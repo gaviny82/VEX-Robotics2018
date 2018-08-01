@@ -10,5 +10,6 @@
 
 #define JOYSTICK_ANGULAR_CH 1
 #define JOYSTICK_VERTICAL_CH 3
+#define JOYSTICK_THROT_START 10
 
 #endif

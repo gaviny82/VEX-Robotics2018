@@ -60,6 +60,14 @@ void operatorControl() {
 		vertical = joystickGetAnalog(MASTER_JOYSTICK, JOYSTICK_VERTICAL_CH); // vertical axis on left joystick
   	angular = joystickGetAnalog(MASTER_JOYSTICK, JOYSTICK_ANGULAR_CH);
 
+    if (vertical <= JOYSTICK_THROT_START && vertical >= -JOYSTICK_THROT_START) {
+      vertical = 0;
+    }
+
+    if (angular <= JOYSTICK_THROT_START && angular >= -JOYSTICK_THROT_START) {
+      angular = 0;
+    }
+
 		setMovement(vertical, angular);
 	}
 }
