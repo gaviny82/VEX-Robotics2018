@@ -1,53 +1,65 @@
 #include "main.h"
 #include "control.h"
 
-extern void setMotorsLR(int left, int right) {
-  /* motors on left side should be reversed */
-  motorSet(MOTOR_R_M, right);
-  motorSet(MOTOR_R_2, right);
-  motorSet(MOTOR_L_M, -left);
-  motorSet(MOTOR_L_2, -left);
+
+extern void setMotorsL(signed char speed){
+  //printf("Motor L: %d \n", speed);
+  motorSet(MOTOR_L_M, -speed);
+  motorSet(MOTOR_L_2, -speed);
+}
+extern void setMotorsR(signed char speed){
+  //printf("Motor R: %d \n", speed);
+  motorSet(MOTOR_R_M, speed);
+  motorSet(MOTOR_R_2, speed);
 }
 
-extern void setMovement(char vertical, char angular) {
- if(vertical!=0)angular/=1.4;
- if(angular!=0)vertical/=1.4;
- setMotorsLR(vertical + angular, vertical - angular);
+extern void setMovement(signed char vertical, signed char angular) {
+ int left = vertical - angular, right=vertical + angular;
+ setMotorsL((char)(left>=127?127:left));
+ setMotorsR((char)(right>=127?127:right));
 }
-
 
 extern void shoot() {
-  bool shoot = joystickGetDigital(MASTER_JOYSTICK,8 , JOY_UP);
-  if (shoot) {
-    motorSet(MOTOR_SHOOT, 127);
-  } else {
-    motorSet(MOTOR_SHOOT, 2);
-  }
+  bool shoot = joystickGetDigital(MASTER_JOYSTICK,7 , JOY_UP);
+  motorSet(MOTOR_SHOOT, shoot?127:2);
 }
 
-bool pickballPrevClicked = false;
-bool pickballEnabled = false;
-
-extern void pickballtask() {
-  bool clicked;
-  clicked = joystickGetDigital(MASTER_JOYSTICK, 8, JOY_LEFT);
-  if (!clicked) {
-    pickballPrevClicked = false;
+bool isKeyDown=false, isCollecting=false;
+void clicked(){
+  isCollecting=!isCollecting;
+  if(isCollecting){
+    motorSet(MOTOR_BALL_COLLECTOR, 127);
+  }else{
+    motorSet(MOTOR_BALL_COLLECTOR, 0);
   }
-
-  if (clicked && pickballPrevClicked) {
-    pickballEnabled = !pickballEnabled;
-    pickballPrevClicked = false;
-  } else {
-    pickballPrevClicked = true;
+}
+extern void runBallCollector() {
+  bool currentKeyState=joystickGetDigital(MASTER_JOYSTICK, 8, JOY_LEFT);
+  if (!isKeyDown&&currentKeyState) {
+    clicked();
   }
-
-if (pickballEnabled) {
-  motorSet(MOTOR_PICKBALL, 127);
-} else {
-  motorSet(MOTOR_PICKBALL, 0);
+  isKeyDown=currentKeyState;
 }
 
-return;
+bool reverseBallCollector(){
+  if(joystickGetDigital(MASTER_JOYSTICK, 8, JOY_RIGHT)){
+    motorSet(MOTOR_BALL_COLLECTOR, -127);
+    return false;
+  }
+  motorSet(MOTOR_BALL_COLLECTOR,0);
+  return true;
+}
+
+void rise(){
+  if(joystickGetDigital(MASTER_JOYSTICK,6, JOY_UP)){
+    motorSet(MOTOR_LIFT_LEFT,127);
+    motorSet(MOTOR_LIFT_RIGHT,127);
+  }else if(joystickGetDigital(MASTER_JOYSTICK,6,JOY_DOWN)){
+    motorSet(MOTOR_LIFT_LEFT,-127);
+    motorSet(MOTOR_LIFT_RIGHT,-127);
+  }else{
+    motorSet(MOTOR_LIFT_LEFT,0);
+    motorSet(MOTOR_LIFT_RIGHT,0);
+  }
 
 }

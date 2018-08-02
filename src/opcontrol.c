@@ -14,21 +14,24 @@
 #include "control.h"
 
 void operatorControl() {
-  printf("Hello World!\n");
 	char vertical, angular;
-  taskRunLoop(pickballtask, 200);
-	while (1) {
+	while (true) {
 		vertical = joystickGetAnalog(MASTER_JOYSTICK, JOYSTICK_VERTICAL_CH);
   	angular = joystickGetAnalog(MASTER_JOYSTICK, JOYSTICK_ANGULAR_CH);
 
     /* JOYSTICK_THROT to prevent fake values */
-    if (vertical <= JOYSTICK_THROT_START && vertical >= -JOYSTICK_THROT_START) {
+    if (abs(vertical) <= JOYSTICK_THROT_START) {
       vertical = 0;
     }
-    if (angular <= JOYSTICK_THROT_START && angular >= -JOYSTICK_THROT_START) {
+    if (abs(angular) <= JOYSTICK_THROT_START) {
       angular = 0;
     }
     setMovement(vertical, angular);
+    //button functions pooling
+		rise();
     shoot();
-	} /* end main loop */
+    if(reverseBallCollector()){
+      runBallCollector();
+	   }
+  }
 }
