@@ -13,11 +13,10 @@
 #include "main.h"
 #include "control.h"
 
-
-
 void operatorControl() {
   printf("Hello World!\n");
 	char vertical, angular;
+  taskRunLoop(pickballtask, 200);
 	while (1) {
 		vertical = joystickGetAnalog(MASTER_JOYSTICK, JOYSTICK_VERTICAL_CH);
   	angular = joystickGetAnalog(MASTER_JOYSTICK, JOYSTICK_ANGULAR_CH);

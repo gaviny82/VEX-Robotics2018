@@ -10,17 +10,44 @@ extern void setMotorsLR(int left, int right) {
 }
 
 extern void setMovement(char vertical, char angular) {
- if(vertical!=0)angular/=2;
- if(angular!=0)vertical/=2;
- setMotorsLR(vertical/1.4 + angular/1.4, vertical/1.4 - angular/1.4);
+ if(vertical!=0)angular/=1.4;
+ if(angular!=0)vertical/=1.4;
+ setMotorsLR(vertical + angular, vertical - angular);
 }
 
 
 extern void shoot() {
   bool shoot = joystickGetDigital(MASTER_JOYSTICK,8 , JOY_UP);
   if (shoot) {
-    motorSet(3, 127);
+    motorSet(MOTOR_SHOOT, 127);
   } else {
-    motorSet(3, -2);
+    motorSet(MOTOR_SHOOT, 2);
   }
+}
+
+bool pickballPrevClicked = false;
+bool pickballEnabled = false;
+
+extern void pickballtask() {
+  bool clicked;
+  clicked = joystickGetDigital(MASTER_JOYSTICK, 8, JOY_LEFT);
+  if (!clicked) {
+    pickballPrevClicked = false;
+  }
+
+  if (clicked && pickballPrevClicked) {
+    pickballEnabled = !pickballEnabled;
+    pickballPrevClicked = false;
+  } else {
+    pickballPrevClicked = true;
+  }
+
+if (pickballEnabled) {
+  motorSet(MOTOR_PICKBALL, 127);
+} else {
+  motorSet(MOTOR_PICKBALL, 0);
+}
+
+return;
+
 }

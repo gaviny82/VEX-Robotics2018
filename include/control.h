@@ -7,6 +7,8 @@
 #define MOTOR_L_2 2
 #define MOTOR_R_M 10
 #define MOTOR_R_2 9
+#define MOTOR_SHOOT 3
+#define MOTOR_PICKBALL 4
 
 #define JOYSTICK_ANGULAR_CH 1
 #define JOYSTICK_VERTICAL_CH 3
@@ -37,5 +39,13 @@ extern void setMovement(char vertical, char angular);
 *
 */
 extern void shoot();
+
+/*
+* task to enable and disenable pickball motor, please delay between execuate
+*
+*/
+
+extern void pickballtask();
+
 
 #endif
