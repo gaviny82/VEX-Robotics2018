@@ -37,7 +37,4 @@ void initializeIO() {
  * can be implemented in this task if desired.
  */
 void initialize() {
-  while(1){
-    printf("Test\n");
-  }
 }

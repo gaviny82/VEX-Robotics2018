@@ -32,16 +32,17 @@
  */
 
  void setMotorsLR(int left, int right) {
-	 motorSet(MOTOR_R_M, -right);
-	 motorSet(MOTOR_R_2, -right);
-	 motorSet(MOTOR_L_M, left);
-	 motorSet(MOTOR_L_2, left);
+   /* motors on left side should be reversed */
+	 motorSet(MOTOR_R_M, right);
+	 motorSet(MOTOR_R_2, right);
+	 motorSet(MOTOR_L_M, -left);
+	 motorSet(MOTOR_L_2, -left);
  }
 
  void setMovement(char vertical, char angular) {
  	if(vertical!=0)angular/=2;
  	if(angular!=0)vertical/=2;
- 	setMotorsLR(vertical/1.4 - angular/1.4, vertical/1.4 + angular/1.4);
+ 	setMotorsLR(vertical/1.4 + angular/1.4, vertical/1.4 - angular/1.4);
  }
 
  void shoot() {
@@ -55,19 +56,20 @@
 
 
 void operatorControl() {
-	char vertical, angular;
+  printf("Hello World!\n");
+	int vertical, angular;
 	while (1) {
-		vertical = joystickGetAnalog(MASTER_JOYSTICK, JOYSTICK_VERTICAL_CH); // vertical axis on left joystick
+		vertical = joystickGetAnalog(MASTER_JOYSTICK, JOYSTICK_VERTICAL_CH);
   	angular = joystickGetAnalog(MASTER_JOYSTICK, JOYSTICK_ANGULAR_CH);
 
+    /* JOYSTICK_THROT to prevent fake values */
     if (vertical <= JOYSTICK_THROT_START && vertical >= -JOYSTICK_THROT_START) {
       vertical = 0;
     }
-
     if (angular <= JOYSTICK_THROT_START && angular >= -JOYSTICK_THROT_START) {
       angular = 0;
     }
-
-		setMovement(vertical, angular);
-	}
+    setMovement(vertical, angular);
+    shoot();
+	} /* end main loop */
 }

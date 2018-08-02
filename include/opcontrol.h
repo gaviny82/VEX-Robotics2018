@@ -1,7 +1,7 @@
 #ifndef OPCONTROL_H_
 #define OPCONTROL_H_
 
-#define MASTER_JOYSTICK 0
+#define MASTER_JOYSTICK 1
 
 #define MOTOR_L_M 1
 #define MOTOR_L_2 2
