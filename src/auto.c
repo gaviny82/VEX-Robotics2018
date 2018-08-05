@@ -14,6 +14,7 @@
 #include "pid.h"
 #include "control.h"
 #include "iodefinitions.h"
+#include "math.h"
 
 TaskHandle leftPIDTask;
 TaskHandle rightPIDTask;
@@ -30,7 +31,7 @@ static void leftPIDLoop (void *tgt) {
     pid_output = pid_process(pid_left ,target ,pid_input);
     printf("encoderL: %d \n", pid_input);
     setMotorsL((char)pid_output);
-    taskDelay(100);
+    taskDelay(200);
   }
 }
 
@@ -64,7 +65,7 @@ static void rightPIDLoop (void *tgt) {
     pid_output = pid_process(pid_right ,target ,pid_input);
     printf("encoderR: %d \n", pid_input);
     setMotorsR((char)pid_output);
-    taskDelay(100);
+    taskDelay(200);
   }
 }
 
@@ -80,15 +81,24 @@ void stopRightPID() {
     if (!rightPIDTask) {
       printf("INFO: Double deleting rightPIDTask! \n");
     }
+
     taskDelete(rightPIDTask);
       printf("task (right wheels) stopped");
     setMotorsR(0);
 }
+void rotate(const int degree){
+
+}
+void move(const int horizontal, const int vertical){
+  rotate(atan(vertical/horizontal));
+  double dst=sqrt(pow(horizontal,2)+pow(vertical,2));
+  startLeftPID(dst);
+  startRightPID(dst);
+}
 
 void autonomous() {
   /* A test here */
-  startLeftPID(1000);
-  startRightPID(1000);
+  move(0,1000);
   taskDelay(5000);
   stopLeftPID();
   stopRightPID();

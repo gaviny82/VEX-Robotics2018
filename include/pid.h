@@ -11,7 +11,6 @@ typedef struct _pidctrl
 	int nIntegral;
 	int nDiffer;
 	float nPowerOut;
-	int initPower;
 } pidctrl;
 
 

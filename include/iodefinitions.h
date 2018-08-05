@@ -2,14 +2,16 @@
 #define IO_DEFINITIONS_H_
 
 //motors
-#define MOTOR_L_M 1
-#define MOTOR_L_2 2
-#define MOTOR_R_M 10
-#define MOTOR_R_2 9
-#define MOTOR_SHOOT 3
-#define MOTOR_BALL_COLLECTOR 4
-#define MOTOR_LIFT_LEFT 5
-#define MOTOR_LIFT_RIGHT 6
+#define MOTOR_L1 1
+#define MOTOR_L2 2
+#define MOTOR_L3 3
+#define MOTOR_R1 8
+#define MOTOR_R2 9
+#define MOTOR_R3 10
+
+#define MOTOR_SHOOT 4
+#define MOTOR_BALL_COLLECTOR 5
+#define MOTOR_CLAW 6
 
 //encoders
 #define ENCODER_LEFT_TOP 1

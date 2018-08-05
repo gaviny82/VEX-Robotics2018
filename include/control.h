@@ -40,5 +40,10 @@ extern void runBallCollector();
 
 extern bool reverseBallCollector();
 
-extern void rise();
+//extern void rise();
+
+extern void claw();
+
+//extern void clawRotate();
+
 #endif

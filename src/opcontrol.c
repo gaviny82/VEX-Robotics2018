@@ -29,10 +29,12 @@ void operatorControl() {
     }
     setMovement(vertical, angular);
     //button functions pooling
-		rise();
+		//rise();
     shoot();
+		claw();
+		//clawRotate();
     if(reverseBallCollector()){
       runBallCollector();
-	   }
+	  }
   }
 }
