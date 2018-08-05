@@ -20,16 +20,15 @@ TaskHandle rightPIDTask;
 
 static void leftPIDLoop (void *tgt) {
   int target = (int32_t)tgt;
-  pid_ctrl_t pid_left;
-  int pid_output;
+  struct _pidctrl pid_left;
+  int pid_output, pid_input;
   encoderReset(leftEncoder);
-
-  pid_init(&pid_left);
-  pid_set_gains(&pid_left, 5, 0, 1);
+  pid_init(pid_left,1.28,0.1,0.001);
 
   while(true){
-    pid_output = (int)pid_process(&pid_left, encoderGet(leftEncoder) - target);
-    printf("encoder: %d", encoderGet(leftEncoder));
+    pid_input =  encoderGet(leftEncoder);
+    pid_output = pid_process(pid_left ,target ,pid_input);
+    printf("encoderL: %d \n", pid_input);
     setMotorsL((char)pid_output);
     taskDelay(100);
   }
@@ -55,16 +54,15 @@ void stopLeftPID() {
 
 static void rightPIDLoop (void *tgt) {
   int target = (int32_t)tgt;
-  pid_ctrl_t pid_left;
-  int pid_output;
-  encoderReset(leftEncoder);
-
-  pid_init(&pid_left);
-  pid_set_gains(&pid_left, 5, 0, 1);
+  struct _pidctrl pid_right;
+  int pid_output, pid_input;
+  encoderReset(rightEncoder);
+  pid_init(pid_right,1.28,0.1,0.001);
 
   while(true){
-    pid_output = (int)pid_process(&pid_left, encoderGet(leftEncoder) - target);
-    printf("encoder: %d", encoderGet(leftEncoder));
+    pid_input =  encoderGet(rightEncoder);
+    pid_output = pid_process(pid_right ,target ,pid_input);
+    printf("encoderR: %d \n", pid_input);
     setMotorsR((char)pid_output);
     taskDelay(100);
   }

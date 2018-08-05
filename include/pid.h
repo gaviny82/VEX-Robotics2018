@@ -1,28 +1,23 @@
 #ifndef PID_H_
 #define PID_H_
 
-/** Instance of a PID controller.
- *
- * @note This structure is only public to be able to do static allocation of it.
- * Do not access its fields directly.
- */
-typedef struct {
-    float kp;
-    float ki;
-    float kd;
-    float integrator;
-    float previous_error;
-    float integrator_limit;
-    float frequency;
-} pid_ctrl_t;
+typedef struct _pidctrl
+{
+	int nSetPos;
+	int nActPos;
+	int nErr;
+	int nErr_last;
+	float Kp,Ki,Kd;
+	int nIntegral;
+	int nDiffer;
+	float nPowerOut;
+	int initPower;
+} pidctrl;
 
-/** Initializes a PID controller. */
-void pid_init(pid_ctrl_t *pid);
 
-/** Sets the gains of the given PID. */
-void pid_set_gains(pid_ctrl_t *pid, float kp, float ki, float kd);
+void pid_init(pidctrl pid,float Kp,float Ki,float Kd);
+int pid_process(pidctrl pid,int posInput,int posAct);
 
-/** Process one step if the PID algorithm. */
-float pid_process(pid_ctrl_t *pid, float error);
+
 
 #endif

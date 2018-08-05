@@ -1,39 +1,27 @@
-#include <stdlib.h>
-#include <math.h>
 #include "pid.h"
 
-
-void pid_init(pid_ctrl_t *pid)
+void pid_init(pidctrl pid,float Kp,float Ki,float Kd)
 {
-    pid_set_gains(pid, 1., 0., 0.);
-    pid->integrator = 0.;
-    pid->previous_error = 0.;
-    pid->integrator_limit = 127;
-    pid->frequency = 1.;
+	pid.Kp=Kp;
+	pid.Ki=Ki;
+	pid.Kd=Kd;
+	pid.nSetPos=0;
+	pid.nActPos=0;
+	pid.nErr=0;
+	pid.nErr_last=0;
+	pid.nIntegral=0;
+	pid.nDiffer=0;
+	pid.nPowerOut=0.0;
 }
 
-void pid_set_gains(pid_ctrl_t *pid, float kp, float ki, float kd)
+int pid_process(pidctrl pid,int posInput,int posAct)
 {
-    pid->kp = kp;
-    pid->ki = ki;
-    pid->kd = kd;
-}
-
-float pid_process(pid_ctrl_t *pid, float error)
-{
-    float output;
-    pid->integrator += error;
-
-    if (pid->integrator > pid->integrator_limit) {
-        pid->integrator = pid->integrator_limit;
-    } else if (pid->integrator < -pid->integrator_limit) {
-        pid->integrator = -pid->integrator_limit;
-    }
-
-    output  = - pid->kp * error;
-    output += - pid->ki * pid->integrator / pid->frequency;
-    output += - pid->kd * (error - pid->previous_error) * pid->frequency;
-
-    pid->previous_error = error;
-    return output;
+	pid.nSetPos=posInput;
+	pid.nActPos=posAct;
+	pid.nErr=pid.nSetPos-pid.nActPos;
+	pid.nIntegral=pid.nErr_last+pid.nErr;
+	pid.nDiffer=pid.nErr_last-pid.nErr;
+	pid.nPowerOut=pid.Kp*pid.nErr+pid.Ki*pid.nIntegral+pid.Kd*pid.nDiffer;
+	pid.nErr_last=pid.nErr;
+	return (int)pid.nPowerOut;
 }
