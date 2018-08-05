@@ -1,6 +1,6 @@
 #include "main.h"
 #include "control.h"
-
+#include "iodefinitions.h"
 
 extern void setMotorsL(signed char speed){
   //printf("Motor L: %d \n", speed);
@@ -58,8 +58,8 @@ void rise(){
     motorSet(MOTOR_LIFT_LEFT,-127);
     motorSet(MOTOR_LIFT_RIGHT,-127);
   }else{
-    motorSet(MOTOR_LIFT_LEFT,0);
-    motorSet(MOTOR_LIFT_RIGHT,0);
+    motorSet(MOTOR_LIFT_LEFT,10);
+    motorSet(MOTOR_LIFT_RIGHT,10);
   }
 
 }

@@ -12,6 +12,7 @@
 
 #include "main.h"
 #include "control.h"
+#include "iodefinitions.h"
 
 
 void initializeIO() {
