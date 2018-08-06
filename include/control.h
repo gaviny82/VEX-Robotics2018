@@ -30,6 +30,7 @@ extern void setMovement(signed char vertical, signed char angular);
 *
 */
 extern void shoot();
+extern void kickloop();
 
 /*
 * task to enable and disenable pickball motor, please delay between execuate
@@ -46,4 +47,5 @@ extern void claw();
 
 //extern void clawRotate();
 
+extern void reverse();
 #endif

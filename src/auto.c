@@ -98,9 +98,31 @@ void move(const int horizontal, const int vertical){
 
 void autonomous() {
   /* A test here */
-  move(0,1000);
+  /*startLeftPID(1000);
+  startRightPID(1000);
   taskDelay(5000);
   stopLeftPID();
   stopRightPID();
   setMovement(0,0);
+  */
+  reverseDirection=1;
+  if(true){
+    setMovement(-40,0);
+    taskDelay(500);
+
+    setMovement(0,0);
+    motorSet(MOTOR_SHOOT,127);
+    taskDelay(4000);
+    motorSet(MOTOR_SHOOT,0);
+
+    setMovement(-90,0);
+    taskDelay(1300);
+    setMovement(0,0);
+
+    setMovement(60,0);
+    taskDelay(2000);
+
+    setMovement(0,0);
+  }
+
 }

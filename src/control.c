@@ -2,6 +2,7 @@
 #include "control.h"
 #include "iodefinitions.h"
 
+
 extern void setMotorsL(signed char speed){
   //printf("Motor L: %d \n", speed);
   motorSet(MOTOR_L1, speed);
@@ -16,7 +17,7 @@ extern void setMotorsR(signed char speed){
 }
 
 extern void setMovement(signed char vertical, signed char angular) {
- int left = vertical - angular, right=vertical + angular;
+ int left = vertical*reverseDirection - angular, right=vertical*reverseDirection + angular;
  setMotorsL((char)(left>=127?127:left));
  setMotorsR((char)(right>=127?127:right));
 }
@@ -70,14 +71,30 @@ extern void rise(){
 
 }
 */
+
 extern void claw(){
   if(joystickGetDigital(MASTER_JOYSTICK, 5, JOY_UP)){
-    motorSet(MOTOR_CLAW, 127);
+    motorSet(MOTOR_CLAW1, 127);
+      motorSet(MOTOR_CLAW2, 127);
   }else if(joystickGetDigital(MASTER_JOYSTICK, 5, JOY_DOWN)){
-    motorSet(MOTOR_CLAW, -127);
+    motorSet(MOTOR_CLAW1, -127);
+      motorSet(MOTOR_CLAW2, -127);
   }else{
-    motorSet(MOTOR_CLAW, 0);
+    motorSet(MOTOR_CLAW1, 0);
+      motorSet(MOTOR_CLAW2, 0);
   }
+}
+
+extern void kickloop() {
+  /*if (joystickGetDigital(MASTER_JOYSTICK, 5, JOY_DOWN)) {
+    motorSet(MOTOR_CLAW, -127);
+  } else if (!digitalRead(DIGITAL_LIMIT_SWITCH_PIN)) {
+    motorSet(MOTOR_CLAW, -10);
+  } else if (joystickGetDigital(MASTER_JOYSTICK, 5, JOY_UP)) {
+    motorSet(MOTOR_CLAW, 127);
+  } else {
+    motorSet(MOTOR_CLAW, -5);
+  }*/
 }
 /*
 extern void clawRotate(){
@@ -91,3 +108,11 @@ extern void clawRotate(){
 
 }
 */
+bool isKeyDown2;
+extern void reverse(){
+  bool currentKeyState=joystickGetDigital(MASTER_JOYSTICK, 7, JOY_DOWN);
+  if (!isKeyDown2&&currentKeyState) {
+    reverseDirection = -reverseDirection;
+  }
+  isKeyDown2=currentKeyState;
+}
