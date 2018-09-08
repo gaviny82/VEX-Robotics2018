@@ -3,11 +3,9 @@
 
 //motors
 #define MOTOR_L1 1
-#define MOTOR_L2 2
-#define MOTOR_L3 3
-#define MOTOR_R1 8
-#define MOTOR_R2 9
-#define MOTOR_R3 10
+#define MOTOR_2L 2
+#define MOTOR_R1 10
+#define MOTOR_2R 3
 
 #define MOTOR_SHOOT 4
 #define MOTOR_BALL_COLLECTOR 5
@@ -24,7 +22,7 @@
 #define MASTER_JOYSTICK 1
 
 #define JOYSTICK_ANGULAR_CH 1
-#define JOYSTICK_VERTICAL_CH 3
+#define JOYSTICK_VERTICAL_CH 2
 #define JOYSTICK_THROT_START 10
 
 //digital

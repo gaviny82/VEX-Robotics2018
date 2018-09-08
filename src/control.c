@@ -6,18 +6,16 @@
 extern void setMotorsL(signed char speed){
   //printf("Motor L: %d \n", speed);
   motorSet(MOTOR_L1, speed);
-  motorSet(MOTOR_L2, speed);
-  motorSet(MOTOR_L3, speed);
+  motorSet(MOTOR_2L, speed);
 }
 extern void setMotorsR(signed char speed){
   //printf("Motor R: %d \n", speed);
   motorSet(MOTOR_R1, speed);
-  motorSet(MOTOR_R2, speed);
-  motorSet(MOTOR_R3, speed);
+  motorSet(MOTOR_2R, -speed);
 }
 
 extern void setMovement(signed char vertical, signed char angular) {
- int left = vertical*reverseDirection - angular, right=vertical*reverseDirection + angular;
+ int left = vertical*reverseDirection + angular, right = vertical*reverseDirection - angular;
  setMotorsL((char)(left>=127?127:left));
  setMotorsR((char)(right>=127?127:right));
 }
