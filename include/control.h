@@ -6,6 +6,9 @@
 Encoder leftEncoder;
 Encoder rightEncoder;
 
+/* Put configs here */
+#define GLOBAL_DEBUG
+
 /*
 * Set the motor speed values for left/Right side wheels
 *
@@ -41,11 +44,15 @@ extern void runBallCollector();
 
 extern bool reverseBallCollector();
 
-//extern void rise();
-
 extern void claw();
 
-//extern void clawRotate();
-
 extern void reverse();
+
+
+#ifdef GLOBAL_DEBUG
+#define DBG_PRINT(...) do{ printf(  __VA_ARGS__ ); } while( false )
+#else
+#define DBG_PRINT(...) do{ } while ( false )
+#endif
+
 #endif

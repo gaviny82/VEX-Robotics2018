@@ -29,7 +29,7 @@ static void leftPIDLoop (void *tgt) {
   while(true){
     pid_input =  encoderGet(leftEncoder);
     pid_output = pid_process(pid_left ,target ,pid_input);
-    printf("encoderL: %d \n", pid_input);
+    DBG_PRINT("encoderL: %d \n", pid_input);
     setMotorsL((char)pid_output);
     taskDelay(200);
   }
@@ -38,7 +38,7 @@ static void leftPIDLoop (void *tgt) {
 
 void startLeftPID(int target) {
   if (leftPIDTask && taskGetState(leftPIDTask) == TASK_RUNNING) {
-    printf("PANIC: LeftPIDTask is still running! \n");
+    DBG_PRINT("PANIC: LeftPIDTask is still running! \n");
     return;
   }
   leftPIDTask = taskCreate(leftPIDLoop, TASK_DEFAULT_STACK_SIZE, (void *)target, TASK_PRIORITY_DEFAULT + 1);
@@ -46,10 +46,10 @@ void startLeftPID(int target) {
 
 void stopLeftPID() {
     if (!leftPIDTask) {
-      printf("INFO: Double deleting LeftPIDTask! \n");
+    DBG_PRINT("INFO: Double deleting LeftPIDTask! \n");
     }
     taskDelete(leftPIDTask);
-      printf("task (left wheels) stopped");
+      printf("task (left wheels) stopped \n");
     setMotorsL(0);
 }
 
@@ -63,7 +63,7 @@ static void rightPIDLoop (void *tgt) {
   while(true){
     pid_input =  encoderGet(rightEncoder);
     pid_output = pid_process(pid_right ,target ,pid_input);
-    printf("encoderR: %d \n", pid_input);
+    DBG_PRINT("encoderR: %d \n", pid_input);
     setMotorsR((char)pid_output);
     taskDelay(200);
   }
@@ -71,7 +71,7 @@ static void rightPIDLoop (void *tgt) {
 
 void startRightPID(int target) {
   if (rightPIDTask && taskGetState(rightPIDTask) == TASK_RUNNING) {
-    printf("PANIC: rightPIDTask is still running! \n");
+    DBG_PRINT("PANIC: rightPIDTask is still running! \n");
     return;
   }
   rightPIDTask = taskCreate(rightPIDLoop, TASK_DEFAULT_STACK_SIZE, (void *)target, TASK_PRIORITY_DEFAULT + 1);
@@ -79,11 +79,11 @@ void startRightPID(int target) {
 
 void stopRightPID() {
     if (!rightPIDTask) {
-      printf("INFO: Double deleting rightPIDTask! \n");
+    DBG_PRINT("INFO: Double deleting rightPIDTask! \n");
     }
 
     taskDelete(rightPIDTask);
-      printf("task (right wheels) stopped");
+    DBG_PRINT("task (right wheels) stopped \n");
     setMotorsR(0);
 }
 void rotate(const int degree){
@@ -97,14 +97,6 @@ void move(const int horizontal, const int vertical){
 }
 
 void autonomous() {
-  /* A test here */
-  /*startLeftPID(1000);
-  startRightPID(1000);
-  taskDelay(5000);
-  stopLeftPID();
-  stopRightPID();
-  setMovement(0,0);
-  */
   reverseDirection=1;
   if(true){
     setMovement(-40,0);

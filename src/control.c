@@ -4,12 +4,12 @@
 
 
 extern void setMotorsL(signed char speed){
-  //printf("Motor L: %d \n", speed);
+  DBG_PRINT("setMotorsL: %d \n", speed);
   motorSet(MOTOR_L1, speed);
   motorSet(MOTOR_2L, speed);
 }
 extern void setMotorsR(signed char speed){
-  //printf("Motor R: %d \n", speed);
+  DBG_PRINT("setMotorsR: %d \n", speed);
   motorSet(MOTOR_R1, speed);
   motorSet(MOTOR_2R, -speed);
 }
@@ -30,7 +30,6 @@ bool isKeyDown=false, isCollecting=false;
 extern void runBallCollector() {
   bool currentKeyState=joystickGetDigital(MASTER_JOYSTICK, 8, JOY_LEFT);
   if (!isKeyDown&&currentKeyState) {
-    printf("%d%d%d\n",isKeyDown,currentKeyState,isCollecting);
     isCollecting=!isCollecting;
     if(isCollecting){
       motorSet(MOTOR_BALL_COLLECTOR, 127);
@@ -54,21 +53,6 @@ extern bool reverseBallCollector(){
   }
   return true;
 }
-/*
-extern void rise(){
-  if(joystickGetDigital(MASTER_JOYSTICK,6, JOY_UP)){
-    motorSet(MOTOR_LIFT_LEFT,127);
-    motorSet(MOTOR_LIFT_RIGHT,127);
-  }else if(joystickGetDigital(MASTER_JOYSTICK,6,JOY_DOWN)){
-    motorSet(MOTOR_LIFT_LEFT,-127);
-    motorSet(MOTOR_LIFT_RIGHT,-127);
-  }else{
-    motorSet(MOTOR_LIFT_LEFT,10);
-    motorSet(MOTOR_LIFT_RIGHT,10);
-  }
-
-}
-*/
 
 extern void claw(){
   if(joystickGetDigital(MASTER_JOYSTICK, 5, JOY_UP)){
@@ -83,29 +67,6 @@ extern void claw(){
   }
 }
 
-extern void kickloop() {
-  /*if (joystickGetDigital(MASTER_JOYSTICK, 5, JOY_DOWN)) {
-    motorSet(MOTOR_CLAW, -127);
-  } else if (!digitalRead(DIGITAL_LIMIT_SWITCH_PIN)) {
-    motorSet(MOTOR_CLAW, -10);
-  } else if (joystickGetDigital(MASTER_JOYSTICK, 5, JOY_UP)) {
-    motorSet(MOTOR_CLAW, 127);
-  } else {
-    motorSet(MOTOR_CLAW, -5);
-  }*/
-}
-/*
-extern void clawRotate(){
-  if(joystickGetDigital(MASTER_JOYSTICK, 7, JOY_LEFT)){
-    motorSet(MOTOR_CLAW_ROTATE, 127);
-  }else if(joystickGetDigital(MASTER_JOYSTICK,7,JOY_RIGHT)){
-    motorSet(MOTOR_CLAW_ROTATE,-127);
-  }else{
-    motorSet(MOTOR_CLAW_ROTATE,0);
-  }
-
-}
-*/
 bool isKeyDown2;
 extern void reverse(){
   bool currentKeyState=joystickGetDigital(MASTER_JOYSTICK, 7, JOY_DOWN);

@@ -30,11 +30,9 @@ void operatorControl() {
     }
     setMovement(vertical, angular);
     //button functions pooling
-		//rise();
     shoot();
 		reverse();
 		claw();
-		//clawRotate();
     if(reverseBallCollector()){
       runBallCollector();
 	  }
