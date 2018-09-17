@@ -41,6 +41,7 @@ void startLeftPID(int target) {
     DBG_PRINT("PANIC: LeftPIDTask is still running! \n");
     return;
   }
+  encoderReset(leftEncoder);
   leftPIDTask = taskCreate(leftPIDLoop, TASK_DEFAULT_STACK_SIZE, (void *)target, TASK_PRIORITY_DEFAULT + 1);
 }
 
@@ -74,6 +75,7 @@ void startRightPID(int target) {
     DBG_PRINT("PANIC: rightPIDTask is still running! \n");
     return;
   }
+  encoderReset(rightEncoder);
   rightPIDTask = taskCreate(rightPIDLoop, TASK_DEFAULT_STACK_SIZE, (void *)target, TASK_PRIORITY_DEFAULT + 1);
 }
 
@@ -86,35 +88,7 @@ void stopRightPID() {
     DBG_PRINT("task (right wheels) stopped \n");
     setMotorsR(0);
 }
-void rotate(const int degree){
-
-}
-void move(const int horizontal, const int vertical){
-  rotate(atan(vertical/horizontal));
-  double dst=sqrt(pow(horizontal,2)+pow(vertical,2));
-  startLeftPID(dst);
-  startRightPID(dst);
-}
 
 void autonomous() {
-  reverseDirection=1;
-  if(true){
-    setMovement(-40,0);
-    taskDelay(500);
-
-    setMovement(0,0);
-    motorSet(MOTOR_SHOOT,127);
-    taskDelay(4000);
-    motorSet(MOTOR_SHOOT,0);
-
-    setMovement(-90,0);
-    taskDelay(1300);
-    setMovement(0,0);
-
-    setMovement(60,0);
-    taskDelay(2000);
-
-    setMovement(0,0);
-  }
-
+  reverseDirection=1; /* Reset the Reverse State*/
 }

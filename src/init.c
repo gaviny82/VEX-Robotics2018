@@ -16,11 +16,12 @@
 
 
 void initializeIO() {
-  leftEncoder = encoderInit(ENCODER_LEFT_TOP, ENCODER_LEFT_BOTTOM, false);
-  rightEncoder = encoderInit(ENCODER_RIGHT_TOP, ENCODER_RIGHT_BOTTOM, false);
   pinMode(DIGITAL_LIMIT_SWITCH_PIN, INPUT);
   DBG_PRINT("INFO: initializeIO() Done \n");
 }
 
 void initialize() {
+  leftEncoder = encoderInit(ENCODER_LEFT_TOP, ENCODER_LEFT_BOTTOM, false);
+  rightEncoder = encoderInit(ENCODER_RIGHT_TOP, ENCODER_RIGHT_BOTTOM, false);
+  DBG_PRINT("INFO: initialize() Done \n");
 }

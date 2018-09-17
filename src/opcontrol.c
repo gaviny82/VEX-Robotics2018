@@ -17,7 +17,7 @@
 void operatorControl() {
 	char vertical, angular;
 	reverseDirection = 1;
-	
+
 	while (true) {
 		vertical = joystickGetAnalog(MASTER_JOYSTICK, JOYSTICK_VERTICAL_CH)*0.8;
   	angular = joystickGetAnalog(MASTER_JOYSTICK, JOYSTICK_ANGULAR_CH)*0.8;
@@ -30,11 +30,5 @@ void operatorControl() {
     }
     setMovement(vertical, angular);
     //button functions pooling
-    shoot();
-		reverse();
-		claw();
-    if(reverseBallCollector()){
-      runBallCollector();
-	  }
   }
 }
