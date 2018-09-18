@@ -1,6 +1,16 @@
 #include "API.h"
 #include "keynotify.h"
 
+void set_keynotify(int num, unsigned char joystick, unsigned char buttonGroup,
+                    unsigned char button, keynotify_cb_t callback) {
+    if (num < 0 || num > MAX_NOTIFY)
+      return;
+    keynotify[num].joystick = joystick;
+    keynotify[num].buttonGroup = buttonGroup;
+    keynotify[num].button = button;
+    keynotify[num].callback = (*callback);
+}
+
 void keynotify_loop() {
   int i = 0;
   for(i = 0; i < MAX_NOTIFY ; i++) {
@@ -8,7 +18,7 @@ void keynotify_loop() {
     bool current;
 
     /* Check if the notify is defined */
-    if (!keynotify[i].joystick)
+    if (!(*keynotify[i].callback))
       continue;
 
     /* Get the current key state */

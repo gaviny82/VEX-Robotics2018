@@ -28,25 +28,8 @@ extern void setMotorsR(signed char speed);
 */
 extern void setMovement(signed char vertical, signed char angular);
 
-/*
-* detect shoot key, should be execuated in every loops
-*
-*/
-extern void shoot();
-extern void kickloop();
 
-/*
-* task to enable and disenable pickball motor, please delay between execuate
-*
-*/
 
-extern void runBallCollector();
-
-extern bool reverseBallCollector();
-
-extern void claw();
-
-extern void reverse();
 
 
 #ifdef GLOBAL_DEBUG

@@ -13,10 +13,23 @@
 #include "main.h"
 #include "control.h"
 #include "iodefinitions.h"
+#include "keynotify.h"
+
+/* Callback function for reverseDirection */
+void callback_reverseDirection() {
+	reverseDirection = -reverseDirection;
+}
+
 
 void operatorControl() {
 	char vertical, angular;
 	reverseDirection = 1;
+
+	taskRunLoop(keynotify_loop, 20);
+
+	set_keynotify(0, MASTER_JOYSTICK,
+		8, JOY_UP, callback_reverseDirection);
+
 
 	while (true) {
 		vertical = joystickGetAnalog(MASTER_JOYSTICK, JOYSTICK_VERTICAL_CH)*0.8;
