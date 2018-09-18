@@ -1,1 +1,1 @@
-{"py/object": "prosconfig.ProjectConfig", "py/state": {"kernel": "2.12.2", "libraries": {}, "output": "bin/output.bin"}}
+{"py/object": "prosconductor.providers.TemplateConfig", "py/state": {"depot": null, "name": "kernel", "remove_paths": [], "template_ignore": ["template.pros"], "upgrade_paths": ["firmware/libpros.a", "include/API.h", "common.mk"], "version": "2.12.1"}}

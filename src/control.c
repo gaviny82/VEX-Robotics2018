@@ -1,6 +1,6 @@
 #include "main.h"
 #include "control.h"
-#include "iodefinitions.h"
+#include "config.h"
 
 
 extern void setMotorsL(signed char speed){

@@ -12,11 +12,16 @@
 #define MOTOR_CLAW1 6
 #define MOTOR_CLAW2 7
 
+
 //encoders
+Encoder leftEncoder;
 #define ENCODER_LEFT_TOP 1
 #define ENCODER_LEFT_BOTTOM 2
+
+Encoder rightEncoder;
 #define ENCODER_RIGHT_TOP 3
 #define ENCODER_RIGHT_BOTTOM 4
+
 
 //joystick
 #define MASTER_JOYSTICK 1
@@ -25,9 +30,13 @@
 #define JOYSTICK_VERTICAL_CH 2
 #define JOYSTICK_THROT_START 10
 
+
 //digital
 #define DIGITAL_LIMIT_SWITCH_PIN 5
 
+
+//configurations
+#define GLOBAL_DEBUG
 int reverseDirection;
 
 #endif

@@ -2,17 +2,12 @@
 #define OPCONTROL_H_
 
 #include "API.h"
-#include "iodefinitions.h"
-Encoder leftEncoder;
-Encoder rightEncoder;
-
-/* Put configs here */
-#define GLOBAL_DEBUG
+#include "config.h"
 
 /*
-* Set the motor speed values for left/Right side wheels
+* Set the speed of motors for left/right side wheels
 *
-* @param left side
+* @param Speed of motors on left/right side
 *
 */
 extern void setMotorsL(signed char speed);
@@ -28,25 +23,8 @@ extern void setMotorsR(signed char speed);
 */
 extern void setMovement(signed char vertical, signed char angular);
 
-/*
-* detect shoot key, should be execuated in every loops
-*
-*/
-extern void shoot();
-extern void kickloop();
 
-/*
-* task to enable and disenable pickball motor, please delay between execuate
-*
-*/
 
-extern void runBallCollector();
-
-extern bool reverseBallCollector();
-
-extern void claw();
-
-extern void reverse();
 
 
 #ifdef GLOBAL_DEBUG
