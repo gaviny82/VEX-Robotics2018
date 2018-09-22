@@ -1,8 +1,7 @@
 #include "API.h"
 #include "keynotify.h"
 
-void set_keynotify(int num, unsigned char joystick, unsigned char buttonGroup,
-                    unsigned char button, keynotify_cb_t callback) {
+void set_keynotify(int num, unsigned char joystick, unsigned char buttonGroup, unsigned char button, keynotify_cb_t callback) {
     if (num < 0 || num > MAX_NOTIFY)
       return;
     keynotify[num].joystick = joystick;

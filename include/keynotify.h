@@ -1,4 +1,5 @@
 #ifndef KEYNOTIFY_H_
+#define KEYNOTIFY_H_
 
 #define MAX_NOTIFY 5
 
@@ -21,7 +22,5 @@ void set_keynotify(int num, unsigned char joystick, unsigned char buttonGroup,
 void keynotify_loop();
 
 #define NOTIFY_REVERSE_DIRECTION 0
-
-#define KEYNOTIFY_H_
 
 #endif

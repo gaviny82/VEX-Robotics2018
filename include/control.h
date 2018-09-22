@@ -24,9 +24,6 @@ extern void setMotorsR(signed char speed);
 extern void setMovement(signed char vertical, signed char angular);
 
 
-
-
-
 #ifdef GLOBAL_DEBUG
 #define DBG_PRINT(...) do{ printf(  __VA_ARGS__ ); } while( false )
 #else
