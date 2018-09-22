@@ -1,6 +1,7 @@
 #include "pid.h"
 #include "math.h"
 #include "config.h"
+#include "control.h"
 #include "API.h"
 
 void pid_init(pidctrl pid,float Kp,float Ki,float Kd)
