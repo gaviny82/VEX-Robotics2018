@@ -27,8 +27,7 @@ void operatorControl() {
 
 	taskRunLoop(keynotify_loop, 20);
 
-	set_keynotify(0, MASTER_JOYSTICK,
-		8, JOY_UP, callback_reverseDirection);
+	set_keynotify(0, MASTER_JOYSTICK, 8, JOY_UP, callback_reverseDirection);
 
 
 	while (true) {

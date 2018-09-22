@@ -1,6 +1,8 @@
 #ifndef IO_DEFINITIONS_H_
 #define IO_DEFINITIONS_H_
 
+#include "API.h"
+
 //motors
 #define MOTOR_L1 1
 #define MOTOR_2L 2

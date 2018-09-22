@@ -17,6 +17,16 @@ void pid_init(pidctrl pid, float Kp, float Ki, float Kd);
 
 int pid_process(pidctrl pid, int posInput, int posAct);
 
+static void leftPIDLoop(void *tgt);
 
+void startLeftPID(int target);
+
+void stopLeftPID();
+
+static void rightPIDLoop(void *tgt);
+
+void startRightPID(int target);
+
+void stopRightPID();
 
 #endif
