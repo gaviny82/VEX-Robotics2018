@@ -29,5 +29,6 @@ void initialize() {
 }
 
 void resetConfig() {
-	reverseDirection = 1;
+	direction = DIRECTION_NORMAL;
+	collectorState = COLLECTOR_STOP;
 }

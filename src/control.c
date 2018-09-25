@@ -1,7 +1,5 @@
-#include "main.h"
 #include "control.h"
 #include "config.h"
-
 
 extern void setMotorsL(signed char speed) {
 	DBG_PRINT("setMotorsL: %d \n", speed);
@@ -15,8 +13,8 @@ extern void setMotorsR(signed char speed) {
 }
 
 extern void setMovement(signed char vertical, signed char angular) {
-	int left = vertical * reverseDirection + angular,
-		right = vertical * reverseDirection - angular;
+	int left = vertical * direction + angular,
+		right = vertical * direction - angular;
 	setMotorsL((char)(left >= 127 ? 127 : left));
 	setMotorsR((char)(right >= 127 ? 127 : right));
 }

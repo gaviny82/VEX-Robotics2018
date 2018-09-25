@@ -8,7 +8,6 @@
 * Set the speed of motors for left/right side wheels
 *
 * @param Speed of motors on left/right side
-*
 */
 extern void setMotorsL(signed char speed);
 extern void setMotorsR(signed char speed);

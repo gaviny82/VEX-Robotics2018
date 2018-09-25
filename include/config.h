@@ -1,5 +1,5 @@
-#ifndef IO_DEFINITIONS_H_
-#define IO_DEFINITIONS_H_
+#ifndef CONFIG_H_
+#define CONFIG_H_
 
 #include "API.h"
 
@@ -10,7 +10,7 @@
 #define MOTOR_2R 3
 
 #define MOTOR_SHOOT 4
-#define MOTOR_BALL_COLLECTOR 5
+#define MOTOR_COLLECTOR 5
 #define MOTOR_CLAW1 6
 #define MOTOR_CLAW2 7
 
@@ -39,6 +39,14 @@ Encoder rightEncoder;
 
 //configurations
 #define GLOBAL_DEBUG
-int reverseDirection;
+
+#define DIRECTION_NORMAL 1
+#define DIRECTION_REVERSE -1
+extern char direction;
+
+#define COLLECTOR_STOP 0
+#define COLLECTOR_REVERSE -127
+#define COLLECTOR_ON 127
+extern char collectorState;
 
 #endif
