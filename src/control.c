@@ -9,7 +9,7 @@ extern void setMotorsL(signed char speed) {
 extern void setMotorsR(signed char speed) {
 	DBG_PRINT("setMotorsR: %d \n", speed);
 	motorSet(MOTOR_R1, speed);
-	motorSet(MOTOR_2R, -speed);
+	motorSet(MOTOR_2R, -speed); /* Reverse it here, ugly workaroud. */
 }
 
 extern void setMovement(signed char vertical, signed char angular) {

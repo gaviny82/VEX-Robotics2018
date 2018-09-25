@@ -42,11 +42,11 @@ Encoder rightEncoder;
 
 #define DIRECTION_NORMAL 1
 #define DIRECTION_REVERSE -1
-extern char direction;
+char direction;
 
 #define COLLECTOR_STOP 0
 #define COLLECTOR_REVERSE -127
 #define COLLECTOR_ON 127
-extern char collectorState;
+char collectorState;
 
 #endif

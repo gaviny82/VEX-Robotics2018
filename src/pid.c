@@ -27,7 +27,7 @@ int pid_process(pidctrl pid, int posInput, int posAct)
 	pid.nDiffer = pid.nErr_last - pid.nErr;
 	pid.nPowerOut = pid.Kp*pid.nErr + pid.Ki*pid.nIntegral + pid.Kd*pid.nDiffer;
 	pid.nErr_last = pid.nErr;
-	return (int)pid.nPowerOut;
+	return (int)pid.nPowerOut; /* Save a little bit memory */
 }
 
 
@@ -37,7 +37,7 @@ static void leftPIDLoop(void *tgt) {
 	struct _pidctrl pid_left;
 	int pid_output, pid_input;
 	encoderReset(leftEncoder);
-	pid_init(pid_left, 1.28, 0.1, 0.001);
+	pid_init(pid_left, 1.28, 0.1, 0.001); /* Left wheel PID params here */
 
 	while (true) {
 		pid_input = encoderGet(leftEncoder);
@@ -73,7 +73,7 @@ static void rightPIDLoop(void *tgt) {
 	struct _pidctrl pid_right;
 	int pid_output, pid_input;
 	encoderReset(rightEncoder);
-	pid_init(pid_right, 1.28, 0.1, 0.001);
+	pid_init(pid_right, 1.28, 0.1, 0.001);  /* Right wheel PID params here */
 
 	while (true) {
 		pid_input = encoderGet(rightEncoder);
