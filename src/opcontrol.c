@@ -16,6 +16,8 @@
 #include "config.h"
 #include "keynotify.h"
 
+TaskHandle taskH_shoot;
+
  /* Callback function for direction */
 void callback_direction() {
 	direction = -direction;
@@ -27,10 +29,28 @@ void callback_switchBallCollector(){
 	else{
 		collectorState = COLLECTOR_ON;
 	}
-	//pending optimization
+	/* YJC: pending optimization */
+	/* YJX: I think it's good enough */
 }
-void callback_shoot(){
 
+void shoot_task() {
+	unsigned long start;
+	start = millis();
+	/* TODO: Set motors here*/
+	for(;(start - millis()) >= 2000;) delay(10); /* TODO: Detect limition
+																							switch here to prevent deadband */
+/* TODO: Set motors end here*/
+taskSuspend(NULL);
+}
+
+
+void callback_shoot(){
+	/* We're going to create a task here since it should not be blocked */
+	if(!taskH_shoot)
+		taskH_shoot = taskRunLoop(shoot_task, 0); /* Don't know if task will
+																									delete it self by the end */
+	if(taskGetState(taskH_shoot)!= TASK_RUNNING)
+		taskResume(taskH_shoot);
 }
 
 void operatorControl() {
