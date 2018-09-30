@@ -18,6 +18,8 @@
 
 void initializeIO() {
 	pinMode(DIGITAL_LIMIT_SWITCH_PIN, INPUT);
+	/* Init Debug Uart*/
+	usartInit(uart1, 9600, SERIAL_8N1);
 	DBG_PRINT("INFO: initializeIO() Done \n");
 }
 

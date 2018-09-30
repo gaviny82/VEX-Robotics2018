@@ -45,6 +45,7 @@ taskSuspend(NULL);
 
 
 void callback_shoot(){
+	DBG_PRINT("Shoot Callback.");
 	/* We're going to create a task here since it should not be blocked */
 	if(!taskH_shoot)
 		taskH_shoot = taskRunLoop(shoot_task, 0); /* Don't know if task will
