@@ -13,9 +13,35 @@ typedef struct _pidctrl
 	float nPowerOut;
 } pidctrl;
 
+/*
+* initialize a new pid control
+*
+* @param proportion argument
+*
+* @param integral argument
+*
+* @param derivative argument
+*
+*/
 void pid_init(pidctrl pid, float Kp, float Ki, float Kd);
 
+/*
+* return the output of a pid
+*
+* @param a defined pid
+*
+* @param current value
+*
+* @param target value
+*
+*/
 int pid_process(pidctrl pid, int posInput, int posAct);
+
+
+void goForward(int distance);
+
+void rotate(int degree);
+
 
 static void leftPIDLoop(void *tgt);
 

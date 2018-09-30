@@ -30,6 +30,14 @@ int pid_process(pidctrl pid, int posInput, int posAct)
 	return (int)pid.nPowerOut; /* Save a little bit memory */
 }
 
+void goForward(int distance){
+//TODO: reset encoders, then start pid to move to target postion
+}
+
+void rotate(int degree){
+//TODO: reset encoders, then rotate the robot about the center
+}
+
 
 TaskHandle leftPIDTask;
 static void leftPIDLoop(void *tgt) {
