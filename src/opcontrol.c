@@ -37,7 +37,7 @@ void shoot_task() {
 	unsigned long start;
 	start = millis();
 	/* TODO: Set motors here*/
-	for(;(start - millis()) >= 2000;) delay(10); /* TODO: Detect limition
+	for(;(start - millis()) >= 2000;) delay(10); /* TODO: Detect limitation
 																							switch here to prevent deadband */
 /* TODO: Set motors end here*/
 taskSuspend(NULL);

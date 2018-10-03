@@ -18,4 +18,19 @@
 
 void autonomous() {
 	resetConfig();
+	#ifdef AUTONOMOUS_RED_FRONT
+
+	#else
+	#ifdef AUTONOMOUS_RED_BACK
+
+	#else
+	#ifdef AUTONOMOUS_BLUE_FRONT
+
+	#else
+	#ifdef AUTONOMOUS_BLUE_BACK
+
+	#endif
+	#endif
+	#endif
+	#endif
 }

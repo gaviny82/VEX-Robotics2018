@@ -40,6 +40,12 @@ Encoder rightEncoder;
 //configurations
 #define GLOBAL_DEBUG
 
+//autonomous positions
+#define AUTONOMOUS_RED_FRONT
+//#define AUTONOMOUS_RED_BACK
+//#define AUTONOMOUS_BLUE_FRONT
+//#define AUTONOMOUS_BLUE_BACK
+
 #define DIRECTION_NORMAL 1
 #define DIRECTION_REVERSE -1
 char direction;
