@@ -36,11 +36,16 @@ void callback_switchBallCollector(){
 void shoot_task() {
 	unsigned long start;
 	start = millis();
-	/* TODO: Set motors here*/
-	for(;(start - millis()) >= 2000;) delay(10); /* TODO: Detect limitation
-																							switch here to prevent deadband */
-/* TODO: Set motors end here*/
-taskSuspend(NULL);
+
+	motorSet(MOTOR_SHOOT1, 127);
+	motorSet(MOTOR_SHOOT2, 127);
+
+	for(;(start - millis()) >= 2000;) delay(10);
+	/* TODO: Detect limitation switch here to prevent deadband */
+
+	motorSet(MOTOR_SHOOT1, 0);
+	motorSet(MOTOR_SHOOT2, 0);
+	taskSuspend(NULL);
 }
 
 
@@ -58,10 +63,10 @@ void operatorControl() {
 	//initialising
 	char vertical, angular;
 	resetConfig();
-	taskRunLoop(keynotify_loop, 20);
+	taskRunLoop(keynotify_loop, 50);
 	//set key events
-	set_keynotify(0, MASTER_JOYSTICK, 8, JOY_UP, callback_direction);
-	set_keynotify(1, MASTER_JOYSTICK, 7, JOY_UP, callback_switchBallCollector);
+	set_keynotify(0, MASTER_JOYSTICK, 7, JOY_UP, callback_direction);
+	set_keynotify(1, MASTER_JOYSTICK, 5, JOY_UP, callback_switchBallCollector);
 	set_keynotify(2, MASTER_JOYSTICK, 8, JOY_DOWN, callback_shoot);
 
 	while (true) {
@@ -83,6 +88,14 @@ void operatorControl() {
 			else {
 				collectorState = COLLECTOR_ON;
 			}
+		}
+
+		if(joystickGetDigital(MASTER_JOYSTICK, 6, JOY_UP)){
+			motorSet(MOTOR_CLAW, 127);
+		}else if(joystickGetDigital(MASTER_JOYSTICK, 6, JOY_DOWN)){
+			motorSet(MOTOR_CLAW, -127);
+		}else{
+			motorSet(MOTOR_CLAW, 0);
 		}
 
 		//execute motors

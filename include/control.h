@@ -29,4 +29,6 @@ extern void setMovement(signed char vertical, signed char angular);
 #define DBG_PRINT(...) do{ } while ( false )
 #endif
 
+#define SET_SHOOT_MOTORS(...) do { motorSet(MOTOR_SHOOT1, __VA_ARGS__); motorSet(MOTOR_SHOOT2, __VA_ARGS__); } while (false)
+
 #endif
