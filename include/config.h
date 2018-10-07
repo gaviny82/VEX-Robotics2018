@@ -4,13 +4,15 @@
 #include "API.h"
 
 //motors
-#define MOTOR_L1 1
+#define MOTOR_L_FRONT 1
+#define MOTOR_L_BACK 9
 #define MOTOR_2L 4
-#define MOTOR_R1 10
+#define MOTOR_R_FRONT 10
+#define MOTOR_R_BACK 8
 #define MOTOR_2R 5
 
 #define MOTOR_SHOOT1 7
-#define MOTOR_SHOOT2 8
+#define MOTOR_SHOOT2 6
 #define MOTOR_COLLECTOR 2
 #define MOTOR_CLAW 3
 

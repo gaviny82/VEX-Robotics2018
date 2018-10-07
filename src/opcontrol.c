@@ -40,7 +40,7 @@ void shoot_task() {
 	motorSet(MOTOR_SHOOT1, 127);
 	motorSet(MOTOR_SHOOT2, 127);
 
-	for(;(start - millis()) >= 2000;) delay(10);
+	for(;(start - millis()) >= 2000;) delay(1);
 	/* TODO: Detect limitation switch here to prevent deadband */
 
 	motorSet(MOTOR_SHOOT1, 0);
@@ -67,7 +67,7 @@ void operatorControl() {
 	//set key events
 	set_keynotify(0, MASTER_JOYSTICK, 7, JOY_UP, callback_direction);
 	set_keynotify(1, MASTER_JOYSTICK, 5, JOY_UP, callback_switchBallCollector);
-	set_keynotify(2, MASTER_JOYSTICK, 8, JOY_DOWN, callback_shoot);
+	//set_keynotify(2, MASTER_JOYSTICK, 8, JOY_DOWN, callback_shoot);
 
 	while (true) {
 		vertical = joystickGetAnalog(MASTER_JOYSTICK, JOYSTICK_VERTICAL_CH) * 0.8;
@@ -97,6 +97,12 @@ void operatorControl() {
 		}else{
 			motorSet(MOTOR_CLAW, 0);
 		}
+
+		if(joystickGetDigital(MASTER_JOYSTICK, 8, JOY_DOWN)){
+			SET_SHOOT_MOTORS(127);
+		}else{
+			SET_SHOOT_MOTORS(0);
+		}//TODO: one key shoot
 
 		//execute motors
 		motorSet(MOTOR_COLLECTOR, collectorState);
