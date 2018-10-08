@@ -2,3 +2,4 @@
 
 char direction = DIRECTION_NORMAL;
 char collectorState = COLLECTOR_STOP;
+float motorSpeed = MOTORSPEED_NORMAL;

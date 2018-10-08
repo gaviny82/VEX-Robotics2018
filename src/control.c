@@ -1,13 +1,15 @@
 #include "control.h"
 #include "config.h"
 
-extern void setMotorsL(signed char speed) {
+extern void setMotorsL(signed char value) {
+	char speed = value * motorSpeed * direction;
 	DBG_PRINT("setMotorsL: %d \n", speed);
 	motorSet(MOTOR_L_FRONT, speed);
 	motorSet(MOTOR_L_BACK, speed);
 	motorSet(MOTOR_2L, speed);
 }
-extern void setMotorsR(signed char speed) {
+extern void setMotorsR(signed char value) {
+	char speed = value * motorSpeed * direction;
 	DBG_PRINT("setMotorsR: %d \n", speed);
 	motorSet(MOTOR_R_FRONT, speed);
 	motorSet(MOTOR_R_BACK, -speed);

@@ -30,8 +30,8 @@ Encoder rightEncoder;
 //joystick
 #define MASTER_JOYSTICK 1
 
-#define JOYSTICK_ANGULAR_CH 1
-#define JOYSTICK_VERTICAL_CH 3
+#define JOYSTICK_ANGULAR_CH 3
+#define JOYSTICK_VERTICAL_CH 1
 #define JOYSTICK_THROT_START 10
 
 
@@ -50,11 +50,16 @@ Encoder rightEncoder;
 
 #define DIRECTION_NORMAL 1
 #define DIRECTION_REVERSE -1
-char direction;
+extern char direction;
 
 #define COLLECTOR_STOP 0
 #define COLLECTOR_REVERSE -127
 #define COLLECTOR_ON 127
-char collectorState;
+extern char collectorState;
+
+#define MOTORSPEED_HIGH 1.0
+#define MOTORSPEED_NORMAL 0.75
+#define MOTORSPEED_LOW 0.25
+extern float motorSpeed;
 
 #endif
