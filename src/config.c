@@ -1,5 +1,5 @@
 #include "config.h"
 
-char direction = DIRECTION_NORMAL;
+bool isReversed = false;
 char collectorState = COLLECTOR_STOP;
 float motorSpeed = MOTORSPEED_NORMAL;

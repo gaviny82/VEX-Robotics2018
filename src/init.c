@@ -17,7 +17,7 @@
 
 
 void initializeIO() {
-	pinMode(DIGITAL_LIMIT_SWITCH_PIN, INPUT);
+	//pinMode(DIGITAL_LIMIT_SWITCH_PIN, INPUT);
 	/* Init Debug Uart*/
 	usartInit(uart1, 9600, SERIAL_8N1);
 	DBG_PRINT("INFO: initializeIO() Done \n");
@@ -26,11 +26,13 @@ void initializeIO() {
 void initialize() {
 	leftEncoder = encoderInit(ENCODER_LEFT_TOP, ENCODER_LEFT_BOTTOM, false);
 	rightEncoder = encoderInit(ENCODER_RIGHT_TOP, ENCODER_RIGHT_BOTTOM, false);
+
 	resetConfig();
 	DBG_PRINT("INFO: initialize() Done \n");
 }
 
 void resetConfig() {
-	direction = DIRECTION_NORMAL;
+	isReversed=false;
 	collectorState = COLLECTOR_STOP;
+	motorSpeed = MOTORSPEED_NORMAL;
 }
