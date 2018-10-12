@@ -68,12 +68,48 @@ void callback_normalSpeed() {
 }
 
 void operatorControl() {
+#if 0
+while (true) {
+if(joystickGetDigital(MASTER_JOYSTICK, 8, JOY_UP)){
+	motorSet(MOTOR_L_FRONT, 127);
+} else {
+	motorSet(MOTOR_L_FRONT, 0);
+}
+if(joystickGetDigital(MASTER_JOYSTICK, 8, JOY_DOWN)){
+	motorSet(MOTOR_L_BACK, 127);
+} else {
+	motorSet(MOTOR_L_BACK, 0);
+}
+if(joystickGetDigital(MASTER_JOYSTICK, 8, JOY_LEFT)){
+	motorSet(MOTOR_2L, 127);
+} else {
+	motorSet(MOTOR_2L, 0);
+}
+
+if(joystickGetDigital(MASTER_JOYSTICK, 7, JOY_UP)){
+	motorSet(MOTOR_R_FRONT, 127);
+} else {
+	motorSet(MOTOR_R_FRONT, 0);
+}
+if(joystickGetDigital(MASTER_JOYSTICK, 7, JOY_DOWN)){
+	motorSet(MOTOR_R_BACK, 127);
+} else {
+	motorSet(MOTOR_R_BACK, 0);
+}
+if(joystickGetDigital(MASTER_JOYSTICK, 7, JOY_LEFT)){
+	motorSet(MOTOR_2R, 127);
+} else {
+	motorSet(MOTOR_2R, 0);
+}
+}
+#else
+
 	//initialising
 	char vertical, angular;
 	resetConfig();
 	taskRunLoop(keynotify_loop, 20);
 	//set key events
-	set_keynotify(0, MASTER_JOYSTICK, 7, JOY_DOWN, callback_direction);//reverse
+	set_keynotify(0, MASTER_JOYSTICK, 8, JOY_UP, callback_direction);//reverse
 	set_keynotify(1, MASTER_JOYSTICK, 7, JOY_LEFT, callback_lowSpeed);//switch to low speed
 	set_keynotify(2, MASTER_JOYSTICK, 7, JOY_RIGHT, callback_normalSpeed);//switch to normal speed
 	set_keynotify(3, MASTER_JOYSTICK, 5, JOY_UP, callback_switchBallCollector);//switch on/off ball collector
@@ -121,4 +157,5 @@ void operatorControl() {
 		motorSet(MOTOR_COLLECTOR, collectorState);
 		setMovement(vertical, angular);
 	}
+	#endif
 }
