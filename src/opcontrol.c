@@ -22,6 +22,9 @@ TaskHandle taskH_shoot;
 void callback_direction() {
 	isReversed = !isReversed;
 }
+void callback_ls() {
+	ls_enabled = !ls_enabled;
+}
 void callback_switchBallCollector() {
 	if (collectorState != COLLECTOR_STOP) {
 		collectorState = COLLECTOR_STOP;
@@ -113,6 +116,7 @@ if(joystickGetDigital(MASTER_JOYSTICK, 7, JOY_LEFT)){
 	set_keynotify(1, MASTER_JOYSTICK, 7, JOY_LEFT, callback_lowSpeed);//switch to low speed
 	set_keynotify(2, MASTER_JOYSTICK, 7, JOY_RIGHT, callback_normalSpeed);//switch to normal speed
 	set_keynotify(3, MASTER_JOYSTICK, 5, JOY_UP, callback_switchBallCollector);//switch on/off ball collector
+	set_keynotify(0, MASTER_JOYSTICK, 8, JOY_RIGHT, callback_ls);//limit ls
 	//set_keynotify(2, MASTER_JOYSTICK, 8, JOY_DOWN, callback_shoot);//TODO: one key shoot
 
 	while (true) {
@@ -137,7 +141,11 @@ if(joystickGetDigital(MASTER_JOYSTICK, 7, JOY_LEFT)){
 		}
 
 		if (joystickGetDigital(MASTER_JOYSTICK, 6, JOY_UP)) {
+			if ( analogRead(1) < 4095 && ls_enabled){
+				motorSet(MOTOR_CLAW, -30);
+			} else {
 			motorSet(MOTOR_CLAW, 127);
+		}
 		}
 		else if (joystickGetDigital(MASTER_JOYSTICK, 6, JOY_DOWN)) {
 			motorSet(MOTOR_CLAW, -127);

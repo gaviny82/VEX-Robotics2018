@@ -18,19 +18,16 @@
 
 void autonomous() {
 	resetConfig();
-	#ifdef AUTONOMOUS_RED_FRONT
-
-	#else
-	#ifdef AUTONOMOUS_RED_BACK
-
-	#else
-	#ifdef AUTONOMOUS_BLUE_FRONT
-
-	#else
-	#ifdef AUTONOMOUS_BLUE_BACK
-
-	#endif
-	#endif
-	#endif
-	#endif
+	setMovement(-127,0);
+	delay(300);
+	setMovement(0,0);
+	SET_SHOOT_MOTORS(127);
+	delay(2000);
+	SET_SHOOT_MOTORS(0);
+	setMovement(-127,0);
+	delay(3000);
+	setMovement(0,0);
+  setMovement(127,0);
+	delay(1000);
+	setMovement(0,0);
 }

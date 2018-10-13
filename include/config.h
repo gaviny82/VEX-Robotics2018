@@ -3,6 +3,8 @@
 
 #include "API.h"
 
+bool ls_enabled;
+
 //motors
 #define MOTOR_L_FRONT 1
 #define MOTOR_L_BACK 9
