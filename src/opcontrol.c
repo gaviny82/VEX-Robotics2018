@@ -116,7 +116,7 @@ if(joystickGetDigital(MASTER_JOYSTICK, 7, JOY_LEFT)){
 	set_keynotify(1, MASTER_JOYSTICK, 7, JOY_LEFT, callback_lowSpeed);//switch to low speed
 	set_keynotify(2, MASTER_JOYSTICK, 7, JOY_RIGHT, callback_normalSpeed);//switch to normal speed
 	set_keynotify(3, MASTER_JOYSTICK, 5, JOY_UP, callback_switchBallCollector);//switch on/off ball collector
-	set_keynotify(0, MASTER_JOYSTICK, 8, JOY_RIGHT, callback_ls);//limit ls
+	set_keynotify(4, MASTER_JOYSTICK, 8, JOY_RIGHT, callback_ls);//limit ls
 	//set_keynotify(2, MASTER_JOYSTICK, 8, JOY_DOWN, callback_shoot);//TODO: one key shoot
 
 	while (true) {
