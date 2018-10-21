@@ -28,8 +28,8 @@ extern void setMovement(signed char vertical, signed char turning) {
 	int realVertical = vertical * (clawAsForward ? 1 : -1);
 	int left, right;
 	if(clawAsForward){
-		left = 0.7 * realVertical + 0.6 * turning;
-		right = 0.7 * realVertical - 0.6 * turning;
+		left = 0.7 * realVertical + 0.5 * turning;
+		right = 0.7 * realVertical - 0.5 * turning;
 	}else{
 		left = verticalSpeed * realVertical + turningSpeed * turning;
 		right = verticalSpeed * realVertical - turningSpeed * turning;

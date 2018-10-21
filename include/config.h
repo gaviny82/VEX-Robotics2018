@@ -28,8 +28,8 @@ Encoder rightEncoder;
 #define ENCODER_RIGHT_TOP 3
 #define ENCODER_RIGHT_BOTTOM 4
 
-//TODO:#define POTENTIALMETER_SHOOT 0
 #define POTENTIALMETER_CLAW 1
+#define POTENTIALMETER_SHOOT 2
 
 //joystick
 #define MASTER_JOYSTICK 1

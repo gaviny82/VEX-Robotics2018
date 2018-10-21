@@ -62,12 +62,12 @@ void callback_shoot() {
 
 void callback_highSpeed() {
 	DBG_PRINT("Switch to %ix speed", TURNING_LOW);
-	turningSpeed = TURNING_LOW;
+	turningSpeed = TURNING_NORMAL;
 }
 
 void callback_normalSpeed() {
 	DBG_PRINT("Switch to %ix speed", TURNING_NORMAL);
-	turningSpeed = TURNING_NORMAL;
+	turningSpeed = TURNING_LOW;
 }
 
 bool autoShoot;
@@ -112,7 +112,6 @@ if(joystickGetDigital(MASTER_JOYSTICK, 7, JOY_LEFT)){
 }
 }
 #else
-
 	//initialising
 	char vertical, angular;
 	resetConfig();
@@ -123,7 +122,9 @@ if(joystickGetDigital(MASTER_JOYSTICK, 7, JOY_LEFT)){
 	set_keynotify(2, MASTER_JOYSTICK, 7, JOY_LEFT, callback_normalSpeed);//switch to normal speed
 	set_keynotify(3, MASTER_JOYSTICK, 5, JOY_UP, callback_switchBallCollector);//switch on/off ball collector
 	set_keynotify(4, MASTER_JOYSTICK, 8, JOY_RIGHT, callback_ls);//limit ls
-	set_keynotify(5, MASTER_JOYSTICK, 7, JOY_DOWN, callback_switchAutoShoot);//limit ls
+	#ifdef GLOBAL_DEBUG
+	set_keynotify(5, MASTER_JOYSTICK, 7, JOY_DOWN, callback_switchAutoShoot);
+	#endif
 
 	//set_keynotify(2, MASTER_JOYSTICK, 8, JOY_DOWN, callback_shoot);//TODO: one key shoot
 
@@ -137,19 +138,23 @@ if(joystickGetDigital(MASTER_JOYSTICK, 7, JOY_LEFT)){
 		if (abs(angular) <= JOYSTICK_THROT_START) {
 			angular = 0;
 		}
+		//execute motors
+		motorSet(MOTOR_COLLECTOR, collectorState);
+		setMovement(vertical, angular);
 
 		//button functions pooling
+		//switch ball collector
 		if (collectorState != COLLECTOR_STOP) {
 			if (joystickGetDigital(MASTER_JOYSTICK, 5, JOY_DOWN)) {
 				collectorState = COLLECTOR_REVERSE;
-			}
-			else {
+			} else {
 				collectorState = COLLECTOR_ON;
 			}
 		}
 
+		//rotate claw
 		if (joystickGetDigital(MASTER_JOYSTICK, 6, JOY_UP)) {
-			if ( analogRead(POTENTIALMETER_CLAW) < 4095 && ls_enabled){
+			if (analogRead(POTENTIALMETER_CLAW) < 4095 && ls_enabled){
 				motorSet(MOTOR_CLAW, -30);
 			} else {
 				motorSet(MOTOR_CLAW, 127);
@@ -157,21 +162,16 @@ if(joystickGetDigital(MASTER_JOYSTICK, 7, JOY_LEFT)){
 		}
 		else if (joystickGetDigital(MASTER_JOYSTICK, 6, JOY_DOWN)) {
 			motorSet(MOTOR_CLAW, -127);
-		}
-		else {
+		} else {
 			motorSet(MOTOR_CLAW, 0);
 		}
 
+		//manual shoot
 		if (joystickGetDigital(MASTER_JOYSTICK, 8, JOY_DOWN)) {
 			SET_SHOOT_MOTORS(127);
-		}
-		else {
+		} else {
 			SET_SHOOT_MOTORS(autoShoot ? 30 : 0);
 		}
-
-		//execute motors
-		motorSet(MOTOR_COLLECTOR, collectorState);
-		setMovement(vertical, angular);
 	}
 	#endif
 }
