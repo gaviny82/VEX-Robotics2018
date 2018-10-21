@@ -1,5 +1,9 @@
 #include "config.h"
 
-bool isReversed;
+//motion config
+bool clawAsForward = false;
+float turningSpeed = TURNING_NORMAL;
+float verticalSpeed =  SPEED_NORMAL;
+
+//ball collector states
 char collectorState = COLLECTOR_STOP;
-float motorSpeed = MOTORSPEED_NORMAL;

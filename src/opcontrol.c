@@ -19,8 +19,8 @@
 TaskHandle taskH_shoot;
 
 /* Callback function for direction */
-void callback_direction() {
-	isReversed = !isReversed;
+void callback_reverse() {
+	clawAsForward = !clawAsForward;
 }
 void callback_ls() {
 	ls_enabled = !ls_enabled;
@@ -60,14 +60,20 @@ void callback_shoot() {
 		taskResume(taskH_shoot);
 }
 
-void callback_lowSpeed() {
-	DBG_PRINT("Switch to %ix speed", MOTORSPEED_LOW);
-	motorSpeed = MOTORSPEED_LOW;
+void callback_highSpeed() {
+	DBG_PRINT("Switch to %ix speed", TURNING_LOW);
+	turningSpeed = TURNING_LOW;
 }
 
 void callback_normalSpeed() {
-	DBG_PRINT("Switch to %ix speed", MOTORSPEED_NORMAL);
-	motorSpeed = MOTORSPEED_NORMAL;
+	DBG_PRINT("Switch to %ix speed", TURNING_NORMAL);
+	turningSpeed = TURNING_NORMAL;
+}
+
+bool autoShoot;
+void callback_switchAutoShoot(){
+	DBG_PRINT("Auto shoot switched");
+	autoShoot =! autoShoot;
 }
 
 void operatorControl() {
@@ -112,11 +118,13 @@ if(joystickGetDigital(MASTER_JOYSTICK, 7, JOY_LEFT)){
 	resetConfig();
 	taskRunLoop(keynotify_loop, 20);
 	//set key events
-	set_keynotify(0, MASTER_JOYSTICK, 8, JOY_UP, callback_direction);//reverse
-	set_keynotify(1, MASTER_JOYSTICK, 7, JOY_LEFT, callback_lowSpeed);//switch to low speed
-	set_keynotify(2, MASTER_JOYSTICK, 7, JOY_RIGHT, callback_normalSpeed);//switch to normal speed
+	set_keynotify(0, MASTER_JOYSTICK, 8, JOY_UP, callback_reverse);//reverse
+	set_keynotify(1, MASTER_JOYSTICK, 7, JOY_RIGHT, callback_highSpeed);//switch to low speed
+	set_keynotify(2, MASTER_JOYSTICK, 7, JOY_LEFT, callback_normalSpeed);//switch to normal speed
 	set_keynotify(3, MASTER_JOYSTICK, 5, JOY_UP, callback_switchBallCollector);//switch on/off ball collector
 	set_keynotify(4, MASTER_JOYSTICK, 8, JOY_RIGHT, callback_ls);//limit ls
+	set_keynotify(5, MASTER_JOYSTICK, 7, JOY_DOWN, callback_switchAutoShoot);//limit ls
+
 	//set_keynotify(2, MASTER_JOYSTICK, 8, JOY_DOWN, callback_shoot);//TODO: one key shoot
 
 	while (true) {
@@ -141,11 +149,11 @@ if(joystickGetDigital(MASTER_JOYSTICK, 7, JOY_LEFT)){
 		}
 
 		if (joystickGetDigital(MASTER_JOYSTICK, 6, JOY_UP)) {
-			if ( analogRead(1) < 4095 && ls_enabled){
+			if ( analogRead(POTENTIALMETER_CLAW) < 4095 && ls_enabled){
 				motorSet(MOTOR_CLAW, -30);
 			} else {
-			motorSet(MOTOR_CLAW, 127);
-		}
+				motorSet(MOTOR_CLAW, 127);
+			}
 		}
 		else if (joystickGetDigital(MASTER_JOYSTICK, 6, JOY_DOWN)) {
 			motorSet(MOTOR_CLAW, -127);
@@ -158,7 +166,7 @@ if(joystickGetDigital(MASTER_JOYSTICK, 7, JOY_LEFT)){
 			SET_SHOOT_MOTORS(127);
 		}
 		else {
-			SET_SHOOT_MOTORS(0);
+			SET_SHOOT_MOTORS(autoShoot ? 30 : 0);
 		}
 
 		//execute motors

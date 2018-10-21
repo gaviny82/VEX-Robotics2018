@@ -32,8 +32,8 @@ void initialize() {
 }
 
 void resetConfig() {
-	isReversed=false;
+	clawAsForward = false;
 	collectorState = COLLECTOR_STOP;
-	motorSpeed = MOTORSPEED_NORMAL;
+	turningSpeed = TURNING_NORMAL;
 	ls_enabled = true;
 }

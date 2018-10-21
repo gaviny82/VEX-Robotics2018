@@ -1,7 +1,7 @@
 #ifndef KEYNOTIFY_H_
 #define KEYNOTIFY_H_
 
-#define MAX_NOTIFY 5
+#define MAX_NOTIFY 10
 
 typedef void (*keynotify_cb_t)();
 
