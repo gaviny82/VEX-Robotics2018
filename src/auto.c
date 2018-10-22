@@ -12,7 +12,7 @@
 
 #include "main.h"
 #include "pid.h"
-#include "control.h"
+#include "motion.h"
 #include "config.h"
 #include "init.h"
 

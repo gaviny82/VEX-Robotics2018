@@ -39,8 +39,14 @@ Encoder rightEncoder;
 #define JOYSTICK_THROT_START 10
 
 
-//configurations
+//debug
 #define GLOBAL_DEBUG
+
+#ifdef GLOBAL_DEBUG
+#define DBG_PRINT(...) do{ fprintf(uart1,  __VA_ARGS__ ); } while( false )
+#else
+#define DBG_PRINT(...) do{ } while ( false )
+#endif
 
 //autonomous positions
 #define AUTONOMOUS_RED_FRONT

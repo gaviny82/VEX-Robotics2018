@@ -12,111 +12,17 @@
 
 #include "main.h"
 #include "init.h"
-#include "control.h"
+#include "motion.h"
+#include "shoot.h"
 #include "config.h"
 #include "keynotify.h"
 
-TaskHandle taskH_shoot;
-
-/* Callback function for direction */
-void callback_reverse() {
-	clawAsForward = !clawAsForward;
-}
-void callback_ls() {
-	ls_enabled = !ls_enabled;
-}
-void callback_switchBallCollector() {
-	if (collectorState != COLLECTOR_STOP) {
-		collectorState = COLLECTOR_STOP;
-	}
-	else {
-		collectorState = COLLECTOR_ON;
-	}
-}
-
-void shoot_task() {
-	unsigned long start;
-	start = millis();
-
-	motorSet(MOTOR_SHOOT1, 127);
-	motorSet(MOTOR_SHOOT2, 127);
-
-	for (; (start - millis()) >= 2000;) delay(1);
-	/* TODO: Use analog encoder to control the rotation of gears */
-
-	motorSet(MOTOR_SHOOT1, 0);
-	motorSet(MOTOR_SHOOT2, 0);
-	taskSuspend(NULL);
-}
-
-
-void callback_shoot() {
-	DBG_PRINT("Shoot Callback.");
-	/* We're going to create a task here since it should not be blocked */
-	if (!taskH_shoot)
-		taskH_shoot = taskRunLoop(shoot_task, 0); /* Don't know if task will
-																									delete itself by the end */
-	if (taskGetState(taskH_shoot) != TASK_RUNNING)
-		taskResume(taskH_shoot);
-}
-
-void callback_highSpeed() {
-	DBG_PRINT("Switch to %ix speed", TURNING_LOW);
-	turningSpeed = TURNING_NORMAL;
-}
-
-void callback_normalSpeed() {
-	DBG_PRINT("Switch to %ix speed", TURNING_NORMAL);
-	turningSpeed = TURNING_LOW;
-}
-
-bool autoShoot;
-void callback_switchAutoShoot(){
-	DBG_PRINT("Auto shoot switched");
-	autoShoot =! autoShoot;
-}
-
 void operatorControl() {
-#if 0
-while (true) {
-if(joystickGetDigital(MASTER_JOYSTICK, 8, JOY_UP)){
-	motorSet(MOTOR_L_FRONT, 127);
-} else {
-	motorSet(MOTOR_L_FRONT, 0);
-}
-if(joystickGetDigital(MASTER_JOYSTICK, 8, JOY_DOWN)){
-	motorSet(MOTOR_L_BACK, 127);
-} else {
-	motorSet(MOTOR_L_BACK, 0);
-}
-if(joystickGetDigital(MASTER_JOYSTICK, 8, JOY_LEFT)){
-	motorSet(MOTOR_2L, 127);
-} else {
-	motorSet(MOTOR_2L, 0);
-}
-
-if(joystickGetDigital(MASTER_JOYSTICK, 7, JOY_UP)){
-	motorSet(MOTOR_R_FRONT, 127);
-} else {
-	motorSet(MOTOR_R_FRONT, 0);
-}
-if(joystickGetDigital(MASTER_JOYSTICK, 7, JOY_DOWN)){
-	motorSet(MOTOR_R_BACK, 127);
-} else {
-	motorSet(MOTOR_R_BACK, 0);
-}
-if(joystickGetDigital(MASTER_JOYSTICK, 7, JOY_LEFT)){
-	motorSet(MOTOR_2R, 127);
-} else {
-	motorSet(MOTOR_2R, 0);
-}
-}
-#else
 	//initialising
 	char vertical, angular;
 	resetConfig();
 	taskRunLoop(keynotify_loop, 20);
-	//set key events
+	//register key events
 	set_keynotify(0, MASTER_JOYSTICK, 8, JOY_UP, callback_reverse);//reverse
 	set_keynotify(1, MASTER_JOYSTICK, 7, JOY_RIGHT, callback_highSpeed);//switch to low speed
 	set_keynotify(2, MASTER_JOYSTICK, 7, JOY_LEFT, callback_normalSpeed);//switch to normal speed
@@ -129,20 +35,19 @@ if(joystickGetDigital(MASTER_JOYSTICK, 7, JOY_LEFT)){
 	//set_keynotify(2, MASTER_JOYSTICK, 8, JOY_DOWN, callback_shoot);//TODO: one key shoot
 
 	while (true) {
+		//motion control
 		vertical = joystickGetAnalog(MASTER_JOYSTICK, JOYSTICK_VERTICAL_CH);
 		angular = joystickGetAnalog(MASTER_JOYSTICK, JOYSTICK_ANGULAR_CH);
-		/* JOYSTICK_THROT to prevent errors */
+
 		if (abs(vertical) <= JOYSTICK_THROT_START) {
 			vertical = 0;
 		}
 		if (abs(angular) <= JOYSTICK_THROT_START) {
 			angular = 0;
 		}
-		//execute motors
 		motorSet(MOTOR_COLLECTOR, collectorState);
 		setMovement(vertical, angular);
 
-		//button functions pooling
 		//switch ball collector
 		if (collectorState != COLLECTOR_STOP) {
 			if (joystickGetDigital(MASTER_JOYSTICK, 5, JOY_DOWN)) {
@@ -173,5 +78,4 @@ if(joystickGetDigital(MASTER_JOYSTICK, 7, JOY_LEFT)){
 			SET_SHOOT_MOTORS(autoShoot ? 30 : 0);
 		}
 	}
-	#endif
 }
