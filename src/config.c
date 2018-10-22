@@ -7,3 +7,11 @@ float verticalSpeed =  SPEED_NORMAL;
 
 //ball collector states
 char collectorState = COLLECTOR_STOP;
+
+
+void resetConfig() {
+	clawAsForward = false;
+	collectorState = COLLECTOR_STOP;
+	turningSpeed = TURNING_NORMAL;
+	ls_enabled = true;
+}

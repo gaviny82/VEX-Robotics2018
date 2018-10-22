@@ -5,6 +5,11 @@
 
 bool ls_enabled;
 
+/*
+* reset the direction and speed of motion and stop the collector
+*/
+extern void resetConfig();
+
 //motors
 #define MOTOR_L_FRONT 1
 #define MOTOR_L_BACK 9
@@ -39,8 +44,14 @@ Encoder rightEncoder;
 #define JOYSTICK_THROT_START 10
 
 
-//configurations
+//debug
 #define GLOBAL_DEBUG
+
+#ifdef GLOBAL_DEBUG
+#define DBG_PRINT(...) do{ fprintf(uart1,  __VA_ARGS__ ); } while( false )
+#else
+#define DBG_PRINT(...) do{ } while ( false )
+#endif
 
 //autonomous positions
 #define AUTONOMOUS_RED_FRONT

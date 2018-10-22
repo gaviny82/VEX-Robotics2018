@@ -38,8 +38,10 @@ void pid_init(pidctrl pid, float Kp, float Ki, float Kd);
 int pid_process(pidctrl pid, int posInput, int posAct);
 
 
+//TODO: use pid to control the distance moved
 void goForward(int distance);
 
+//TODO: use pid to control the angle rotated
 void rotate(int degree);
 
 

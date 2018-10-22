@@ -10,11 +10,10 @@
  * obtained from http://sourceforge.net/projects/freertos/files/ or on request.
  */
 
-#include "main.h"
+#include "API.h"
 #include "pid.h"
-#include "control.h"
+#include "motion.h"
 #include "config.h"
-#include "init.h"
 
 void autonomous() {
 	resetConfig();

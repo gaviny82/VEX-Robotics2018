@@ -12,10 +12,7 @@
 
 #include "main.h"
 #include "API.h"
-#include "control.h"
 #include "config.h"
-#include "init.h"
-
 
 void initializeIO() {
 	/* Init Debug Uart*/
@@ -26,14 +23,8 @@ void initializeIO() {
 void initialize() {
 	leftEncoder = encoderInit(ENCODER_LEFT_TOP, ENCODER_LEFT_BOTTOM, false);
 	rightEncoder = encoderInit(ENCODER_RIGHT_TOP, ENCODER_RIGHT_BOTTOM, false);
-	pinMode(13,  INPUT_ANALOG);
+	pinMode(13, INPUT_ANALOG);
+	pinMode(14, INPUT_ANALOG);
 	resetConfig();
 	DBG_PRINT("INFO: initialize() Done \n");
-}
-
-void resetConfig() {
-	clawAsForward = false;
-	collectorState = COLLECTOR_STOP;
-	turningSpeed = TURNING_NORMAL;
-	ls_enabled = true;
 }
