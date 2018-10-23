@@ -43,6 +43,13 @@ void callback_reverse() {
 	clawAsForward = !clawAsForward;
 }
 
+<<<<<<< HEAD:src/motion.c
+=======
+void callback_ls() {
+	ls_enabled = !ls_enabled;
+}
+
+>>>>>>> 271a7dd5ba928b240096753c49116678a75ba644:src/motion.c
 void callback_switchBallCollector() {
 	if (collectorState != COLLECTOR_STOP) {
 		collectorState = COLLECTOR_STOP;
