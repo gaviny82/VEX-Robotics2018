@@ -21,7 +21,6 @@ extern void setMotorsR(signed char speed);
 */
 extern void setMovement(signed char vertical, signed char angular);
 
-<<<<<<< HEAD:include/motion.h
 /*
 * To reverse the direction of the robot
 */
@@ -36,16 +35,6 @@ extern void callback_switchBallCollector();
 * switch to high/normal speed
 */
 extern void callback_highSpeed();
-=======
-extern void callback_reverse();
-
-extern void callback_ls();
-
-extern void callback_switchBallCollector();
-
-extern void callback_highSpeed();
-
->>>>>>> 271a7dd5ba928b240096753c49116678a75ba644:include/motion.h
 extern void callback_normalSpeed();
 
 #define SET_SHOOT_MOTORS(...) do { motorSet(MOTOR_SHOOT1, __VA_ARGS__); motorSet(MOTOR_SHOOT2, __VA_ARGS__); } while (false)

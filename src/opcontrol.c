@@ -10,24 +10,16 @@
  * obtained from http://sourceforge.net/projects/freertos/files/ or on request.
  */
 
-<<<<<<< HEAD
 #include "API.h"
-=======
-#include "main.h"
-#include "init.h"
->>>>>>> 271a7dd5ba928b240096753c49116678a75ba644
 #include "motion.h"
 #include "shoot.h"
 #include "config.h"
 #include "keynotify.h"
 
-<<<<<<< HEAD
 void callback_ls() {
 	ls_enabled = !ls_enabled;
 }
 
-=======
->>>>>>> 271a7dd5ba928b240096753c49116678a75ba644
 void operatorControl() {
 	//initialising
 	char vertical, angular;

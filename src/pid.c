@@ -1,3 +1,8 @@
+/** @file pid.c
+ * @brief File for PID control
+ *
+ * This file should contain PID algorithms
+ */
 #include "pid.h"
 #include "math.h"
 #include "config.h"
@@ -27,15 +32,21 @@ int pid_process(pidctrl pid, int posInput, int posAct)
 	pid.nDiffer = pid.nErr_last - pid.nErr;
 	pid.nPowerOut = pid.Kp*pid.nErr + pid.Ki*pid.nIntegral + pid.Kd*pid.nDiffer;
 	pid.nErr_last = pid.nErr;
-	return (int)pid.nPowerOut; /* Save a little bit memory */
+	return (int)pid.nPowerOut;
 }
 
 void goForward(int distance){
-//TODO: reset encoders, then start pid to move to target postion
+	encoderReset(leftEncoder);
+	encoderReset(rightEncoder);
+	
+//TODO: start pid to move to target postion
 }
 
 void rotate(int degree){
-//TODO: reset encoders, then rotate the robot about the center
+	encoderReset(leftEncoder);
+	encoderReset(rightEncoder);
+
+//TODO: rotate the robot about the center
 }
 
 

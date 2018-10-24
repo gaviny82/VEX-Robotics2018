@@ -1,3 +1,8 @@
+/** @file shoot.c
+ * @brief File for shooting
+ *
+ * This file should contain functions to shoot the ball.
+ */
 #include "shoot.h"
 #include "main.h"
 #include "motion.h"

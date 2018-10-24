@@ -1,3 +1,8 @@
+/** @file keynotify.c
+ * @brief File for key events
+ *
+ * This file should contain the detection of key clicked events.
+ */
 #include "API.h"
 #include "keynotify.h"
 

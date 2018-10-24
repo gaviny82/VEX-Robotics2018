@@ -1,3 +1,8 @@
+/** @file motion.c
+ * @brief File for motion of the robot
+ *
+ * This file should contain motor control functions and selection of motor speed levels.
+ */
 #include "motion.h"
 #include "config.h"
 
@@ -43,13 +48,6 @@ void callback_reverse() {
 	clawAsForward = !clawAsForward;
 }
 
-<<<<<<< HEAD:src/motion.c
-=======
-void callback_ls() {
-	ls_enabled = !ls_enabled;
-}
-
->>>>>>> 271a7dd5ba928b240096753c49116678a75ba644:src/motion.c
 void callback_switchBallCollector() {
 	if (collectorState != COLLECTOR_STOP) {
 		collectorState = COLLECTOR_STOP;

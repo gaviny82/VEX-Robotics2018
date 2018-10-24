@@ -13,10 +13,6 @@
 #include "main.h"
 #include "API.h"
 #include "config.h"
-<<<<<<< HEAD
-=======
-#include "init.h"
->>>>>>> 271a7dd5ba928b240096753c49116678a75ba644
 
 void initializeIO() {
 	/* Init Debug Uart*/
