@@ -1,9 +1,15 @@
+/** @file keynotify.c
+ * @brief File for key events
+ *
+ * This file should contain the detection of key clicked events.
+ */
 #include "API.h"
 #include "keynotify.h"
 
 void set_keynotify(int num, unsigned char joystick, unsigned char buttonGroup, unsigned char button, keynotify_cb_t callback) {
     if (num < 0 || num > MAX_NOTIFY)
       return;
+    keynotify[num].isPrevDown = false;
     keynotify[num].joystick = joystick;
     keynotify[num].buttonGroup = buttonGroup;
     keynotify[num].button = button;
@@ -25,7 +31,7 @@ void keynotify_loop() {
                     keynotify[i].buttonGroup , keynotify[i].button);
 
     /* Try situations */
-    if(current && keynotify[i].isPrevDown) {
+    if(!current && keynotify[i].isPrevDown) {
       keynotify[i].isPrevDown = false;
       keynotify[i].callback();
     } else if (current) {

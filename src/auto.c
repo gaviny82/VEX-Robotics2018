@@ -10,12 +10,32 @@
  * obtained from http://sourceforge.net/projects/freertos/files/ or on request.
  */
 
-#include "main.h"
+#include "API.h"
 #include "pid.h"
-#include "control.h"
+#include "motion.h"
 #include "config.h"
-#include "init.h"
 
 void autonomous() {
 	resetConfig();
+#if 0
+	setMovement(-127,0);
+	delay(300);
+	setMovement(0,0);
+	SET_SHOOT_MOTORS(127);
+	delay(2000);
+	SET_SHOOT_MOTORS(0);
+	setMovement(-127,0);
+	delay(3000);
+	setMovement(0,0);
+  setMovement(127,0);
+	delay(1000);
+	setMovement(0,0);
+#else
+SET_SHOOT_MOTORS(127);
+delay(2000);
+SET_SHOOT_MOTORS(0);
+setMovement(127,0);
+delay(1000);
+setMovement(0,0);
+#endif
 }

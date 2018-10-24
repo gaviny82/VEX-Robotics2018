@@ -1,7 +1,12 @@
+/** @file pid.c
+ * @brief File for PID control
+ *
+ * This file should contain PID algorithms
+ */
 #include "pid.h"
 #include "math.h"
 #include "config.h"
-#include "control.h"
+#include "motion.h"
 #include "API.h"
 
 void pid_init(pidctrl pid, float Kp, float Ki, float Kd)
@@ -30,6 +35,20 @@ int pid_process(pidctrl pid, int posInput, int posAct)
 	return (int)pid.nPowerOut;
 }
 
+void goForward(int distance){
+	encoderReset(leftEncoder);
+	encoderReset(rightEncoder);
+	
+//TODO: start pid to move to target postion
+}
+
+void rotate(int degree){
+	encoderReset(leftEncoder);
+	encoderReset(rightEncoder);
+
+//TODO: rotate the robot about the center
+}
+
 
 TaskHandle leftPIDTask;
 static void leftPIDLoop(void *tgt) {
@@ -37,7 +56,7 @@ static void leftPIDLoop(void *tgt) {
 	struct _pidctrl pid_left;
 	int pid_output, pid_input;
 	encoderReset(leftEncoder);
-	pid_init(pid_left, 1.28, 0.1, 0.001);
+	pid_init(pid_left, 1.28, 0.1, 0.001); /* Left wheel PID params here */
 
 	while (true) {
 		pid_input = encoderGet(leftEncoder);
@@ -73,7 +92,7 @@ static void rightPIDLoop(void *tgt) {
 	struct _pidctrl pid_right;
 	int pid_output, pid_input;
 	encoderReset(rightEncoder);
-	pid_init(pid_right, 1.28, 0.1, 0.001);
+	pid_init(pid_right, 1.28, 0.1, 0.001);  /* Right wheel PID params here */
 
 	while (true) {
 		pid_input = encoderGet(rightEncoder);

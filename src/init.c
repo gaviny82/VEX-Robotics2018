@@ -11,24 +11,20 @@
  */
 
 #include "main.h"
-#include "control.h"
+#include "API.h"
 #include "config.h"
-#include "init.h"
-
 
 void initializeIO() {
-	pinMode(DIGITAL_LIMIT_SWITCH_PIN, INPUT);
+	/* Init Debug Uart*/
+	usartInit(uart1, 9600, SERIAL_8N1);
 	DBG_PRINT("INFO: initializeIO() Done \n");
 }
 
 void initialize() {
 	leftEncoder = encoderInit(ENCODER_LEFT_TOP, ENCODER_LEFT_BOTTOM, false);
 	rightEncoder = encoderInit(ENCODER_RIGHT_TOP, ENCODER_RIGHT_BOTTOM, false);
+	pinMode(13, INPUT_ANALOG);
+	pinMode(14, INPUT_ANALOG);
 	resetConfig();
 	DBG_PRINT("INFO: initialize() Done \n");
-}
-
-void resetConfig() {
-	direction = DIRECTION_NORMAL;
-	collectorState = COLLECTOR_STOP;
 }
