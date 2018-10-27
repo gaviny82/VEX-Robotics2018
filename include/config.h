@@ -77,11 +77,11 @@ extern float verticalSpeed;
 extern TaskHandle leftPIDTask;
 extern TaskHandle rightPIDTask;
 
-extern void startLeftPID(int target);
+extern void startLeftPID(PIDTaskArg pid);
 
 extern void stopLeftPID();
 
-extern void startRightPID(int target);
+extern void startRightPID(PIDTaskArg pid);
 
 extern void stopRightPID();
 
