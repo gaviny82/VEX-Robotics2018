@@ -44,8 +44,8 @@ void goForward(int distance, unsigned char speed, signed int estimateTime);
 void rotate(int degree, unsigned char speed, signed int estimateTime);
 
 
-static void leftPIDLoop(void *tgt);
+extern void leftPIDLoop(void *tgt);
 
-static void rightPIDLoop(void *tgt);
+extern void rightPIDLoop(void *tgt);
 
 #endif

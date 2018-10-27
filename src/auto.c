@@ -18,7 +18,7 @@
 
 void autonomous() {
 	resetConfig();
-#if 0
+/*#if 0
 	setMovement(-127, 0);
 	delay(300);
 	setMovement(0, 0);
@@ -38,5 +38,7 @@ void autonomous() {
 	setMovement(127, 0);
 	delay(1000);
 	setMovement(0, 0);
-#endif
+#endif*/
+DBG_PRINT("autonomous started");
+	goForward(1000, 127, 3000);
 }

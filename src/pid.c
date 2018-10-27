@@ -37,7 +37,7 @@ int pid_process(pidctrl pid, int posInput, int posAct)
 
 void goForward(int distance, unsigned char speed, signed int estimateTime){
 	startLeftPID(distance);
-	stopRightPID(distance);
+	startRightPID(distance);
 	delay(estimateTime);
 	stopLeftPID();
 	stopRightPID();
@@ -50,7 +50,7 @@ void rotate(int degree, unsigned char speed, signed int estimateTime){
 }
 
 
-static void leftPIDLoop(void *tgt) {
+void leftPIDLoop(void *tgt) {
 	int target = (int32_t)tgt;
 	struct _pidctrl pid_left;
 	int pid_output, pid_input;
@@ -66,7 +66,7 @@ static void leftPIDLoop(void *tgt) {
 	}
 }
 
-static void rightPIDLoop(void *tgt) {
+void rightPIDLoop(void *tgt) {
 	int target = (int32_t)tgt;
 	struct _pidctrl pid_right;
 	int pid_output, pid_input;
