@@ -37,6 +37,5 @@ extern void callback_switchBallCollector();
 extern void callback_highSpeed();
 extern void callback_normalSpeed();
 
-#define SET_SHOOT_MOTORS(...) do { motorSet(MOTOR_SHOOT1, __VA_ARGS__); motorSet(MOTOR_SHOOT2, __VA_ARGS__); } while (false)
 
 #endif

@@ -22,4 +22,10 @@ extern void callback_shoot();
 */
 extern void callback_switchAutoShoot();
 
+extern void shoot_out();
+
+extern void autoshoot_loop();
+
+#define SET_SHOOT_MOTORS(x) do { motorSet(MOTOR_SHOOT1, x); motorSet(MOTOR_SHOOT2, x); } while (0)
+
 #endif

@@ -25,6 +25,7 @@ void operatorControl() {
 	char vertical, angular;
 	resetConfig();
 	taskRunLoop(keynotify_loop, 20);
+	//taskRunLoop(autoshoot_loop, 0);
 	//register key events
 	set_keynotify(0, MASTER_JOYSTICK, 8, JOY_UP, callback_reverse);//reverse
 	set_keynotify(1, MASTER_JOYSTICK, 7, JOY_RIGHT, callback_highSpeed);//switch to low speed
