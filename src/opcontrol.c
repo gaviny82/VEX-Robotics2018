@@ -86,9 +86,9 @@ void operatorControl() {
 
 		//manual shoot
 		if (joystickGetDigital(MASTER_JOYSTICK, 8, JOY_DOWN)) {
-			SET_SHOOT_MOTORS(127);
+			//SET_SHOOT_MOTORS(127);
 		} else {
-			SET_SHOOT_MOTORS(autoShoot ? 30 : 0);
+			//SET_SHOOT_MOTORS(autoShoot ? 30 : 0);
 		}
 	}
 }
