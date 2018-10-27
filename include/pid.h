@@ -33,28 +33,19 @@ void pid_init(pidctrl pid, float Kp, float Ki, float Kd);
 * @param current value
 *
 * @param target value
-*
 */
 int pid_process(pidctrl pid, int posInput, int posAct);
 
 
 //TODO: use pid to control the distance moved
-void goForward(int distance);
+void goForward(int distance, unsigned char speed, signed int estimateTime);
 
 //TODO: use pid to control the angle rotated
-void rotate(int degree);
+void rotate(int degree, unsigned char speed, signed int estimateTime);
 
 
 static void leftPIDLoop(void *tgt);
 
-void startLeftPID(int target);
-
-void stopLeftPID();
-
 static void rightPIDLoop(void *tgt);
-
-void startRightPID(int target);
-
-void stopRightPID();
 
 #endif

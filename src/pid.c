@@ -35,22 +35,21 @@ int pid_process(pidctrl pid, int posInput, int posAct)
 	return (int)pid.nPowerOut;
 }
 
-void goForward(int distance){
-	encoderReset(leftEncoder);
-	encoderReset(rightEncoder);
-	
+void goForward(int distance, unsigned char speed, signed int estimateTime){
+	startLeftPID(distance);
+	stopRightPID(distance);
+	delay(estimateTime);
+	stopLeftPID();
+	stopRightPID();
 //TODO: start pid to move to target postion
 }
 
-void rotate(int degree){
-	encoderReset(leftEncoder);
-	encoderReset(rightEncoder);
+void rotate(int degree, unsigned char speed, signed int estimateTime){
 
 //TODO: rotate the robot about the center
 }
 
 
-TaskHandle leftPIDTask;
 static void leftPIDLoop(void *tgt) {
 	int target = (int32_t)tgt;
 	struct _pidctrl pid_left;
@@ -63,30 +62,10 @@ static void leftPIDLoop(void *tgt) {
 		pid_output = pid_process(pid_left, target, pid_input);
 		DBG_PRINT("encoderL: %d \n", pid_input);
 		setMotorsL((char)pid_output);
-		taskDelay(200);
+		taskDelay(50);
 	}
 }
 
-void startLeftPID(int target) {
-	if (leftPIDTask && taskGetState(leftPIDTask) == TASK_RUNNING) {
-		DBG_PRINT("PANIC: LeftPIDTask is still running! \n");
-		return;
-	}
-	encoderReset(leftEncoder);
-	leftPIDTask = taskCreate(leftPIDLoop, TASK_DEFAULT_STACK_SIZE, (void *)target, TASK_PRIORITY_DEFAULT + 1);
-}
-
-void stopLeftPID() {
-	if (!leftPIDTask) {
-		DBG_PRINT("INFO: Double deleting LeftPIDTask! \n");
-	}
-	taskDelete(leftPIDTask);
-	DBG_PRINT("task (left wheels) stopped \n");
-	setMotorsL(0);
-}
-
-
-TaskHandle rightPIDTask;
 static void rightPIDLoop(void *tgt) {
 	int target = (int32_t)tgt;
 	struct _pidctrl pid_right;
@@ -99,25 +78,6 @@ static void rightPIDLoop(void *tgt) {
 		pid_output = pid_process(pid_right, target, pid_input);
 		DBG_PRINT("encoderR: %d \n", pid_input);
 		setMotorsR((char)pid_output);
-		taskDelay(200);
+		taskDelay(50);
 	}
-}
-
-void startRightPID(int target) {
-	if (rightPIDTask && taskGetState(rightPIDTask) == TASK_RUNNING) {
-		DBG_PRINT("PANIC: rightPIDTask is still running! \n");
-		return;
-	}
-	encoderReset(rightEncoder);
-	rightPIDTask = taskCreate(rightPIDLoop, TASK_DEFAULT_STACK_SIZE, (void *)target, TASK_PRIORITY_DEFAULT + 1);
-}
-
-void stopRightPID() {
-	if (!rightPIDTask) {
-		DBG_PRINT("INFO: Double deleting rightPIDTask! \n");
-	}
-
-	taskDelete(rightPIDTask);
-	DBG_PRINT("task (right wheels) stopped \n");
-	setMotorsR(0);
 }

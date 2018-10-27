@@ -16,16 +16,27 @@
 #include "config.h"
 #include "keynotify.h"
 
+void printdeg() {
+	int deg = analogRead(2);
+	printf("PS_SHOOTdeg: %d \n", deg);
+	delay(300);
+}
+
 void callback_ls() {
 	ls_enabled = !ls_enabled;
 }
 
 void operatorControl() {
+#if 0
+	while(true){
+		printdeg();
+	}
+#endif
 	//initialising
 	char vertical, angular;
 	resetConfig();
 	taskRunLoop(keynotify_loop, 20);
-	//taskRunLoop(autoshoot_loop, 0);
+	taskRunLoop(autoshoot_loop, 20);
 	//register key events
 	set_keynotify(0, MASTER_JOYSTICK, 8, JOY_UP, callback_reverse);//reverse
 	set_keynotify(1, MASTER_JOYSTICK, 7, JOY_RIGHT, callback_highSpeed);//switch to low speed
@@ -35,8 +46,6 @@ void operatorControl() {
 	#ifdef GLOBAL_DEBUG
 	set_keynotify(5, MASTER_JOYSTICK, 7, JOY_DOWN, callback_switchAutoShoot);
 	#endif
-
-	//set_keynotify(2, MASTER_JOYSTICK, 8, JOY_DOWN, callback_shoot);//TODO: one key shoot
 
 	while (true) {
 		//motion control

@@ -39,8 +39,8 @@ Encoder rightEncoder;
 //joystick
 #define MASTER_JOYSTICK 1
 
-#define JOYSTICK_ANGULAR_CH 4
-#define JOYSTICK_VERTICAL_CH 2
+#define JOYSTICK_ANGULAR_CH 1
+#define JOYSTICK_VERTICAL_CH 3
 #define JOYSTICK_THROT_START 10
 
 
@@ -67,10 +67,22 @@ extern bool clawAsForward;
 extern char collectorState;
 
 #define TURNING_NORMAL 1
-#define TURNING_LOW 0.5
+#define TURNING_LOW 0.6
 extern float turningSpeed;
 #define SPEED_HIGH 1
 #define SPEED_NORMAL 0.9
 extern float verticalSpeed;
+
+//pid tasks
+extern TaskHandle leftPIDTask;
+extern TaskHandle rightPIDTask;
+
+extern void startLeftPID(int target);
+
+extern void stopLeftPID();
+
+extern void startRightPID(int target);
+
+extern void stopRightPID();
 
 #endif
