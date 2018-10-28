@@ -6,11 +6,11 @@
 #include "motion.h"
 #include "config.h"
 
-signed char limit127(int value){
-	if (value < -127) {
-		return -127;
-	} else if (value > 127) {
-		return 127;
+signed char limit(int limit, int value){
+	if (value < -limit) {
+		return -limit;
+	} else if (value > limit) {
+		return limit;
 	} else {
 		return (signed char)value;
 	}
@@ -38,8 +38,8 @@ void setMovement(signed char vertical, signed char turning) {
 		left = verticalSpeed * realVertical + turningSpeed * turning;
 		right = verticalSpeed * realVertical - turningSpeed * turning;
 	}
-	setMotorsL(limit127(left));
-	setMotorsR(limit127(right));
+	setMotorsL(limit(127, left));
+	setMotorsR(limit(127, right));
 }
 
 void manualmotion_loop(){
@@ -52,7 +52,6 @@ void manualmotion_loop(){
 		if (abs(angular) <= JOYSTICK_THROT_START) {
 			angular = 0;
 		}
-		motorSet(MOTOR_COLLECTOR, collectorState);
 		setMovement(vertical, angular);
 }
 

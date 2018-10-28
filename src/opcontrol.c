@@ -30,7 +30,6 @@ void operatorControl() {
 	}
 #endif
 	//initialising
-	char vertical, angular;
 	resetConfig();
 	taskRunLoop(keynotify_loop, 20);
 	//register key events
@@ -41,16 +40,9 @@ void operatorControl() {
 	set_keynotify(4, MASTER_JOYSTICK, 7, JOY_DOWN, callback_autoshoot);
 
 	while (true) {
-		
 		manualmotion_loop();
 		autoshoot_loop();
-		//switch ball collector
-		if (collectorState != COLLECTOR_STOP) {
-			if (joystickGetDigital(MASTER_JOYSTICK, 5, JOY_DOWN)) {
-				collectorState = COLLECTOR_REVERSE;
-			} else {
-				collectorState = COLLECTOR_ON;
-			}
-		}
+		bc_joy_loop();
+		bc_setmotors_loop();
 	}
 }

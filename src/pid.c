@@ -35,11 +35,11 @@ int pid_process(PIDCtrl *pid, int posInput, int posAct)
 	return (int)pid->nPowerOut;
 }
 
-void goForward(int distance, unsigned char speed, signed int estimateTime) {
+void go(int distance, unsigned char speed, signed int estimateTime) {
 	PIDCtrl arg;
 	arg.max = speed;
-	arg.target = distance;
-	pid_init(&arg, 0.3, 0, 0);
+	arg.target = -distance;
+	pid_init(&arg, 0.15, 0.05, 0);
 
 	DBG_PRINT("Going forward %d \n", distance);
 	startLeftPID(&arg);
@@ -48,27 +48,24 @@ void goForward(int distance, unsigned char speed, signed int estimateTime) {
 	DBG_PRINT("Stopped\n");
 	stopLeftPID();
 	stopRightPID();
-	//TODO: test the pid arguments
 }
 
 void rotate(int degree, unsigned char speed, signed int estimateTime) {
-	PIDCtrl args;
-	pid_init(&args, 0.8, 0.1, 0.5);
+	PIDCtrl argsL,argsR;
+	pid_init(&argsL, 0.6, 0, 0);
+	pid_init(&argsR, 0.6, 0, 0);
 
-	/*PIDTaskArg argLeft, argRight;
-	argLeft.max = speed;
-	argRight.max = speed;
-	argLeft.pid = pidArgs;
-	argRight.pid = pidArgs;
+	argsL.max = speed;
+	argsR.max = speed;
 
-	argLeft.target = degree;
-	argRight.target = -degree;
+	argsL.target = degree;
+	argsR.target = -degree;
 
-	startLeftPID(&argLeft);
-	startRightPID(&argRight);
+	startLeftPID(&argsL);
+	startRightPID(&argsR);
 	delay(estimateTime);
 	stopLeftPID();
-	stopRightPID();*/
+	stopRightPID();
 	//TODO: test the pid arguments
 }
 
@@ -78,13 +75,14 @@ void leftPIDLoop(void *tgt) {
 	/* Left wheel PID params here 1.28, 0.1, 0.001 */
 
 	while (true) {
-		pid_input = -encoderGet(rightEncoder);
+		pid_input = -encoderGet(leftEncoder);
 		pid_output = pid_process(pid, target, pid_input);
 
-		DBG_PRINT("Encoder Left: %d", pid_input);
-		//DBG_PRINT("Left: %d \n",pid_input);
-		setMotorsL((char)(pid_output > pid->max ? pid->max : pid_output));
-		taskDelay(50);
+		DBG_PRINT("Encoder Left: %d	", pid_input);
+		char motorL = limit(pid->max, pid_output);
+		DBG_PRINT("Motor Left: %d \n",motorL);
+		setMotorsL(motorL);
+		taskDelay(30);
 	}
 }
 
@@ -95,9 +93,10 @@ void rightPIDLoop(void* tgt) {
 	while (true) {
 		pid_input = -encoderGet(rightEncoder);
 		pid_output = pid_process(pid, target, pid_input);
-		DBG_PRINT("Encoder right: %d", pid_input);
-		//DBG_PRINT("Right: %d \n",pid_input);
-		setMotorsR((char)(pid_output > pid->max ? pid->max : pid_output));
-		taskDelay(50);
+		DBG_PRINT("Encoder right: %d	", pid_input);
+		char motorR = limit(pid->max, pid_output);
+		DBG_PRINT("Motor right: %d\n", motorR);
+		setMotorsR(motorR);
+		taskDelay(30);
 	}
 }

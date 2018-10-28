@@ -39,5 +39,7 @@ extern void callback_normalSpeed();
 
 extern void manualmotion_loop();
 
+extern signed char limit(int limit,int value);
+
 
 #endif

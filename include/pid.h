@@ -7,8 +7,8 @@ typedef struct {
 	int nErr;
 	int nErr_last;
 	float Kp, Ki, Kd;
-	int nIntegral;
-	int nDiffer;
+	float nIntegral;
+	float nDiffer;
 	float nPowerOut;
 	int max;
 	int target;
@@ -37,7 +37,7 @@ void pid_init(PIDCtrl *pid, float Kp, float Ki, float Kd);
 */
 int pid_process(PIDCtrl *pid, int posInput, int posAct);
 
-void goForward(int distance, unsigned char speed, signed int estimateTime);
+void go(int distance, unsigned char speed, signed int estimateTime);
 
 void rotate(int degree, unsigned char speed, signed int estimateTime);
 

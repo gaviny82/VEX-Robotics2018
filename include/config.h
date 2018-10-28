@@ -92,4 +92,8 @@ extern void startRightPID(PIDCtrl *pid);
 
 extern void stopRightPID();
 
+extern void bc_joy_loop(); 
+
+extern void bc_setmotors_loop();
+
 #endif
