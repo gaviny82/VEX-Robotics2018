@@ -39,6 +39,7 @@ void autonomous() {
 		delay(1000);
 		setMovement(0, 0);
 	#endif*/
-	DBG_PRINT("autonomous started");
+
+	DBG_PRINT("autonomous started\n");
 	goForward(1000, 127, 3000);
 }

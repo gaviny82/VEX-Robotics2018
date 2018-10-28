@@ -2,6 +2,7 @@
 #define CONFIG_H_
 
 #include "API.h"
+#include "pid.h"
 
 bool ls_enabled;
 
@@ -48,7 +49,7 @@ Encoder rightEncoder;
 #define GLOBAL_DEBUG
 
 #ifdef GLOBAL_DEBUG
-#define DBG_PRINT(...) do{ fprintf(uart1,  __VA_ARGS__ ); } while( false )
+#define DBG_PRINT(...) do{ printf(__VA_ARGS__ ); } while( false )
 #else
 #define DBG_PRINT(...) do{ } while ( false )
 #endif
@@ -77,17 +78,17 @@ extern float verticalSpeed;
 #define LOW_POSITION 1
 #define HOLD_POSITION 2
 
-int claw_position = FREE_POSITION;
+int claw_position;
 
 //pid tasks
 extern TaskHandle leftPIDTask;
 extern TaskHandle rightPIDTask;
 
-extern void startLeftPID(PIDTaskArg pid);
+extern void startLeftPID(PIDCtrl *pid);
 
 extern void stopLeftPID();
 
-extern void startRightPID(PIDTaskArg pid);
+extern void startRightPID(PIDCtrl *pid);
 
 extern void stopRightPID();
 

@@ -37,7 +37,6 @@ void operatorControl() {
 	char vertical, angular;
 	resetConfig();
 	taskRunLoop(keynotify_loop, 20);
-	taskRunLoop(autoshoot_loop, 20);
 	//register key events
 	set_keynotify(0, MASTER_JOYSTICK, 8, JOY_UP, callback_reverse);//reverse
 	set_keynotify(1, MASTER_JOYSTICK, 7, JOY_RIGHT, callback_highSpeed);//switch to low speed
@@ -45,7 +44,7 @@ void operatorControl() {
 	set_keynotify(3, MASTER_JOYSTICK, 5, JOY_UP, callback_switchBallCollector);//switch on/off ball collector
 	set_keynotify(4, MASTER_JOYSTICK, 8, JOY_RIGHT, callback_ls);//limit ls
 	#ifdef GLOBAL_DEBUG
-	set_keynotify(5, MASTER_JOYSTICK, 7, JOY_DOWN, callback_switchAutoShoot);
+	set_keynotify(5, MASTER_JOYSTICK, 7, JOY_DOWN, shoot_out);
 	#endif
 
 	while (true) {
@@ -62,6 +61,7 @@ void operatorControl() {
 		motorSet(MOTOR_COLLECTOR, collectorState);
 		setMovement(vertical, angular);
 
+		autoshoot_loop();
 		//switch ball collector
 		if (collectorState != COLLECTOR_STOP) {
 			if (joystickGetDigital(MASTER_JOYSTICK, 5, JOY_DOWN)) {
@@ -71,7 +71,7 @@ void operatorControl() {
 			}
 		}
 
-		claw_control();
+		//claw_control();
 
 		//manual shoot
 		if (joystickGetDigital(MASTER_JOYSTICK, 8, JOY_DOWN)) {

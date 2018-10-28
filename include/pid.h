@@ -10,13 +10,9 @@ typedef struct {
 	int nIntegral;
 	int nDiffer;
 	float nPowerOut;
-} PIDCtrl;
-
-typedef struct {
-	PIDCtrl pid;
-	char max;
+	int max;
 	int target;
-} PIDTaskArg;
+} PIDCtrl;
 
 /*
 * initialize a new pid control

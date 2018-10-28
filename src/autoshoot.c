@@ -5,7 +5,7 @@
 #include "shoot.h"
 
 #define POSITION_NULL 1550
-#define POSITION_READY 2000
+#define POSITION_READY 2100
 
 #define MOTOR_FIX_CIRCUIT 30
 #define MOTOR_SHOOT_CIRCUIT 127
@@ -22,16 +22,27 @@ int shoot_stage = 0;
 #define STAGE_FINALL_KICK 2
 
 void shoot_out() {
-	if (!shoot_sig)
+	printf("call shoot!\n");
+	if (shoot_stage == STAGE_ZERO_POSITION)
 		shoot_sig = SIG_SHOOT;
 }
 
-void autoshoot_loop(void *param) {
+void autoshoot_loop() {
 		int deg = analogRead(POTENTIALMETER_SHOOT);
+		if(shoot_sig == SIG_SHOOT && shoot_stage == STAGE_ZERO_POSITION){
+		printf("shoot!!!!!\n");
+			shoot_sig = SIG_STDBY;
+			SET_SHOOT_MOTORS(MOTOR_SHOOT_CIRCUIT);
+			shoot_stage = STAGE_FINALL_KICK;
+			return;
+		}
+
+		if(shoot_stage == STAGE_FINALL_KICK && deg > 1600)
+			return;
 
 		if (deg > POSITION_READY - 20) {
 			printf("ready! degree: %d \n", deg);
-			shoot_stage = STAGE_FINALL_KICK;
+			shoot_stage = STAGE_ZERO_POSITION;
 			SET_SHOOT_MOTORS(MOTOR_FIX_CIRCUIT);
 		}else{
 			printf("pulling! degree: %d\n", deg);

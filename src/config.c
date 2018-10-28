@@ -3,6 +3,8 @@
  *
  * This file should contain the global variables and configuration to the robot
  */
+
+ #include "API.h"
  #include "config.h"
  #include "pid.h"
  #include "motion.h"
@@ -27,13 +29,13 @@ void resetConfig() {
 TaskHandle leftPIDTask;
 TaskHandle rightPIDTask;
 
-void startRightPID(PIDTaskArg pid) {
+void startRightPID(PIDCtrl *pid) {
 	if (rightPIDTask && taskGetState(rightPIDTask) == TASK_RUNNING) {
 		DBG_PRINT("PANIC: rightPIDTask is still running! \n");
 		return;
 	}
 	encoderReset(rightEncoder);
-	rightPIDTask = taskCreate(rightPIDLoop, TASK_DEFAULT_STACK_SIZE, (void *)pid, TASK_PRIORITY_DEFAULT + 1);
+	rightPIDTask = taskCreate(rightPIDLoop, TASK_DEFAULT_STACK_SIZE, (void*)pid, TASK_PRIORITY_DEFAULT + 1);
 }
 
 void stopRightPID() {
@@ -47,7 +49,7 @@ void stopRightPID() {
 }
 
 
-void startLeftPID(PIDTaskArg pid) {
+void startLeftPID(PIDCtrl *pid) {
 	if (leftPIDTask && taskGetState(leftPIDTask) == TASK_RUNNING) {
 		DBG_PRINT("PANIC: LeftPIDTask is still running! \n");
 		return;

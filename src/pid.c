@@ -36,17 +36,16 @@ int pid_process(PIDCtrl pid, int posInput, int posAct)
 }
 
 void goForward(int distance, unsigned char speed, signed int estimateTime) {
-	PIDCtrl pidArgs;
-	pid_init(pidArgs, 1.28, 0.1, 0);
-
-	PIDTaskArg arg;
+	PIDCtrl arg;
+	pid_init(arg, 1.28, 0.1, 0);
 	arg.max = speed;
 	arg.target = distance;
-	arg.pid = pidArgs;
 
-	startLeftPID(arg);
-	startRightPID(arg);
+	DBG_PRINT("Going forward %d \n", distance);
+	startLeftPID(&arg);
+	startRightPID(&arg);
 	delay(estimateTime);
+	DBG_PRINT("Stopped\n");
 	stopLeftPID();
 	stopRightPID();
 	//TODO: test the pid arguments
@@ -56,7 +55,7 @@ void rotate(int degree, unsigned char speed, signed int estimateTime) {
 	PIDCtrl pidArgs;
 	pid_init(pidArgs, 1.28, 0.1, 0);
 
-	PIDTaskArg argLeft, argRight;
+	/*PIDTaskArg argLeft, argRight;
 	argLeft.max = speed;
 	argRight.max = speed;
 	argLeft.pid = pidArgs;
@@ -65,40 +64,40 @@ void rotate(int degree, unsigned char speed, signed int estimateTime) {
 	argLeft.target = degree;
 	argRight.target = -degree;
 
-	startLeftPID(argLeft);
-	startRightPID(argRight);
+	startLeftPID(&argLeft);
+	startRightPID(&argRight);
 	delay(estimateTime);
 	stopLeftPID();
-	stopRightPID();
+	stopRightPID();*/
 	//TODO: test the pid arguments
 }
 
 void leftPIDLoop(void *tgt) {
-	PIDTaskArg arg = (PIDTaskArg)tgt;
-	PIDCtrl pid_left = arg.pid;
-	int target = arg.target, pid_output, pid_input;
-	encoderReset(rightEncoder);/* Left wheel PID params here 1.28, 0.1, 0.001 */
+	PIDCtrl *pid=(PIDCtrl *)tgt;
+	int target = pid->target, pid_output, pid_input;
+	/* Left wheel PID params here 1.28, 0.1, 0.001 */
+	DBG_PRINT("p:%d, i:%d, d:%d \n", (int)pid->Kp, (int)pid->Ki, (int)pid->Kd);
+	DBG_PRINT("Target: %d\n", target);
 
 	while (true) {
 		pid_input = encoderGet(rightEncoder);
-		pid_output = pid_process(pid_left, target, pid_input);
-		DBG_PRINT("Encoder Left: %d \n", pid_input);
-		setMotorsR((char)(pid_output > arg.max ? arg.max : pid_output));
+		pid_output = pid_process(*pid, target, pid_input);
+		//DBG_PRINT("Left: %d \n",pid_input);
+		//setMotorsL((char)(pid_output > pid->max ? pid->max : pid_output));
 		taskDelay(50);
 	}
 }
 
-void rightPIDLoop(void *tgt) {
-	PIDTaskArg arg = (PIDTaskArg)tgt;
-	PIDCtrl pid_right = arg.pid;
-	int target = arg.target, pid_output, pid_input;
-	encoderReset(rightEncoder);/* Right wheel PID params here 1.28, 0.1, 0.001 */
+void rightPIDLoop(void* tgt) {
+	PIDCtrl *pid=(PIDCtrl *)tgt;
+	int target = pid->target, pid_output, pid_input;
+	/* Right wheel PID params here 1.28, 0.1, 0.001 */
 
 	while (true) {
 		pid_input = encoderGet(rightEncoder);
-		pid_output = pid_process(pid_right, target, pid_input);
-		DBG_PRINT("Encoder Right: %d \n", pid_input);
-		setMotorsR((char)(pid_output > arg.max ? arg.max : pid_output));
+		pid_output = pid_process(*pid, target, pid_input);
+		//DBG_PRINT("Right: %d \n",pid_input);
+		//setMotorsR((char)(pid_output > pid->max ? pid->max : pid_output));
 		taskDelay(50);
 	}
 }
