@@ -21,7 +21,7 @@ void resetConfig() {
 	collectorState = COLLECTOR_STOP;
   verticalSpeed=SPEED_NORMAL;
 	turningSpeed = TURNING_LOW;
-	ls_enabled = true;
+	claw_position = FREE_POSITION;
 }
 
 TaskHandle leftPIDTask;

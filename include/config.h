@@ -73,6 +73,12 @@ extern float turningSpeed;
 #define SPEED_NORMAL 0.9
 extern float verticalSpeed;
 
+#define FREE_POSITION 0
+#define LOW_POSITION 1
+#define HOLD_POSITION 2
+
+int claw_position = FREE_POSITION;
+
 //pid tasks
 extern TaskHandle leftPIDTask;
 extern TaskHandle rightPIDTask;

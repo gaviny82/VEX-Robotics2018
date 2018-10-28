@@ -14,12 +14,13 @@
 #include "motion.h"
 #include "shoot.h"
 #include "config.h"
+#include "claw.h"
 #include "keynotify.h"
 
 void printdeg() {
-	int deg = analogRead(2);
-	printf("PS_SHOOTdeg: %d \n", deg);
-	delay(300);
+	int deg = analogRead(1);
+	printf("PS_ARMdeg: %d \n", deg);
+	delay(1000);
 }
 
 void callback_ls() {
@@ -70,19 +71,7 @@ void operatorControl() {
 			}
 		}
 
-		//rotate claw
-		if (joystickGetDigital(MASTER_JOYSTICK, 6, JOY_UP)) {
-			if (analogRead(POTENTIALMETER_CLAW) < 4095 && ls_enabled){
-				motorSet(MOTOR_CLAW, -30);
-			} else {
-				motorSet(MOTOR_CLAW, 127);
-			}
-		}
-		else if (joystickGetDigital(MASTER_JOYSTICK, 6, JOY_DOWN)) {
-			motorSet(MOTOR_CLAW, -127);
-		} else {
-			motorSet(MOTOR_CLAW, 0);
-		}
+		claw_control();
 
 		//manual shoot
 		if (joystickGetDigital(MASTER_JOYSTICK, 8, JOY_DOWN)) {
