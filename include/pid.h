@@ -1,8 +1,7 @@
 #ifndef PID_H_
 #define PID_H_
 
-typedef struct _pidctrl
-{
+typedef struct {
 	int nSetPos;
 	int nActPos;
 	int nErr;
@@ -11,7 +10,13 @@ typedef struct _pidctrl
 	int nIntegral;
 	int nDiffer;
 	float nPowerOut;
-} pidctrl;
+} PIDCtrl;
+
+typedef struct {
+	PIDCtrl pid;
+	char max;
+	int target;
+} PIDTaskArg;
 
 /*
 * initialize a new pid control
@@ -23,7 +28,7 @@ typedef struct _pidctrl
 * @param derivative argument
 *
 */
-void pid_init(pidctrl pid, float Kp, float Ki, float Kd);
+void pid_init(PIDCtrl pid, float Kp, float Ki, float Kd);
 
 /*
 * return the output of a pid
@@ -34,18 +39,15 @@ void pid_init(pidctrl pid, float Kp, float Ki, float Kd);
 *
 * @param target value
 */
-int pid_process(pidctrl pid, int posInput, int posAct);
+int pid_process(PIDCtrl pid, int posInput, int posAct);
 
-
-//TODO: use pid to control the distance moved
 void goForward(int distance, unsigned char speed, signed int estimateTime);
 
-//TODO: use pid to control the angle rotated
 void rotate(int degree, unsigned char speed, signed int estimateTime);
 
 
-static void leftPIDLoop(void *tgt);
+extern void leftPIDLoop(void *tgt);
 
-static void rightPIDLoop(void *tgt);
+extern void rightPIDLoop(void *tgt);
 
 #endif
