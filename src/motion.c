@@ -17,14 +17,12 @@ signed char limit127(int value){
 }
 
 void setMotorsL(signed char speed) {
-	DBG_PRINT("setMotorsL: %d \n", speed);
 	motorSet(MOTOR_L_FRONT, speed);
 	motorSet(MOTOR_L_BACK, speed);
 	motorSet(MOTOR_2L, speed);
 }
 
 void setMotorsR(signed char speed) {
-	DBG_PRINT("setMotorsR: %d \n", speed);
 	motorSet(MOTOR_R_FRONT, speed);
 	motorSet(MOTOR_R_BACK, -speed);
 	motorSet(MOTOR_2R, -speed);

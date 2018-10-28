@@ -41,11 +41,9 @@ void autoshoot_loop() {
 			return;
 
 		if (deg > POSITION_READY - 20) {
-			printf("ready! degree: %d \n", deg);
 			shoot_stage = STAGE_ZERO_POSITION;
 			SET_SHOOT_MOTORS(MOTOR_FIX_CIRCUIT);
 		}else{
-			printf("pulling! degree: %d\n", deg);
 			shoot_stage = STAGE_PULL;
 			SET_SHOOT_MOTORS(MOTOR_SHOOT_CIRCUIT);
 		}

@@ -24,7 +24,7 @@ typedef struct {
 * @param derivative argument
 *
 */
-void pid_init(PIDCtrl pid, float Kp, float Ki, float Kd);
+void pid_init(PIDCtrl *pid, float Kp, float Ki, float Kd);
 
 /*
 * return the output of a pid
@@ -35,7 +35,7 @@ void pid_init(PIDCtrl pid, float Kp, float Ki, float Kd);
 *
 * @param target value
 */
-int pid_process(PIDCtrl pid, int posInput, int posAct);
+int pid_process(PIDCtrl *pid, int posInput, int posAct);
 
 void goForward(int distance, unsigned char speed, signed int estimateTime);
 
