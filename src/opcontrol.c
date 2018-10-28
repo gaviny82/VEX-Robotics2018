@@ -19,12 +19,8 @@
 
 void printdeg() {
 	int deg = analogRead(1);
-	printf("PS_ARMdeg: %d \n", deg);
+	DBG_PRINT("PS_ARMdeg: %d \n", deg);
 	delay(1000);
-}
-
-void callback_ls() {
-	ls_enabled = !ls_enabled;
 }
 
 void operatorControl() {
@@ -42,25 +38,11 @@ void operatorControl() {
 	set_keynotify(1, MASTER_JOYSTICK, 7, JOY_RIGHT, callback_highSpeed);//switch to low speed
 	set_keynotify(2, MASTER_JOYSTICK, 7, JOY_LEFT, callback_normalSpeed);//switch to normal speed
 	set_keynotify(3, MASTER_JOYSTICK, 5, JOY_UP, callback_switchBallCollector);//switch on/off ball collector
-	set_keynotify(4, MASTER_JOYSTICK, 8, JOY_RIGHT, callback_ls);//limit ls
-	#ifdef GLOBAL_DEBUG
-	set_keynotify(5, MASTER_JOYSTICK, 7, JOY_DOWN, shoot_out);
-	#endif
+	set_keynotify(4, MASTER_JOYSTICK, 7, JOY_DOWN, callback_autoshoot);
 
 	while (true) {
-		//motion control
-		vertical = joystickGetAnalog(MASTER_JOYSTICK, JOYSTICK_VERTICAL_CH);
-		angular = joystickGetAnalog(MASTER_JOYSTICK, JOYSTICK_ANGULAR_CH);
-
-		if (abs(vertical) <= JOYSTICK_THROT_START) {
-			vertical = 0;
-		}
-		if (abs(angular) <= JOYSTICK_THROT_START) {
-			angular = 0;
-		}
-		motorSet(MOTOR_COLLECTOR, collectorState);
-		setMovement(vertical, angular);
-
+		
+		manualmotion_loop();
 		autoshoot_loop();
 		//switch ball collector
 		if (collectorState != COLLECTOR_STOP) {
@@ -69,15 +51,6 @@ void operatorControl() {
 			} else {
 				collectorState = COLLECTOR_ON;
 			}
-		}
-
-		//claw_control();
-
-		//manual shoot
-		if (joystickGetDigital(MASTER_JOYSTICK, 8, JOY_DOWN)) {
-			//SET_SHOOT_MOTORS(127);
-		} else {
-			//SET_SHOOT_MOTORS(autoShoot ? 30 : 0);
 		}
 	}
 }

@@ -3,6 +3,7 @@
  *
  * This file should contain functions to shoot the ball.
  */
+#if 0
 #include "shoot.h"
 #include "main.h"
 #include "motion.h"
@@ -40,3 +41,4 @@ void callback_switchAutoShoot(){
 	DBG_PRINT("Auto shoot switched");
 	autoShoot =! autoShoot;
 }
+#endif

@@ -22,7 +22,7 @@ extern void callback_shoot();
 */
 extern void callback_switchAutoShoot();
 
-extern void shoot_out();
+extern void callback_autoshoot();
 
 extern void autoshoot_loop();
 

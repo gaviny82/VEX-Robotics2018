@@ -37,5 +37,7 @@ extern void callback_switchBallCollector();
 extern void callback_highSpeed();
 extern void callback_normalSpeed();
 
+extern void manualmotion_loop();
+
 
 #endif

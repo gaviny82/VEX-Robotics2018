@@ -16,8 +16,7 @@
 
 void initializeIO() {
 	/* Init Debug Uart*/
-	usartInit(uart1, 9600, SERIAL_8N1);
-	DBG_PRINT("INFO: initializeIO() Done \n");
+	//usartInit(uart1, 9600, SERIAL_8N1);
 }
 
 void initialize() {

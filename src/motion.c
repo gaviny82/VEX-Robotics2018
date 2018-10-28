@@ -42,6 +42,20 @@ void setMovement(signed char vertical, signed char turning) {
 	setMotorsR(limit127(right));
 }
 
+void manualmotion_loop(){
+		int vertical = joystickGetAnalog(MASTER_JOYSTICK, JOYSTICK_VERTICAL_CH);
+		int angular = joystickGetAnalog(MASTER_JOYSTICK, JOYSTICK_ANGULAR_CH);
+
+		if (abs(vertical) <= JOYSTICK_THROT_START) {
+			vertical = 0;
+		}
+		if (abs(angular) <= JOYSTICK_THROT_START) {
+			angular = 0;
+		}
+		motorSet(MOTOR_COLLECTOR, collectorState);
+		setMovement(vertical, angular);
+}
+
 void callback_reverse() {
 	clawAsForward = !clawAsForward;
 }
@@ -56,11 +70,11 @@ void callback_switchBallCollector() {
 }
 
 void callback_highSpeed() {
-	DBG_PRINT("Switch to %ix speed", TURNING_LOW);
+	DBG_PRINT("Switch to %fx speed", TURNING_LOW);
 	turningSpeed = TURNING_NORMAL;
 }
 
 void callback_normalSpeed() {
-	DBG_PRINT("Switch to %ix speed", TURNING_NORMAL);
+	DBG_PRINT("Switch to %dx speed", TURNING_NORMAL);
 	turningSpeed = TURNING_LOW;
 }

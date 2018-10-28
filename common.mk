@@ -2,8 +2,8 @@ ARCHTUPLE=arm-none-eabi-
 DEVICE=VexCortex
 
 MFLAGS=-mthumb -mcpu=cortex-m3 -mlittle-endian
-CPPFLAGS=-Os
-GCCFLAGS=-ffunction-sections -fsigned-char -fomit-frame-pointer -fsingle-precision-constant -fdiagnostics-color
+CPPFLAGS= -O2
+GCCFLAGS=-ffunction-sections -fsigned-char -fomit-frame-pointer -fsingle-precision-constant -fdiagnostics-color -Ofast -ffast-math
 
 WARNFLAGS+=
 

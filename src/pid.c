@@ -37,9 +37,9 @@ int pid_process(PIDCtrl *pid, int posInput, int posAct)
 
 void goForward(int distance, unsigned char speed, signed int estimateTime) {
 	PIDCtrl arg;
-	pid_init(&arg, 1.28, 0.1, 0);
 	arg.max = speed;
 	arg.target = distance;
+	pid_init(&arg, 0.3, 0, 0);
 
 	DBG_PRINT("Going forward %d \n", distance);
 	startLeftPID(&arg);
@@ -52,8 +52,8 @@ void goForward(int distance, unsigned char speed, signed int estimateTime) {
 }
 
 void rotate(int degree, unsigned char speed, signed int estimateTime) {
-	PIDCtrl *pidArgs;
-	pid_init(pidArgs, 1.28, 0.1, 0);
+	PIDCtrl args;
+	pid_init(&args, 0.8, 0.1, 0.5);
 
 	/*PIDTaskArg argLeft, argRight;
 	argLeft.max = speed;
