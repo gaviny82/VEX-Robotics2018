@@ -12,21 +12,17 @@
 
 #include "API.h"
 #include "motion.h"
-#include "shoot.h"
 #include "config.h"
 #include "claw.h"
 #include "keynotify.h"
-
-void printdeg() {
-	int deg = analogRead(1);
-	DBG_PRINT("PS_ARMdeg: %d \n", deg);
-	delay(1000);
-}
+#include "shoot.h"
 
 void operatorControl() {
 #if 0
-	while(true){
-		printdeg();
+	while (true) {
+		int deg = analogRead(1);
+		DBG_PRINT("PS_ARMdeg: %d \n", deg);
+		delay(1000);
 	}
 #endif
 	//initialising
@@ -43,6 +39,5 @@ void operatorControl() {
 		manualmotion_loop();
 		autoshoot_loop();
 		bc_joy_loop();
-		bc_setmotors_loop();
 	}
 }

@@ -31,14 +31,13 @@ void callback_shoot() {
 	DBG_PRINT("Shoot Callback.");
 	/* We're going to create a task here since it should not be blocked */
 	if (!taskH_shoot)
-		taskH_shoot = taskRunLoop(shoot_task, 0); /* Don't know if task will
-																									delete itself by the end */
+		taskH_shoot = taskRunLoop(shoot_task, 0); /* Don't know if task will delete itself by the end */
 	if (taskGetState(taskH_shoot) != TASK_RUNNING)
 		taskResume(taskH_shoot);
 }
 
-void callback_switchAutoShoot(){
+void callback_switchAutoShoot() {
 	DBG_PRINT("Auto shoot switched");
-	autoShoot =! autoShoot;
+	autoShoot = !autoShoot;
 }
 #endif
