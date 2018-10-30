@@ -39,5 +39,7 @@ void operatorControl() {
 		manualmotion_loop();
 		autoshoot_loop();
 		bc_joy_loop();
+		motorSet(MOTOR_COLLECTOR, collectorState);
+		//TODO: claw
 	}
 }

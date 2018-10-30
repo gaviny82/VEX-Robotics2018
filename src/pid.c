@@ -66,7 +66,6 @@ void rotate(int degree, unsigned char speed, signed int estimateTime) {
 	delay(estimateTime);
 	stopLeftPID();
 	stopRightPID();
-	//TODO: test the pid arguments
 }
 
 void leftPIDLoop(void *tgt) {

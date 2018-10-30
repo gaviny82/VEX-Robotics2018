@@ -18,6 +18,7 @@
 
 void autonomous() {
 	resetConfig();
+	//TODO: set claw position
 	motorSet(MOTOR_COLLECTOR, COLLECTOR_ON);
 	go(1530, 127, 1900);
 	go(-1335, 127, 1600);
