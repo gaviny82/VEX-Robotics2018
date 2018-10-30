@@ -14,7 +14,7 @@
 #include "pid.h"
 #include "motion.h"
 #include "config.h"
-#include "shoot.h"
+#include "control.h"
 
 void autonomous() {
 	resetConfig();
