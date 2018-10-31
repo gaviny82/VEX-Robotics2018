@@ -8,7 +8,7 @@
 #define MOTOR_FIX_CIRCUIT 30
 #define MOTOR_SHOOT_CIRCUIT 127
 
-extern void callback_autoshoot();
+extern void callback_shoot();
 
 extern void autoshoot_loop();
 

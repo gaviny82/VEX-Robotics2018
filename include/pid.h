@@ -17,11 +17,11 @@ typedef struct {
 /*
 * initialize a new pid control
 *
-* @param proportion argument
+* @param Kp: proportion argument
 *
-* @param integral argument
+* @param Ki: integral argument
 *
-* @param derivative argument
+* @param Kd: derivative argument
 *
 */
 extern void pid_init(PIDCtrl *pid, float Kp, float Ki, float Kd);
@@ -29,16 +29,34 @@ extern void pid_init(PIDCtrl *pid, float Kp, float Ki, float Kd);
 /*
 * return the output of a pid
 *
-* @param a defined pid
+* @param pid: a defined pid
 *
-* @param current value
+* @param posInput: target value
 *
-* @param target value
+* @param posAct: current value
 */
 extern int pid_process(PIDCtrl *pid, int posInput, int posAct);
 
+/*
+* go straight forward, it goes backward if distance is negative
+*
+* @param distance: distance moved
+*
+* @param speed: set maximum speed to complete the action
+*
+* @param estimateTime: time delay to stop the task
+*/
 extern void go(int distance, unsigned char speed, signed int estimateTime);
 
+/*
+* rotate about the center
+*
+* @param degree: angle rotated clockwise
+*
+* @param speed: set maximum speed to complete the action
+*
+* @param estimateTime: time delay to stop the task
+*/
 extern void rotate(int degree, unsigned char speed, signed int estimateTime);
 
 

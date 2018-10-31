@@ -32,7 +32,7 @@ void operatorControl() {
 	set_keynotify(1, MASTER_JOYSTICK, 7, JOY_RIGHT, callback_highSpeed);//switch to low speed
 	set_keynotify(2, MASTER_JOYSTICK, 7, JOY_LEFT, callback_normalSpeed);//switch to normal speed
 	set_keynotify(3, MASTER_JOYSTICK, 5, JOY_UP, callback_switchBallCollector);//switch on/off ball collector
-	set_keynotify(4, MASTER_JOYSTICK, 7, JOY_DOWN, callback_autoshoot);
+	set_keynotify(4, MASTER_JOYSTICK, 7, JOY_DOWN, callback_shoot);//press to shoot the ball
 
 	while (true) {
 		manualmotion_loop();

@@ -3,7 +3,7 @@
 
 #include "API.h"
 
-//pid tasks
+//autonomous
 extern TaskHandle leftPIDTask;
 extern TaskHandle rightPIDTask;
 

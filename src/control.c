@@ -14,7 +14,7 @@
 int shoot_sig = 0;
 int shoot_stage = 0;
 
-void callback_autoshoot() {
+void callback_shoot() {
 	DBG_PRINT("Shoot Callback Triggered\n");
 	if (shoot_stage == STAGE_ZERO_POSITION)
 		shoot_sig = SIG_SHOOT;

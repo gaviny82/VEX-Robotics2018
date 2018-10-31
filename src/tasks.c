@@ -24,7 +24,6 @@ void stopRightPID() {
 	setMotorsR(0);
 }
 
-
 void startLeftPID(PIDCtrl *pid) {
 	if (leftPIDTask && taskGetState(leftPIDTask) == TASK_RUNNING) {
 		DBG_PRINT("PANIC: LeftPIDTask is still running! \n");

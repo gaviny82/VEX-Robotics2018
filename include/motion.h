@@ -7,7 +7,7 @@
 /*
 * Set the speed of motors for left/right side wheels
 *
-* @param Speed of motors on left/right side
+* @param speed: speed of motors on left/right side
 */
 extern void setMotorsL(signed char speed);
 extern void setMotorsR(signed char speed);
@@ -15,9 +15,9 @@ extern void setMotorsR(signed char speed);
 /*
 * Set the relative movement speed for directions
 *
-* @param Vertical speed
+* @param vertical: vertical speed
 *
-* @param Angular speed
+* @param angular: angular speed
 */
 extern void setMovement(signed char vertical, signed char angular);
 
@@ -32,8 +32,18 @@ extern void callback_reverse();
 extern void callback_highSpeed();
 extern void callback_normalSpeed();
 
+/*
+* motion control using joystick 
+*/
 extern void manualmotion_loop();
 
-extern signed char limit(int limit,int value);
+/*
+* limit a value to a certain range
+*
+* @param input: the value needed to be limited
+*
+* @param value: the maximum value
+*/
+extern signed char limit(int input, int value);
 
 #endif
