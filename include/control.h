@@ -2,6 +2,12 @@
 #define CONTROL_H_
 
 //shoot conrol
+#define POSITION_NULL 1550
+#define POSITION_READY 2000
+
+#define MOTOR_FIX_CIRCUIT 30
+#define MOTOR_SHOOT_CIRCUIT 127
+
 extern void callback_autoshoot();
 
 extern void autoshoot_loop();
@@ -17,5 +23,10 @@ extern void claw_control();
 
 //collector control
 extern void bc_joy_loop();
+
+/*
+* turn on/off the ball collector
+*/
+extern void callback_switchBallCollector();
 
 #endif

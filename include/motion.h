@@ -27,11 +27,6 @@ extern void setMovement(signed char vertical, signed char angular);
 extern void callback_reverse();
 
 /*
-* turn on/off the ball collector
-*/
-extern void callback_switchBallCollector();
-
-/*
 * switch to high/normal speed
 */
 extern void callback_highSpeed();
@@ -40,6 +35,5 @@ extern void callback_normalSpeed();
 extern void manualmotion_loop();
 
 extern signed char limit(int limit,int value);
-
 
 #endif

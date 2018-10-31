@@ -80,16 +80,4 @@ extern float verticalSpeed;
 
 int claw_position;
 
-//pid tasks
-extern TaskHandle leftPIDTask;
-extern TaskHandle rightPIDTask;
-
-extern void startLeftPID(PIDCtrl *pid);
-
-extern void stopLeftPID();
-
-extern void startRightPID(PIDCtrl *pid);
-
-extern void stopRightPID();
-
 #endif

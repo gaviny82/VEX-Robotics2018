@@ -11,11 +11,10 @@
  */
 
 #include "API.h"
-#include "motion.h"
 #include "config.h"
-#include "keynotify.h"
-#include "shoot.h"
 #include "control.h"
+#include "motion.h"
+#include "keynotify.h"
 
 void operatorControl() {
 #if 0

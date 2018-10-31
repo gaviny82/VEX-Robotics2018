@@ -8,6 +8,7 @@
 #include "config.h"
 #include "motion.h"
 #include "API.h"
+#include "tasks.h"
 
 void pid_init(PIDCtrl *pid, float Kp, float Ki, float Kd)
 {

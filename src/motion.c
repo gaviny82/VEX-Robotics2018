@@ -59,15 +59,6 @@ void callback_reverse() {
 	clawAsForward = !clawAsForward;
 }
 
-void callback_switchBallCollector() {
-	if (collectorState != COLLECTOR_STOP) {
-		collectorState = COLLECTOR_STOP;
-	}
-	else {
-		collectorState = COLLECTOR_ON;
-	}
-}
-
 void callback_highSpeed() {
 	DBG_PRINT("Switch to %fx speed", TURNING_LOW);
 	turningSpeed = TURNING_NORMAL;

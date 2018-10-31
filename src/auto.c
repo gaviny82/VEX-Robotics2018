@@ -24,9 +24,11 @@ void autonomous() {
 	go(-1335, 127, 1600);
 	rotate(450, 127, 1000);
 	go(630, 80, 1000);
+
 	SET_SHOOT_MOTORS(127);
 	delay(2200);
 	SET_SHOOT_MOTORS(0);
+	
 	motorSet(MOTOR_COLLECTOR, COLLECTOR_STOP);
 	rotate(50, 127, 1000);
 	go(1000, 90, 1300);
@@ -38,5 +40,4 @@ void autonomous() {
 	setMovement(127, 0);
 	delay(2000);
 	setMovement(0, 0);
-	//rotate(200, 127, 1000);
 }

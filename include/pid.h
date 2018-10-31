@@ -24,7 +24,7 @@ typedef struct {
 * @param derivative argument
 *
 */
-void pid_init(PIDCtrl *pid, float Kp, float Ki, float Kd);
+extern void pid_init(PIDCtrl *pid, float Kp, float Ki, float Kd);
 
 /*
 * return the output of a pid
@@ -35,11 +35,11 @@ void pid_init(PIDCtrl *pid, float Kp, float Ki, float Kd);
 *
 * @param target value
 */
-int pid_process(PIDCtrl *pid, int posInput, int posAct);
+extern int pid_process(PIDCtrl *pid, int posInput, int posAct);
 
-void go(int distance, unsigned char speed, signed int estimateTime);
+extern void go(int distance, unsigned char speed, signed int estimateTime);
 
-void rotate(int degree, unsigned char speed, signed int estimateTime);
+extern void rotate(int degree, unsigned char speed, signed int estimateTime);
 
 
 extern void leftPIDLoop(void *tgt);

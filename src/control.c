@@ -2,22 +2,17 @@
 #include "config.h"
 #include "API.h"
 
-#define POSITION_NULL 1550
-#define POSITION_READY 2000
-
-#define MOTOR_FIX_CIRCUIT 30
-#define MOTOR_SHOOT_CIRCUIT 127
-
+//shoot control
 #define SIG_SHOOT 1
 #define SIG_ONGOING -1
 #define SIG_STDBY 0
 
-int shoot_sig = 0;
-int shoot_stage = 0;
-
 #define STAGE_ZERO_POSITION 0
 #define STAGE_PULL 1
 #define STAGE_FINALL_KICK 2
+
+int shoot_sig = 0;
+int shoot_stage = 0;
 
 void callback_autoshoot() {
 	DBG_PRINT("Shoot Callback Triggered\n");
@@ -47,6 +42,7 @@ void autoshoot_loop() {
 	}
 }
 
+//claw control
 void claw_control() {
 	bool clicked = joystickGetDigital(MASTER_JOYSTICK, 6, JOY_UP) ||
 		joystickGetDigital(MASTER_JOYSTICK, 6, JOY_DOWN);
@@ -91,6 +87,7 @@ opcontrol:
 	}
 }
 
+//collector control
 void bc_joy_loop() {
 	//switch ball collector
 	if (collectorState != COLLECTOR_STOP) {
@@ -101,4 +98,13 @@ void bc_joy_loop() {
 			collectorState = COLLECTOR_ON;
 		}
 	}//TODO: 
+}
+
+void callback_switchBallCollector() {
+	if (collectorState != COLLECTOR_STOP) {
+		collectorState = COLLECTOR_STOP;
+	}
+	else {
+		collectorState = COLLECTOR_ON;
+	}
 }
