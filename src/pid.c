@@ -52,7 +52,7 @@ void go(int distance, unsigned char speed, signed int estimateTime) {
 }
 
 void rotate(int degree, unsigned char speed, signed int estimateTime) {
-	PIDCtrl argsL,argsR;
+	PIDCtrl argsL, argsR;
 	pid_init(&argsL, 0.6, 0, 0);
 	pid_init(&argsR, 0.6, 0, 0);
 
@@ -70,7 +70,7 @@ void rotate(int degree, unsigned char speed, signed int estimateTime) {
 }
 
 void leftPIDLoop(void *tgt) {
-	PIDCtrl *pid=(PIDCtrl *)tgt;
+	PIDCtrl *pid = (PIDCtrl *)tgt;
 	int target = pid->target, pid_output, pid_input;
 	/* Left wheel PID params here 1.28, 0.1, 0.001 */
 
@@ -80,14 +80,14 @@ void leftPIDLoop(void *tgt) {
 
 		DBG_PRINT("Encoder Left: %d	", pid_input);
 		char motorL = limit(pid->max, pid_output);
-		DBG_PRINT("Motor Left: %d \n",motorL);
+		DBG_PRINT("Motor Left: %d \n", motorL);
 		setMotorsL(motorL);
 		taskDelay(30);
 	}
 }
 
 void rightPIDLoop(void* tgt) {
-	PIDCtrl *pid=(PIDCtrl *)tgt;
+	PIDCtrl *pid = (PIDCtrl *)tgt;
 	int target = pid->target, pid_output, pid_input;
 	/* Right wheel PID params here 1.28, 0.1, 0.001 */
 	while (true) {
