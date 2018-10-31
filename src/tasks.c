@@ -2,6 +2,8 @@
 #include "control.h"
 #include "motion.h"
 
+TaskHandle autoShoot;
+
 TaskHandle leftPIDTask;
 TaskHandle rightPIDTask;
 

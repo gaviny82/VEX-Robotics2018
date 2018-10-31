@@ -15,10 +15,18 @@
 #include "motion.h"
 #include "config.h"
 #include "control.h"
+#include "tasks.h"
+
+void shoot_autonomous() {
+	if (shoot_stage == STAGE_ZERO_POSITION)
+		shoot_sig = SIG_SHOOT;
+	delay(2500);//TODO: test average shoot time
+}
 
 void autonomous() {
 	//initialisation
 	resetConfig();
+	autoShoot = taskCreate(autoshoot_loop, TASK_DEFAULT_STACK_SIZE, NULL, TASK_PRIORITY_DEFAULT);
 	//TODO: set claw position
 
 	//collect the ball under the leaning cap
@@ -31,9 +39,7 @@ void autonomous() {
 	go(630, 80, 1000);
 
 	//shoot
-	SET_SHOOT_MOTORS(127);
-	delay(2200);
-	SET_SHOOT_MOTORS(0);
+	shoot_autonomous();
 	motorSet(MOTOR_COLLECTOR, COLLECTOR_STOP);
 
 	//adjust direction, then hit the low flag
@@ -48,5 +54,10 @@ void autonomous() {
 
 	setMovement(127, 0);
 	delay(2000);
+
+	//disposition
 	setMovement(0, 0);
+	taskDelete(autoShoot);
+	motorSet(MOTOR_COLLECTOR, COLLECTOR_STOP);
+	SET_SHOOT_MOTORS(0);
 }

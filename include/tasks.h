@@ -4,6 +4,8 @@
 #include "API.h"
 
 //autonomous
+extern TaskHandle autoShoot;
+
 extern TaskHandle leftPIDTask;
 extern TaskHandle rightPIDTask;
 
@@ -14,5 +16,7 @@ extern void stopLeftPID();
 extern void startRightPID(PIDCtrl *pid);
 
 extern void stopRightPID();
+
+
 
 #endif

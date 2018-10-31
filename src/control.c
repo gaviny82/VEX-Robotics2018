@@ -3,13 +3,6 @@
 #include "API.h"
 
 //shoot control
-#define SIG_SHOOT 1
-#define SIG_ONGOING -1
-#define SIG_STDBY 0
-
-#define STAGE_ZERO_POSITION 0
-#define STAGE_PULL 1
-#define STAGE_FINALL_KICK 2
 
 int shoot_sig = 0;
 int shoot_stage = 0;

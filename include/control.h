@@ -8,6 +8,17 @@
 #define MOTOR_FIX_CIRCUIT 30
 #define MOTOR_SHOOT_CIRCUIT 127
 
+#define SIG_SHOOT 1
+#define SIG_ONGOING -1
+#define SIG_STDBY 0
+
+#define STAGE_ZERO_POSITION 0
+#define STAGE_PULL 1
+#define STAGE_FINALL_KICK 2
+
+extern int shoot_sig;
+extern int shoot_stage;
+
 extern void callback_shoot();
 
 extern void autoshoot_loop();
