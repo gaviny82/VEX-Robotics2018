@@ -40,4 +40,6 @@ extern void bc_joy_loop();
 */
 extern void callback_switchBallCollector();
 
+extern void claw_control_loop();
+
 #endif

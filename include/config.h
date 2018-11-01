@@ -40,8 +40,15 @@ Encoder rightEncoder;
 //joystick
 #define MASTER_JOYSTICK 1
 
+#ifdef JPN_HAND
 #define JOYSTICK_ANGULAR_CH 4
 #define JOYSTICK_VERTICAL_CH 2
+#else
+#define USA_HAND
+#define JOYSTICK_ANGULAR_CH 1
+#define JOYSTICK_VERTICAL_CH 3
+#endif
+
 #define JOYSTICK_THROT_START 10
 
 

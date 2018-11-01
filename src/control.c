@@ -25,7 +25,7 @@ void autoshoot_loop() {
 
 	if (shoot_stage == STAGE_FINALL_KICK && deg > 1600) return;
 
-	if (deg > POSITION_READY - 20) {
+	if (deg > POSITION_READY) {
 		shoot_stage = STAGE_ZERO_POSITION;
 		SET_SHOOT_MOTORS(MOTOR_FIX_CIRCUIT);
 	}
@@ -36,48 +36,20 @@ void autoshoot_loop() {
 }
 
 //claw control
-void claw_control() {
-	bool clicked = joystickGetDigital(MASTER_JOYSTICK, 6, JOY_UP) ||
-		joystickGetDigital(MASTER_JOYSTICK, 6, JOY_DOWN);
-	int deg = analogRead(POTENTIALMETER_CLAW);
-	if (claw_position == FREE_POSITION) {
-		goto opcontrol;
-	}
-	if (claw_position == LOW_POSITION) {
-		if (!clicked && deg >= DEG_LOW) {
-			motorSet(MOTOR_CLAW, -80);
+void claw_control_loop() {
+	int deg = analogRead(1);
+	DBG_PRINT("PS_ARMdeg: %d \n", deg);
+
+#if 1
+		if(joystickGetDigital(MASTER_JOYSTICK, 6, JOY_UP)){
+			motorSet(MOTOR_CLAW, 127);
+		} else if(joystickGetDigital(MASTER_JOYSTICK, 6, JOY_DOWN)){
+			motorSet(MOTOR_CLAW, -127);
+		} else {
+			motorSet(MOTOR_CLAW, 0);
 		}
-		if (deg > +DEG_KICK_LOW) {
-			motorSet(MOTOR_CLAW, -30);
-			return;
-		}
-		if (claw_position == HOLD_POSITION) {
-			if (!clicked) {
-				if (deg <= (DEG_HOLD + 80)) {
-					motorSet(MOTOR_CLAW, 80);
-					return;
-				}
-				else if (deg >= (DEG_HOLD - 80)) {
-					motorSet(MOTOR_CLAW, -30);
-					return;
-				}
-				else {
-					motorSet(MOTOR_CLAW, 15);
-					return;
-				}
-			}
-		}
-	}
-opcontrol:
-	if (joystickGetDigital(MASTER_JOYSTICK, 6, JOY_UP)) {
-		motorSet(MOTOR_CLAW, 127);
-	}
-	else if (joystickGetDigital(MASTER_JOYSTICK, 6, JOY_DOWN)) {
-		motorSet(MOTOR_CLAW, -80);
-	}
-	else {
-		motorSet(MOTOR_CLAW, 0);
-	}
+#endif
+
 }
 
 //collector control
@@ -90,7 +62,7 @@ void bc_joy_loop() {
 		else {
 			collectorState = COLLECTOR_ON;
 		}
-	}//TODO: 
+	}//TODO:
 }
 
 void callback_switchBallCollector() {

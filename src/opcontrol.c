@@ -26,7 +26,7 @@ void operatorControl() {
 #endif
 	//initialising
 	resetConfig();
-	taskRunLoop(keynotify_loop, 20);
+	taskRunLoop(keynotify_loop, 30);
 	//register key events
 	set_keynotify(0, MASTER_JOYSTICK, 8, JOY_UP, callback_reverse);//reverse
 	set_keynotify(1, MASTER_JOYSTICK, 7, JOY_RIGHT, callback_highSpeed);//switch to low speed
@@ -36,6 +36,7 @@ void operatorControl() {
 
 	while (true) {
 		manualmotion_loop();
+		claw_control_loop();
 		autoshoot_loop();
 		bc_joy_loop();
 		motorSet(MOTOR_COLLECTOR, collectorState);
