@@ -72,27 +72,28 @@ void callback_switchBallCollector() {
 	}
 }
 
-bool claw_state = 0;
-#define CLAW_LIMITED 1
-#define CLAW_FREE 0
-bool claw_key_pressed = 0;
-bool push_back = 0;
+bool claw_state = false;
+#define CLAW_LIMITED true
+#define CLAW_FREE false
+bool claw_key_pressed = false;
+bool push_back = false;
 
 void callback_clawstate(){
-	claw_state =! claw_state;
-	claw_key_pressed = 0;
+	claw_state = !claw_state;
+	claw_key_pressed = false;
 }
 
 void callback_claw_key_pressed(){
-	claw_key_pressed = 1;
+	claw_key_pressed = true;
 }
 
 //claw control
 void claw_control_loop() {
 	int deg = analogRead(1);
-	DBG_PRINT("PS_ARMdeg: %d \n", deg);
+	//DBG_PRINT("PS_ARMdeg: %d \n", deg);
 
-	if(claw_state == CLAW_FREE){
+	if(1){
+		DBG_PRINT("Free");
 	if(joystickGetDigital(MASTER_JOYSTICK, 6, JOY_DOWN)){
 		motorSet(MOTOR_CLAW, 127);
 	} else if(joystickGetDigital(MASTER_JOYSTICK, 6, JOY_UP)){
@@ -101,15 +102,16 @@ void claw_control_loop() {
 		motorSet(MOTOR_CLAW, 0);
 	}
 } else {
+	DBG_PRINT("Limited");
 	if (push_back && deg > 3600) {
 		return;
 	} else {
-		push_back = 0;
+		push_back = false;
 	}
 	if(claw_key_pressed && deg >= 4040) {
-		claw_key_pressed = 0;
+		claw_key_pressed = false;
 		motorSet(MOTOR_CLAW, 90);
-		push_back = 1;
+		push_back = true;
 	} else if (claw_key_pressed){
 		motorSet(MOTOR_CLAW, -127);
 	} else {

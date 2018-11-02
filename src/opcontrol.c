@@ -17,10 +17,10 @@
 #include "keynotify.h"
 
 void operatorControl() {
-#if 0
+#if 1
 	while (true) {
-		int deg = analogRead(1);
-		DBG_PRINT("PS_CLAW_DEG: %d \n", deg);
+		int deg = analogRead(2);
+		DBG_PRINT("PS_SHOOT_DEG: %d \n", deg);
 		delay(500);
 	}
 #endif
