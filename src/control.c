@@ -92,7 +92,7 @@ void claw_control_loop() {
 	int deg = analogRead(1);
 	//DBG_PRINT("PS_ARMdeg: %d \n", deg);
 
-	if(1){
+	if(claw_state == CLAW_FREE){
 		DBG_PRINT("Free");
 	if(joystickGetDigital(MASTER_JOYSTICK, 6, JOY_DOWN)){
 		motorSet(MOTOR_CLAW, 127);
@@ -103,19 +103,19 @@ void claw_control_loop() {
 	}
 } else {
 	DBG_PRINT("Limited");
-	if (push_back && deg > 3600) {
+	if (push_back && deg > 3800) {
 		return;
 	} else {
 		push_back = false;
 	}
-	if(claw_key_pressed && deg >= 4040) {
+	if(claw_key_pressed && deg >= 4094) {
 		claw_key_pressed = false;
 		motorSet(MOTOR_CLAW, 90);
 		push_back = true;
 	} else if (claw_key_pressed){
 		motorSet(MOTOR_CLAW, -127);
 	} else {
-		motorSet(MOTOR_CLAW, 0);
+		motorSet(MOTOR_CLAW, 5);
 	}
 }
 }
