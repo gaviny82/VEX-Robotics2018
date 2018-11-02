@@ -18,7 +18,7 @@
 #include "tasks.h"
 
 #define BLUE
-#define FRONT
+#define BACK
 
 void shoot_autonomous() {
 	shoot_sig = SIG_SHOOT;
@@ -26,51 +26,58 @@ void shoot_autonomous() {
 }
 
 void autonomous() {
-
 	//initialisation
 	resetConfig();
 	taskRunLoop(autoshoot_loop, 100);
-	//TODO: set claw position
-#ifdef FRONT
 	//collect the ball under the leaning cap
 	motorSet(MOTOR_COLLECTOR, COLLECTOR_ON);
-	go(1530, 127, 1900);
-
-	//go back and rotate anti-clockwise, then move to the shoot position
-	go(-1335, 127, 1600);
+	go(1500, 60, 2000);//go back and rotate anti-clockwise, then move to the shoot position
 #ifdef RED
-	rotate(-450, 127, 1000);
+go(-1200, 80, 1900);
+rotate(-470, 127, 1000);
 #else
-	rotate(450, 127, 1000);
+go(-1300, 80, 1900);
+rotate(480, 127, 1000);
 #endif
-	go(630, 80, 1000);
 
+#ifdef BACK
+delay(3000);
+return;
+#endif
+
+#ifdef RED
+	go(560, 80, 1000);
+#else
+	go(570, 80, 1000);
+#endif
 	//shoot
 	shoot_autonomous();
-	motorSet(MOTOR_COLLECTOR, COLLECTOR_STOP);
-
 	//adjust direction, then hit the low flag
 #ifdef RED
-	rotate(-80, 127, 1000);
+	rotate(-55, 127, 500);
 #else
-	rotate(50, 127, 1000);
+	rotate(60, 127, 500);
 #endif
-	go(1000, 90, 1300);
 
+#ifdef RED
+	go(860, 90, 1300);
+#else
+	go(850, 90, 1300);
+#endif
 	//navigate to alliance parking
-	go(-1800, 127, 2000);
+	go(-1700, 127, 2000);
+	motorSet(MOTOR_COLLECTOR, COLLECTOR_STOP);
 #ifdef RED
 	rotate(500, 127, 800);
 #else
 	rotate(-500, 127, 800);
 #endif
-	go(900, 127, 1000);
+	go(960, 127, 1000);
 #ifdef RED
-	rotate(450, 127, 800);
+	rotate(480, 127, 800);
 #else
-	rotate(-450, 127, 800);
+	rotate(-480, 127, 800);
 #endif
-
 	setMovement(127, 0);
 	delay(2000);
 
@@ -78,12 +85,5 @@ void autonomous() {
 	setMovement(0, 0);
 	motorSet(MOTOR_COLLECTOR, COLLECTOR_STOP);
 
-#else
-/* BACK */
-go(1650, 127, 2300);
-rotate(-420, 127, 1000);
-go(100, 50, 500);
-shoot_autonomous();
-#endif
 
 }

@@ -17,7 +17,7 @@
 #include "keynotify.h"
 
 void operatorControl() {
-#if 1
+#if 0
 	while (true) {
 		int deg = analogRead(2);
 		DBG_PRINT("PS_SHOOT_DEG: %d \n", deg);
