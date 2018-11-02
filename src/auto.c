@@ -17,7 +17,8 @@
 #include "control.h"
 #include "tasks.h"
 
-#define RED
+#define BLUE
+#define FRONT
 
 void shoot_autonomous() {
 	shoot_sig = SIG_SHOOT;
@@ -30,7 +31,7 @@ void autonomous() {
 	resetConfig();
 	taskRunLoop(autoshoot_loop, 100);
 	//TODO: set claw position
-#ifdef BACK
+#ifdef FRONT
 	//collect the ball under the leaning cap
 	motorSet(MOTOR_COLLECTOR, COLLECTOR_ON);
 	go(1530, 127, 1900);
@@ -78,6 +79,7 @@ void autonomous() {
 	motorSet(MOTOR_COLLECTOR, COLLECTOR_STOP);
 
 #else
+/* BACK */
 go(1650, 127, 2300);
 rotate(-420, 127, 1000);
 go(100, 50, 500);

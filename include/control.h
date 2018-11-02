@@ -42,4 +42,10 @@ extern void callback_switchBallCollector();
 
 extern void claw_control_loop();
 
+extern void detect_shoot_switch_loop();
+
+extern void callback_clawstate();
+
+extern void callback_claw_key_pressed();
+
 #endif

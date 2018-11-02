@@ -20,8 +20,8 @@ void operatorControl() {
 #if 0
 	while (true) {
 		int deg = analogRead(1);
-		DBG_PRINT("PS_ARMdeg: %d \n", deg);
-		delay(1000);
+		DBG_PRINT("PS_CLAW_DEG: %d \n", deg);
+		delay(500);
 	}
 #endif
 	//initialising
@@ -33,9 +33,11 @@ void operatorControl() {
 	set_keynotify(2, MASTER_JOYSTICK, 7, JOY_LEFT, callback_normalSpeed);//switch to normal speed
 	set_keynotify(3, MASTER_JOYSTICK, 5, JOY_UP, callback_switchBallCollector);//switch on/off ball collector
 	set_keynotify(4, MASTER_JOYSTICK, 7, JOY_DOWN, callback_shoot);//press to shoot the ball
-
+  set_keynotify(5, MASTER_JOYSTICK, 8, JOY_DOWN, callback_clawstate);//switch claw state
+	set_keynotify(6, MASTER_JOYSTICK, 6, JOY_UP, callback_claw_key_pressed);//switch claw state
 	while (true) {
 		manualmotion_loop();
+		detect_shoot_switch_loop();
 		claw_control_loop();
 		autoshoot_loop();
 		bc_joy_loop();
