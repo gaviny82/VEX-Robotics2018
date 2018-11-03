@@ -32,36 +32,38 @@ void autonomous() {
 	//TODO: set claw position
 	//collect the ball under the leaning cap
 	motorSet(MOTOR_COLLECTOR, COLLECTOR_ON);
-	go(1530, 127, 1900);
+	go(1500, 60, 2000);
 
 	//go back and rotate anti-clockwise, then move to the shoot position
-	go(-1335, 127, 1600);
+	go(-1335, 65, 2000);
 	rotate(-450, 127, 1000);
-	go(630, 80, 1000);
+	go(600, 80, 1000);
 
 	//shoot
 	shoot_autonomous();
 	motorSet(MOTOR_COLLECTOR, COLLECTOR_STOP);
 
 	//adjust direction, then hit the low flag
-	rotate(-70, 127, 1000);
+	rotate(-50, 127, 200);
 	go(1000, 90, 1300);
 // go back
-	go(-800, 90, 800);
+	go(-1600, 90, 1400);
 // turn right
 	rotate(470, 127, 1000);
-	go(1600, 90, 2300);
-	rotate(-460, 127, 1000);
-	go(800, 90, 1200);
+// go forward to bypass the clone
+	go(1660, 90, 2300);
+
+	rotate(-400, 127, 1000);
+	go(1400, 90, 2000);
 	go(-850, 90, 1200);
 	rotate(460, 127, 1000);
-	go(1600, 90, 2300);
-	rotate(-460, 127, 1000);
-	go(600, 90, 1200);
-	go(-1600, 90, 2300);
+	go(1700, 90, 2300);
+	rotate(-480, 127, 1000);
+
+	go(1400, 127, 1200);
+
+
 	//disposition
 	setMovement(0, 0);
 	motorSet(MOTOR_COLLECTOR, COLLECTOR_STOP);
-
-
 }
