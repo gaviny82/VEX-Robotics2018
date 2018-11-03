@@ -17,8 +17,8 @@
 #include "control.h"
 #include "tasks.h"
 
-#define BLUE
-#define BACK
+#define RED
+#define FRONT
 
 void shoot_autonomous() {
 	shoot_sig = SIG_SHOOT;
@@ -32,6 +32,12 @@ void autonomous() {
 	//collect the ball under the leaning cap
 	motorSet(MOTOR_COLLECTOR, COLLECTOR_ON);
 	go(1500, 60, 2000);//go back and rotate anti-clockwise, then move to the shoot position
+
+	#ifdef BACK
+	delay(3000);
+	return;
+	#endif
+
 #ifdef RED
 go(-1200, 80, 1900);
 rotate(-470, 127, 1000);
@@ -40,10 +46,7 @@ go(-1300, 80, 1900);
 rotate(480, 127, 1000);
 #endif
 
-#ifdef BACK
-delay(3000);
-return;
-#endif
+
 
 #ifdef RED
 	go(560, 80, 1000);
@@ -72,6 +75,7 @@ return;
 #else
 	rotate(-500, 127, 800);
 #endif
+return;
 	go(960, 127, 1000);
 #ifdef RED
 	rotate(480, 127, 800);
