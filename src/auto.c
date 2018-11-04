@@ -49,7 +49,7 @@ rotate(480, 127, 1000);
 
 
 #ifdef RED
-	go(600, 80, 1000);
+	go(570, 80, 1000);
 #else
 	go(570, 80, 1000);
 #endif
@@ -57,7 +57,7 @@ rotate(480, 127, 1000);
 	shoot_autonomous();
 	//adjust direction, then hit the low flag
 #ifdef RED
-	rotate(-55, 127, 500);
+	rotate(-45, 127, 500);
 #else
 	rotate(60, 127, 500);
 #endif
