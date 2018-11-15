@@ -1,22 +1,21 @@
 ARCHTUPLE=arm-none-eabi-
-DEVICE=VexCortex
+DEVICE=VEX EDR V5
 
-MFLAGS=-mthumb -mcpu=cortex-m3 -mlittle-endian
-CPPFLAGS= -O2
-GCCFLAGS=-ffunction-sections -fsigned-char -fomit-frame-pointer -fsingle-precision-constant -fdiagnostics-color -Ofast -ffast-math
-#ffast-maths
+MFLAGS=-mcpu=cortex-a9 -mfpu=neon-fp16 -mfloat-abi=softfp
+CPPFLAGS=-D_POSIX_THREADS -D_UNIX98_THREAD_MUTEX_ATTRIBUTES -Os
+GCCFLAGS=-ffunction-sections -fdata-sections -fdiagnostics-color
 
 WARNFLAGS+=
 
 SPACE :=
 SPACE +=
 COMMA := ,
-LNK_FLAGS = --gc-sections
+LNK_FLAGS = -T?%$(FWDIR)/v5.ld --gc-sections
 
 ASMFLAGS=$(MFLAGS) $(WARNFLAGS)
-CFLAGS=$(MFLAGS) $(CPPFLAGS) $(WARNFLAGS) $(GCCFLAGS) -std=gnu99
-CXXFLAGS=$(MFLAGS) $(CPPFLAGS) $(WARNFLAGS) -fno-exceptions -fno-rtti -felide-constructors $(GCCFLAGS) --std=gnu++11
-LDFLAGS=$(MFLAGS) $(WARNFLAGS) -nostartfiles -Wl,-static -Bfirmware -Wl,-u,VectorTable -Wl,-T -Xlinker firmware/cortex.ld $(subst ?%,$(SPACE),$(addprefix -Wl$(COMMA), $(LNK_FLAGS)))
+CFLAGS=$(MFLAGS) $(CPPFLAGS) $(WARNFLAGS) $(GCCFLAGS) --std=gnu11
+CXXFLAGS=$(MFLAGS) $(CPPFLAGS) $(WARNFLAGS) -funwind-tables $(GCCFLAGS)  --std=gnu++17
+LDFLAGS=$(MFLAGS) $(WARNFLAGS) -nostdlib  $(subst ?%,$(SPACE),$(addprefix -Wl$(COMMA), $(LNK_FLAGS)))
 SIZEFLAGS=-d --common
 NUMFMTFLAGS=--to=iec --format %.2f --suffix=B
 
@@ -26,11 +25,7 @@ AR:=$(ARCHTUPLE)ar
 AS:=$(ARCHTUPLE)gcc
 CC:=$(ARCHTUPLE)gcc
 CXX:=$(ARCHTUPLE)g++
-LD:=$(ARCHTUPLE)gcc
-#AS:=clang
-#CC:=clang
-#CXX:=clang++
-#LD:=clang
+LD:=$(ARCHTUPLE)g++
 OBJCOPY:=$(ARCHTUPLE)objcopy
 SIZETOOL:=$(ARCHTUPLE)size
 READELF:=$(ARCHTUPLE)readelf
