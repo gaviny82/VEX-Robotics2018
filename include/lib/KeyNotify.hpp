@@ -8,7 +8,7 @@ public:
   pros::Controller controller;
   pros::controller_digital_e_t button;
   keynotify_callback_t callback;
-    bool isPrevDown;
+  bool isPrevDown = false;
 
-  explicit KeyNotify(pros::Controller &Controller, const pros::controller_digital_e_t Button, const keynotify_callback_t Callback);
+  KeyNotify(pros::Controller &Controller, const pros::controller_digital_e_t Button, const keynotify_callback_t Callback);
 };
