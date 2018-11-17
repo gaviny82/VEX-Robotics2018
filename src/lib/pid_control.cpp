@@ -1,9 +1,9 @@
-#include "lib/PidControl.hpp"
+#include "lib/pid_control.hpp"
 
-PidControl::PidControl(float kP, float kI, float kD){
-  Kp = kP;
-  Ki = kI;
-  Kd = kD;
+PidControl::PidControl(float kP, float kI, float kD) {
+	Kp = kP;
+	Ki = kI;
+	Kd = kD;
 	nSetPos = 0;
 	nActPos = 0;
 	nErr = 0;
@@ -13,8 +13,8 @@ PidControl::PidControl(float kP, float kI, float kD){
 	nPowerOut = 0.0;
 }
 
-float PidControl::PidProcess(int posTarget, int posCurrent){
-  nSetPos = posTarget;
+float PidControl::PidProcess(int posTarget, int posCurrent) {
+	nSetPos = posTarget;
 	nActPos = posCurrent;
 	nErr = nSetPos - nActPos;
 	nIntegral = nErr_last + nErr;
