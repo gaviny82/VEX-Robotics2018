@@ -14,7 +14,7 @@ public:
   int CurrentSpeed, CurrentYaw;
   vector<Motor> LeftMotors, RightMotors;
 
-  Chassis(const vector<Motor> left, const vector<Motor> right, const int &maxSpeed);
+  Chassis(const initializer_list<Motor> left, const initializer_list<Motor> right, const int &maxSpeed);
   void Drive(const int &forward, const int &yaw);
   void Stop();
   void SetMotorLeft(const int &speed);

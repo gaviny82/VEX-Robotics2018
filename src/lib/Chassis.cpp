@@ -13,7 +13,7 @@ int limit(int limit, int value) {
 	}
 }
 
-Chassis::Chassis(const vector<Motor> left, const vector<Motor> right, const int &maxSpeed) {
+Chassis::Chassis(const initializer_list<Motor> left, const initializer_list<Motor> right, const int &maxSpeed) {
 	for (Motor mtr : left) {
 		LeftMotors.push_back(mtr);
 	}

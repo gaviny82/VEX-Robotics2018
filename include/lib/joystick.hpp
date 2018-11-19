@@ -1,4 +1,5 @@
 #pragma once
+#include "pros/misc.hpp"
 
 using namespace pros;
 
