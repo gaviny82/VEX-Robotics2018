@@ -1,6 +1,8 @@
 #include "main.h"
-#include "lib/KeyNotifyEvent.hpp"
-#include "lib/KeyNotify.hpp"
+#include "lib/key_notify_event.hpp"
+#include "lib/key_notify.hpp"
+#include "lib/event_handler.hpp"
+#include "lib/button.hpp"
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -32,6 +34,11 @@ void opcontrol() {
 
 	KeyNotify test(master, DIGITAL_L1, callback_test);
 	KeyNotifyEvent::Register(test);
+
+	//Button b1(master, DIGITAL_L1);
+	//b1.SetClickedEvent(callback_test);
+	//EventHandler::EnableButtonEvents();
+
 	while (true) {
 		pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
 			(pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,

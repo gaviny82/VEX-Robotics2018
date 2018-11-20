@@ -1,5 +1,5 @@
-#include "lib/KeyNotifyEvent.hpp"
-#include "lib/KeyNotify.hpp"
+#include "lib/key_notify_event.hpp"
+#include "lib/key_notify.hpp"
 #include "pros/rtos.hpp"
 #include <list>
 

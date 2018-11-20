@@ -1,24 +1,29 @@
 #include "lib/button.hpp"
-#include "lib/event.hpp"
+#include "lib/event_handler.hpp"
+#include <vector>
 
-using keynotify_callback_t = void (*)(void);
+using event_callback_t = void (*)(void);
 
-Button::Button(Controller &ctrller, controller_digital_e_t &btn)
+Button::Button(Controller &ctrller, controller_digital_e_t btn)
 {
 	controller = &ctrller;
 	button = btn;
-	clickedEvent = new ButtonClickedEvent(this, nullptr);
-}
-Button::~Button(){
-	delete clickedEvent;
+	ClickedEvent = nullptr;
 }
 
-void Button::SetClickedEvent(keynotify_callback_t callback)
+Button::Button(Controller &ctrller, controller_digital_e_t btn, event_callback_t clickedEvent){
+	controller = &ctrller;
+	button = btn;
+	ClickedEvent = clickedEvent;
+}
+
+void Button::SetClickedEvent(event_callback_t clickedEvent)
 {
-	clickedEvent->callback = callback;
+	ClickedEvent = clickedEvent;
+	EventHandler::Events.push_back(this);
 }
 
 void Button::RemoveClickedEvent()
 {
-	clickedEvent->callback = nullptr;
+	ClickedEvent = nullptr;
 }

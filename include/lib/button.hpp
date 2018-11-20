@@ -1,21 +1,24 @@
 #pragma once
 #include "pros/misc.hpp"
-#include "lib/event.hpp"
 
-using keynotify_callback_t = void (*)(void);
+using event_callback_t = void (*)(void);
 using namespace pros;
 
 class Button {
 public:
-	Button(Controller &ctrller, controller_digital_e_t &btn);
-	~Button();
+	Button(Controller &ctrller, controller_digital_e_t btn);
+	Button(Controller &ctrller, controller_digital_e_t btn, event_callback_t clickedEvent);
 
 	bool IsKeyDown() { return controller->get_digital(button); }
+	bool IsPreviewDown = false;
+	event_callback_t ClickedEvent;
 
-	void SetClickedEvent(keynotify_callback_t callback);
+	Controller GetController() { return *controller; }
+
+	void SetClickedEvent(event_callback_t clickedEvent);
 	void RemoveClickedEvent();
 private:
-	ButtonClickedEvent *clickedEvent;
 	Controller *controller;
 	controller_digital_e_t button;
+
 };
