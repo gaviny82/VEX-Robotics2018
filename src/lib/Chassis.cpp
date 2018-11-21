@@ -1,7 +1,7 @@
 #include "lib/chassis.hpp"
 #include <vector>
 
-int limit(int limit, int value) {
+int limit(const int &limit, const int &value) {
 	if (value < -limit) {
 		return -limit;
 	}
@@ -28,22 +28,22 @@ void Chassis::Drive(const int &forward, const int &yaw) {
 	int left = ForwardCoefficient * realforward + TurningCoefficient * yaw;
 	int right = ForwardCoefficient * realforward - TurningCoefficient * yaw;
 
-	SetMotorLeft(limit(127, left));
-	SetMotorRight(limit(127, right));
+	SetMotorsLeft(limit(127, left));
+	SetMotorsRight(limit(127, right));
 }
 
 void Chassis::Stop() {
-	SetMotorLeft(0);
-	SetMotorRight(0);
+	SetMotorsLeft(0);
+	SetMotorsRight(0);
 }
 
-void Chassis::SetMotorLeft(const int &speed) {
+void Chassis::SetMotorsLeft(const int &speed) {
 	for (Motor mtr : LeftMotors) {
 		mtr.move(speed);
 	}
 }
 
-void Chassis::SetMotorRight(const int &speed) {
+void Chassis::SetMotorsRight(const int &speed) {
 	for (Motor mtr : RightMotors) {
 		mtr.move(speed);
 	}

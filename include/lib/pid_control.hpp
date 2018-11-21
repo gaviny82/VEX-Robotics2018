@@ -3,9 +3,7 @@
 class PidControl {
 public:
 	float Kp, Ki, Kd;
-	float nPowerOut;
-	float max;
-	float target;
+	float maxOutput;
 
 	explicit PidControl(float kP, float kI, float kD);
 
@@ -16,7 +14,9 @@ public:
 	* @param posCurrent: current value
 	*/
 	float PidProcess(int posTarget, int posCurrent);
+
 	private:
+		float nPowerOut;
 		int nErr, nErr_last;
 		int nSetPos, nActPos;
 		float nIntegral;

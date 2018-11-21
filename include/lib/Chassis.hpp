@@ -17,9 +17,6 @@ public:
   Chassis(const initializer_list<Motor> left, const initializer_list<Motor> right, const int &maxSpeed);
   void Drive(const int &forward, const int &yaw);
   void Stop();
-  void SetMotorLeft(const int &speed);
-  void SetMotorRight(const int &speed);
-
-private:
-  double _maxSpeed;
+  void SetMotorsLeft(const int &speed);
+  void SetMotorsRight(const int &speed);
 };
