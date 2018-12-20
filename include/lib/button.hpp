@@ -17,6 +17,7 @@ public:
 
 	void SetClickedEvent(event_callback_t clickedEvent);
 	void RemoveClickedEvent();
+	
 private:
 	Controller *controller;
 	controller_digital_e_t button;

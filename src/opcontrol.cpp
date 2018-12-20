@@ -4,6 +4,7 @@
 #include "lib/event_handler.hpp"
 #include "lib/button.hpp"
 #include "lib/chassis.hpp"
+#include "lib/smart_controller.hpp"
 #include "test.hpp"
 
 #define UNIT_TEST
@@ -37,17 +38,18 @@ void callback_test() {
 
 void opcontrol() {
 	Controller master(pros::E_CONTROLLER_MASTER);
+	//SmartController master_smart();
 
-	//Button b1(master, DIGITAL_L1);
-	//b1.SetClickedEvent(callback_test);
-	//EventHandler::EnableButtonEvents();
+	Button b1(master, DIGITAL_L1);
+	b1.SetClickedEvent(callback_test);
+	EventHandler::EnableButtonEvents();
 	Chassis chassis({ left_f_mtr, left_b_mtr }, { right_f_mtr, right_b_mtr });
 
 #ifdef UNIT_TEST
 	Test::ChassisTest(chassis);
 	//Test::ControllerEventTest();
-	KeyNotify test(master, DIGITAL_L1, callback_test);
-	KeyNotifyEvent::Register(test);
+	//KeyNotify test(master, DIGITAL_L1, callback_test);
+	//KeyNotifyEvent::Register(test);
 	while (true){
 		delay(20);
 	}

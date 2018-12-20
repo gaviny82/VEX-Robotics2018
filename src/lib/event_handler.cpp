@@ -2,6 +2,7 @@
 #include "lib/button.hpp"
 
 vector<Button*> EventHandler::Events;
+Task *EventHandler::ButtonEventTask=nullptr;
 
 void EventHandler::button_event_loop(void * param)
 {
