@@ -30,12 +30,16 @@ Motor left_b_mtr(20, MOTOR_GEARSET_18, reverse);
 Motor right_f_mtr(1, MOTOR_GEARSET_18);
 Motor right_b_mtr(18, MOTOR_GEARSET_18);
 
-Motor collector(10, MOTOR_GEARSET_36);
+Motor collector(11, MOTOR_GEARSET_36);
+Motor shoot1(17, MOTOR_GEARSET_6);
+Motor shoot2(19, MOTOR_GEARSET_6, reverse);
 
 Chassis chassis({ left_f_mtr, left_b_mtr }, { right_f_mtr, right_b_mtr });
 
+int test=0;
+
 void callback_test() {
-	pros::lcd::print(2, "callback test");
+	pros::lcd::print(2, "callback test %d", ++test);
 	chassis.Drive(50,0);
 	delay(1000);
 	chassis.Stop();
@@ -52,30 +56,31 @@ void opcontrol() {
 #ifdef UNIT_TEST
 	//Test::ChassisTest(chassis);
 	//Test::ControllerEventTest();
-	//KeyNotify test(master, DIGITAL_X, callback_test);
-	//KeyNotifyEvent::Register(test);
-
 	return;
 #endif
 
 	while (true) {
-		//lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
-			//(lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
-			//(lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);
-			//chassis.Drive(master.get_analog(ANALOG_LEFT_X), master.get_analog(ANALOG_RIGHT_Y));
-
 		int forward = master.get_analog(ANALOG_LEFT_Y);
 		int yaw = master.get_analog(ANALOG_RIGHT_X);
 
-		lcd::print(0, "%d", forward);
-
 		chassis.Drive(forward, yaw);
+		pros::lcd::print(0, "Is KeyA down %d", master.get_digital(DIGITAL_A));
 
 		if(master.get_digital(DIGITAL_A)){
 			collector.move(127);
-
+		}else if(master.get_digital(DIGITAL_B)){
+			collector.move(-127);
 		}else{
 			collector.move(0);
+		}
+
+
+		if(master.get_digital(DIGITAL_X)){
+			shoot1.move(100);
+			shoot2.move(100);
+		}else{
+			shoot1.move(0);
+			shoot2.move(0);
 		}
 
 		delay(20);
