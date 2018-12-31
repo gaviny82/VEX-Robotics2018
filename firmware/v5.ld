@@ -32,7 +32,7 @@ MEMORY
 
 /* Specify the default entry point to the program */
 
-ENTRY(vexStartup)
+ENTRY(hijack_entry)
 
 /* Define the sections, and where they are mapped in memory */
 
