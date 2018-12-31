@@ -32,6 +32,7 @@ Motor collector(11, MOTOR_GEARSET_36);
 Motor shoot1(17, MOTOR_GEARSET_6);
 Motor shoot2(19, MOTOR_GEARSET_6, reverse);
 
+
 ADIAnalogIn shoot_sensor('A');
 
 bool IsCollectorOn;
@@ -48,14 +49,11 @@ bool ShootSignal = SIG_STANDBY;
 
 #ifdef DEBUG
 int shootCount = 0;
-
 //[Test method]
 int test = 0;
 void callback_test() {
 	pros::lcd::print(2, "callback test %d", ++test);
-	chassis.Drive(50, 0);
 	delay(1000);
-	chassis.Stop();
 }
 
 void autoshoot_switch_callback() {
@@ -93,7 +91,7 @@ void opcontrol() {
 			//auto shoot
 			int deg = shoot_sensor.get_value();
 			if (ShootSignal == SIG_SHOOT && IsReady) {
-				shoot_sig = SIG_STANDBY;
+				ShootSignal = SIG_STANDBY;
 				shoot1.move(100);
 				shoot2.move(100);
 				IsReady = false;
@@ -127,8 +125,8 @@ void opcontrol() {
 
 #ifdef DEBUG
 		lcd::print(0, "Is KeyL1 down: %d", master.get_digital(DIGITAL_L1));
-		lcd::print(1, "Forward(%fx): %d, Yaw(%fx): %d", chassis.ForwardCoefficient, forward, chassis.TurningCoefficient, yaw);
-		lcd::print(2, "Shoot signal: %s, Shoot motor velocity: %f, Count: %s", ShootSignal == SIG_STANDBY ? "Standby" : "Shoot", shoot1.get_actual_velocity(), ++count);
+		lcd::print(1, "Forward(%fx): %d, Yaw(%fx): %d", chassis.ForwardCoefficient, chassis.CurrentSpeed, chassis.TurningCoefficient, chassis.CurrentYaw);
+		lcd::print(2, "Shoot signal: %s, Shoot motor velocity: %f, Count: %s", ShootSignal == SIG_STANDBY ? "Standby" : "Shoot", shoot1.get_actual_velocity(), ++shootCount);
 		lcd::print(3, "Collector state: %s%s, Collector temperature: %f", IsCollectorOn ? "On," : "Off,",IsCollectorReverse?"Reverse":"Collecting",collector.get_temperature());
 #endif
 		delay(20);
