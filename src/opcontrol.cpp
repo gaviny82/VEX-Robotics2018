@@ -39,7 +39,7 @@ bool IsCollectorOn;
 bool IsCollectorReverse;
 
 bool IsAutoShootEnabled = true;
-#define POSITION_READY 1000	//TODO: measure the ready position
+#define POSITION_READY 3950	//TODO: measure the ready position
 bool IsReady;
 
 #define SIG_STANDBY false
@@ -52,12 +52,12 @@ int shootCount = 0;
 //[Test method]
 int test = 0;
 void callback_test() {
-	pros::lcd::print(2, "callback test %d", ++test);
-	delay(1000);
+	pros::lcd::print(5, "callback test %d", ++test);
 }
 
 void autoshoot_switch_callback() {
 	IsCollectorOn = !IsCollectorOn;
+	shootCount++;
 }
 #endif
 
@@ -82,29 +82,27 @@ void opcontrol() {
 	Button click_to_shoot(master, DIGITAL_B, shoot_callback);
 	EventHandler::EnableButtonEvents();
 
+	int shoot_m;
 	while (true) {
 		//motion control
 		chassis.Drive(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_X));
 
 		//shoot control
+		int deg = shoot_sensor.get_value();
 		if (IsAutoShootEnabled) {
 			//auto shoot
-			int deg = shoot_sensor.get_value();
 			if (ShootSignal == SIG_SHOOT && IsReady) {
-				ShootSignal = SIG_STANDBY;
-				shoot1.move(100);
-				shoot2.move(100);
+				shoot_m = 100;
 				IsReady = false;
 			}
-			else if (deg > POSITION_READY) {
+			else if (deg < POSITION_READY) {
 				IsReady = true;
-				shoot1.move(60);
-				shoot2.move(60);
+				shoot_m = 40;
 			}
 			else {
+				ShootSignal = SIG_STANDBY;
 				IsReady = false;
-				shoot1.move(100);
-				shoot2.move(100);
+				shoot_m = 100;
 			}
 		}
 		else {
@@ -118,6 +116,8 @@ void opcontrol() {
 				shoot2.move(0);
 			}
 		}
+		shoot1.move(shoot_m);
+		shoot2.move(shoot_m);
 
 		//collector control
 		IsCollectorReverse = master.get_digital(DIGITAL_R2);
@@ -126,9 +126,9 @@ void opcontrol() {
 #ifdef DEBUG
 		lcd::print(0, "Is KeyL1 down: %d", master.get_digital(DIGITAL_L1));
 		lcd::print(1, "Forward(%fx): %d, Yaw(%fx): %d", chassis.ForwardCoefficient, chassis.CurrentSpeed, chassis.TurningCoefficient, chassis.CurrentYaw);
-		lcd::print(2, "Shoot signal: %s, Shoot motor velocity: %f, Count: %s", ShootSignal == SIG_STANDBY ? "Standby" : "Shoot", shoot1.get_actual_velocity(), ++shootCount);
+		lcd::print(2, "Shoot: DEG: %d, SIG: %s, SPD: %d, CNT: %s", deg, ShootSignal == SIG_STANDBY ? "Standby" : "Shoot", shoot_m, shootCount);
 		lcd::print(3, "Collector state: %s%s, Collector temperature: %f", IsCollectorOn ? "On," : "Off,",IsCollectorReverse?"Reverse":"Collecting",collector.get_temperature());
 #endif
-		delay(20);
+		delay(20); /* DO NOT DELETE! If the loop goes too tight LCD will die */
 	}
 }
