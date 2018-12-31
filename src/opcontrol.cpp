@@ -28,7 +28,7 @@ Motor left_b_mtr(20, MOTOR_GEARSET_18, reverse);
 Motor right_f_mtr(1, MOTOR_GEARSET_18);
 Motor right_b_mtr(18, MOTOR_GEARSET_18);
 
-Motor collector(11, MOTOR_GEARSET_36);
+Motor collector(2, MOTOR_GEARSET_36);
 Motor shoot1(17, MOTOR_GEARSET_6);
 Motor shoot2(19, MOTOR_GEARSET_6, reverse);
 
@@ -39,7 +39,7 @@ bool IsCollectorOn;
 bool IsCollectorReverse;
 
 bool IsAutoShootEnabled = true;
-#define POSITION_READY 3950	//TODO: measure the ready position
+#define POSITION_READY 3850	//TODO: Don't know if it works
 bool IsReady;
 
 #define SIG_STANDBY false
@@ -48,7 +48,7 @@ bool ShootSignal = SIG_STANDBY;
 
 
 #ifdef DEBUG
-int shootCount = 0;
+uint32_t shootCount = 0;
 //[Test method]
 int test = 0;
 void callback_test() {
@@ -56,8 +56,7 @@ void callback_test() {
 }
 
 void autoshoot_switch_callback() {
-	IsCollectorOn = !IsCollectorOn;
-	shootCount++;
+	IsAutoShootEnabled = !IsAutoShootEnabled;
 }
 #endif
 
@@ -67,6 +66,7 @@ void collector_switch_callback() {
 
 void shoot_callback() {
 	ShootSignal = SIG_SHOOT;
+	shootCount++;
 }
 
 void opcontrol() {
@@ -97,7 +97,7 @@ void opcontrol() {
 			}
 			else if (deg < POSITION_READY) {
 				IsReady = true;
-				shoot_m = 40;
+				shoot_m = 20;
 			}
 			else {
 				ShootSignal = SIG_STANDBY;
@@ -108,8 +108,8 @@ void opcontrol() {
 		else {
 			//manual shoot
 			if (master.get_digital(DIGITAL_X)) {
-				shoot1.move(100);
-				shoot2.move(100);
+				shoot1.move(127);
+				shoot2.move(127);
 			}
 			else {
 				shoot1.move(0);
@@ -126,9 +126,9 @@ void opcontrol() {
 #ifdef DEBUG
 		lcd::print(0, "Is KeyL1 down: %d", master.get_digital(DIGITAL_L1));
 		lcd::print(1, "Forward(%fx): %d, Yaw(%fx): %d", chassis.ForwardCoefficient, chassis.CurrentSpeed, chassis.TurningCoefficient, chassis.CurrentYaw);
-		lcd::print(2, "Shoot: DEG: %d, SIG: %s, SPD: %d, CNT: %s", deg, ShootSignal == SIG_STANDBY ? "Standby" : "Shoot", shoot_m, shootCount);
+		lcd::print(2, "Shoot: DEG: %d, SIG: %s, SPD: %d, CNT: %ul", deg, ShootSignal == SIG_STANDBY ? "Standby" : "Shoot", shoot_m, shootCount);
 		lcd::print(3, "Collector state: %s%s, Collector temperature: %f", IsCollectorOn ? "On," : "Off,",IsCollectorReverse?"Reverse":"Collecting",collector.get_temperature());
 #endif
-		delay(20); /* DO NOT DELETE! If the loop goes too tight LCD will die */
+		// delay(20); /* DO NOT DELETE! If the loop goes too tight LCD will die */
 	}
 }
