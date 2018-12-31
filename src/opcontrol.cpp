@@ -2,11 +2,8 @@
 #include "lib/event_handler.hpp"
 #include "lib/button.hpp"
 #include "lib/chassis.hpp"
-#include "lib/smart_controller.hpp"
-#include "test.hpp"
+#include "lib/collector.h"
 #include "pros/rtos.hpp"
-
-//#define UNIT_TEST
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -37,6 +34,9 @@ Motor shoot2(19, MOTOR_GEARSET_6, reverse);
 
 int test = 0;
 
+bool IsCollectorOn;
+bool IsCollectorReverse;
+
 void callback_test() {
 	pros::lcd::print(2, "callback test %d", ++test);
 	chassis.Drive(50, 0);
@@ -44,13 +44,17 @@ void callback_test() {
 	chassis.Stop();
 }
 
+void collector_switch_callback() {
+	IsCollectorOn = !IsCollectorOn;
+}
+
 void opcontrol() {
 	//initialization
+	Controller master(CONTROLLER_MASTER);
 	Chassis chassis({ left_f_mtr, left_b_mtr }, { right_f_mtr, right_b_mtr });
-	Controller master(pros::E_CONTROLLER_MASTER);
 
-	Button b1(master, DIGITAL_L1);
-	b1.SetClickedEvent(callback_test);
+	Button test_btn(master, DIGITAL_L1, callback_test);
+	Button collector_switch(master, DIGITAL_R1, collector_switch_callback);
 	EventHandler::EnableButtonEvents();
 
 	while (true) {
@@ -60,16 +64,6 @@ void opcontrol() {
 		chassis.Drive(forward, yaw);
 		pros::lcd::print(0, "Is KeyA down %d", master.get_digital(DIGITAL_A));
 
-		if (master.get_digital(DIGITAL_A)) {
-			collector.move(127);
-		}
-		else if (master.get_digital(DIGITAL_B)) {
-			collector.move(-127);
-		}
-		else {
-			collector.move(0);
-		}
-
 		if (master.get_digital(DIGITAL_X)) {
 			shoot1.move(100);
 			shoot2.move(100);
@@ -78,6 +72,10 @@ void opcontrol() {
 			shoot1.move(0);
 			shoot2.move(0);
 		}
+
+		//collector control
+		IsCollectorReverse = master.get_digital(DIGITAL_DOWN);
+		collector.move((int)IsCollectorOn * 127 * ((int)IsCollectorReverse * 2 - 1));
 
 		delay(20);
 	}

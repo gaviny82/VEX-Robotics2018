@@ -14,7 +14,7 @@ Button::Button(Controller &ctrller, controller_digital_e_t btn)
 Button::Button(Controller &ctrller, controller_digital_e_t btn, event_callback_t clickedEvent){
 	controller = &ctrller;
 	button = btn;
-	ClickedEvent = clickedEvent;
+	SetClickedEvent(clickedEvent);
 }
 
 void Button::SetClickedEvent(event_callback_t clickedEvent)
