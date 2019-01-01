@@ -3,6 +3,7 @@
 #include "lib/button.hpp"
 #include "lib/chassis.hpp"
 #include "pros/rtos.hpp"
+//#include "lib/robot.hpp"
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -48,14 +49,8 @@ bool IsReady;
 #define SIG_SHOOT true
 bool ShootSignal = SIG_STANDBY;
 
-
 #ifdef DEBUG
 uint32_t shootCount = 0;
-//[Test method]
-int test = 0;
-void callback_test() {
-	pros::lcd::print(5, "callback test %d", ++test);
-}
 #endif
 
 void autoshoot_switch_callback() {
@@ -77,11 +72,8 @@ void reverse_callback() {
 void opcontrol() {
 	//initialization
 	Controller master(CONTROLLER_MASTER);
-	chassis.TurningCoefficient=0.7;
+	chassis.TurningCoefficient = 0.7;
 
-#ifdef DEBUG
-	Button test_btn(master, DIGITAL_L1, callback_test);
-#endif
 	Button autoshoot_switch(master, DIGITAL_UP, autoshoot_switch_callback);
 	Button collector_switch(master, DIGITAL_R1, collector_switch_callback);
 	Button click_to_shoot(master, DIGITAL_B, shoot_callback);
@@ -127,22 +119,23 @@ void opcontrol() {
 
 		//collector control
 		IsCollectorReverse = master.get_digital(DIGITAL_R2);
-		if(IsCollectorOn){
-			if(IsReady){
-				collector.move(127 * (IsCollectorReverse? -1:1));
-			}else{
+		if (IsCollectorOn) {
+			if (IsReady) {
+				collector.move(127 * (IsCollectorReverse ? -1 : 1));
+			}
+			else {
 				collector.move(-20);
 			}
-		}else{
+		}
+		else {
 			collector.move(0);
 		}
 
-
 #ifdef DEBUG
-		int line=0;
-		lcd::print(line++, "Forward(%.3fx): %d, Yaw(%.3fx): %d, %s", chassis.ForwardCoefficient, chassis.CurrentSpeed, chassis.TurningCoefficient, chassis.CurrentYaw, chassis.IsReversed?"Reversed":"Forward");
+		int line = 0;
+		lcd::print(line++, "Forward(%.3fx): %d, Yaw(%.3fx): %d, %s", chassis.ForwardCoefficient, chassis.CurrentSpeed, chassis.TurningCoefficient, chassis.CurrentYaw, chassis.IsReversed ? "Reversed" : "Forward");
 		lcd::print(line++, "Shoot: DEG: %d, SIG: %s, Voltage: %d, Count: %ul", deg, ShootSignal == SIG_STANDBY ? "Standby" : "Shoot", shoot_m, shootCount);
-		lcd::print(line++, "Collector state: %s%s, Collector temperature: %f", IsCollectorOn ? "On," : "Off,",IsCollectorReverse?"Reverse":"Collecting",collector.get_temperature());
+		lcd::print(line++, "Collector state: %s%s, Collector temperature: %f", IsCollectorOn ? "On," : "Off,", IsCollectorReverse ? "Reverse" : "Collecting", collector.get_temperature());
 #endif
 		delay(20); /* DO NOT DELETE! If the loop goes too tight LCD will die */
 	}
