@@ -28,9 +28,11 @@ Motor left_b_mtr(20, MOTOR_GEARSET_18);
 Motor right_f_mtr(1, MOTOR_GEARSET_18, reverse);
 Motor right_b_mtr(18, MOTOR_GEARSET_18, reverse);
 
-Motor collector(2, MOTOR_GEARSET_36);
+Motor collector(2, MOTOR_GEARSET_36, reverse);
 Motor shoot1(17, MOTOR_GEARSET_6);
 Motor shoot2(19, MOTOR_GEARSET_6, reverse);
+
+Chassis chassis({ left_f_mtr, left_b_mtr }, { right_f_mtr, right_b_mtr });
 
 
 ADIAnalogIn shoot_sensor('A');
@@ -54,11 +56,11 @@ int test = 0;
 void callback_test() {
 	pros::lcd::print(5, "callback test %d", ++test);
 }
+#endif
 
 void autoshoot_switch_callback() {
 	IsAutoShootEnabled = !IsAutoShootEnabled;
 }
-#endif
 
 void collector_switch_callback() {
 	IsCollectorOn = !IsCollectorOn;
@@ -68,24 +70,28 @@ void shoot_callback() {
 	ShootSignal = SIG_SHOOT;
 	shootCount++;
 }
+void reverse_callback() {
+	chassis.IsReversed=!chassis.IsReversed;
+}
 
 void opcontrol() {
 	//initialization
 	Controller master(CONTROLLER_MASTER);
-	Chassis chassis({ left_f_mtr, left_b_mtr }, { right_f_mtr, right_b_mtr });
+	chassis.TurningCoefficient=0.7;
 
 #ifdef DEBUG
 	Button test_btn(master, DIGITAL_L1, callback_test);
-	Button autoshoot_switch(master, DIGITAL_DOWN, autoshoot_switch_callback);
 #endif
+	Button autoshoot_switch(master, DIGITAL_UP, autoshoot_switch_callback);
 	Button collector_switch(master, DIGITAL_R1, collector_switch_callback);
 	Button click_to_shoot(master, DIGITAL_B, shoot_callback);
+	Button reverse_switch(master, DIGITAL_DOWN, reverse_callback);
 	EventHandler::EnableButtonEvents();
 
 	int shoot_m;
 	while (true) {
 		//motion control
-		chassis.Drive(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_X));
+		chassis.Drive(master.get_analog(ANALOG_LEFT_Y), -master.get_analog(ANALOG_RIGHT_X));
 
 		//shoot control
 		int deg = shoot_sensor.get_value();
@@ -97,7 +103,7 @@ void opcontrol() {
 			}
 			else if (deg < POSITION_READY && deg > 1000) {
 				IsReady = true;
-				shoot_m = 8;
+				shoot_m = 10;
 			}
 			else {
 				ShootSignal = SIG_STANDBY;
@@ -121,13 +127,22 @@ void opcontrol() {
 
 		//collector control
 		IsCollectorReverse = master.get_digital(DIGITAL_R2);
-		collector.move((int)IsCollectorOn * 127 * ((int)IsCollectorReverse * 2 - 1));
+		if(IsCollectorOn){
+			if(IsReady){
+				collector.move(127 * (IsCollectorReverse? -1:1));
+			}else{
+				collector.move(-20);
+			}
+		}else{
+			collector.move(0);
+		}
+
 
 #ifdef DEBUG
-		lcd::print(0, "Is KeyL1 down: %d", master.get_digital(DIGITAL_L1));
-		lcd::print(1, "Forward(%fx): %d, Yaw(%fx): %d", chassis.ForwardCoefficient, chassis.CurrentSpeed, chassis.TurningCoefficient, chassis.CurrentYaw);
-		lcd::print(2, "Shoot: DEG: %d, SIG: %s, SPD: %d, CNT: %ul", deg, ShootSignal == SIG_STANDBY ? "Standby" : "Shoot", shoot_m, shootCount);
-		lcd::print(3, "Collector state: %s%s, Collector temperature: %f", IsCollectorOn ? "On," : "Off,",IsCollectorReverse?"Reverse":"Collecting",collector.get_temperature());
+		int line=0;
+		lcd::print(line++, "Forward(%.3fx): %d, Yaw(%.3fx): %d, %s", chassis.ForwardCoefficient, chassis.CurrentSpeed, chassis.TurningCoefficient, chassis.CurrentYaw, chassis.IsReversed?"Reversed":"Forward");
+		lcd::print(line++, "Shoot: DEG: %d, SIG: %s, Voltage: %d, Count: %ul", deg, ShootSignal == SIG_STANDBY ? "Standby" : "Shoot", shoot_m, shootCount);
+		lcd::print(line++, "Collector state: %s%s, Collector temperature: %f", IsCollectorOn ? "On," : "Off,",IsCollectorReverse?"Reverse":"Collecting",collector.get_temperature());
 #endif
 		delay(20); /* DO NOT DELETE! If the loop goes too tight LCD will die */
 	}
