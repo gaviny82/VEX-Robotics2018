@@ -39,7 +39,7 @@ bool IsCollectorOn;
 bool IsCollectorReverse;
 
 bool IsAutoShootEnabled = true;
-#define POSITION_READY 3850	//TODO: Don't know if it works
+#define POSITION_READY 3750	//TODO: Don't know if it works
 bool IsReady;
 
 #define SIG_STANDBY false
@@ -92,18 +92,20 @@ void opcontrol() {
 		if (IsAutoShootEnabled) {
 			//auto shoot
 			if (ShootSignal == SIG_SHOOT && IsReady) {
-				shoot_m = 100;
+				shoot_m = 127;
 				IsReady = false;
 			}
-			else if (deg < POSITION_READY) {
+			else if (deg < POSITION_READY && deg > 1000) {
 				IsReady = true;
-				shoot_m = 20;
+				shoot_m = 8;
 			}
 			else {
 				ShootSignal = SIG_STANDBY;
 				IsReady = false;
-				shoot_m = 100;
+				shoot_m = 127;
 			}
+				shoot1.move(shoot_m);
+				shoot2.move(shoot_m);
 		}
 		else {
 			//manual shoot
@@ -116,8 +118,6 @@ void opcontrol() {
 				shoot2.move(0);
 			}
 		}
-		shoot1.move(shoot_m);
-		shoot2.move(shoot_m);
 
 		//collector control
 		IsCollectorReverse = master.get_digital(DIGITAL_R2);
@@ -129,6 +129,6 @@ void opcontrol() {
 		lcd::print(2, "Shoot: DEG: %d, SIG: %s, SPD: %d, CNT: %ul", deg, ShootSignal == SIG_STANDBY ? "Standby" : "Shoot", shoot_m, shootCount);
 		lcd::print(3, "Collector state: %s%s, Collector temperature: %f", IsCollectorOn ? "On," : "Off,",IsCollectorReverse?"Reverse":"Collecting",collector.get_temperature());
 #endif
-		// delay(20); /* DO NOT DELETE! If the loop goes too tight LCD will die */
+		delay(20); /* DO NOT DELETE! If the loop goes too tight LCD will die */
 	}
 }
