@@ -3,7 +3,7 @@
 #include "lib/button.hpp"
 #include "lib/chassis.hpp"
 #include "pros/rtos.hpp"
-#include "lib/robot.hpp"
+#include "robot.hpp"
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -66,9 +66,9 @@ void opcontrol() {
 
 	while (true) {
 		//motion control
-#ifdef DEBUG	//acceleration compensation 
+#ifdef DEBUG	//acceleration compensation
+	int currentVelocity = master.get_analog(ANALOG_LEFT_Y);
 		if (IsAccelCompensationEnabled) {
-			int currentVelocity = master.get_analog(ANALOG_LEFT_Y);
 			int accel = currentVelocity - chassis.CurrentSpeed;
 			if (accel < -100) {
 				currentVelocity = chassis.CurrentSpeed - 100;

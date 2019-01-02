@@ -1,8 +1,9 @@
-#pragma once
+#ifndef _ROBOT_HPP_
+#define _ROBOT_HPP_
+
 #include "main.h"
 #include "lib/button.hpp"
 #include "lib/chassis.hpp"
-#include "lib/robot.hpp"
 
 using namespace pros;
 
@@ -33,3 +34,5 @@ bool IsReady;
 bool ShootSignal = SIG_STANDBY;
 
 bool IsAccelCompensationEnabled = true;
+
+#endif
