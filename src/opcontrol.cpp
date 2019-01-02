@@ -42,11 +42,20 @@ void reverse_callback() {
 	chassis.IsReversed=!chassis.IsReversed;
 }
 
+#ifdef DEBUG
+void accel_compensation_callback() {
+	IsAccelCompensationEnabled = !IsAccelCompensationEnabled;
+}
+#endif
+
 void opcontrol() {
 	//initialization
 	Controller master(CONTROLLER_MASTER);
 	chassis.TurningCoefficient = 0.7;
 
+#ifdef DEBUG
+	Button accel_compensation_switch(master, DIGITAL_LEFT, accel_compensation_callback);
+#endif
 	Button autoshoot_switch(master, DIGITAL_UP, autoshoot_switch_callback);
 	Button collector_switch(master, DIGITAL_R1, collector_switch_callback);
 	Button click_to_shoot(master, DIGITAL_B, shoot_callback);
@@ -54,10 +63,21 @@ void opcontrol() {
 	EventHandler::EnableButtonEvents();
 
 	int shoot_m;
+
 	while (true) {
 		//motion control
+#ifdef DEBUG	//acceleration compensation 
+		if (IsAccelCompensationEnabled) {
+			int currentVelocity = master.get_analog(ANALOG_LEFT_Y);
+			int accel = currentVelocity - chassis.CurrentSpeed;
+			if (accel < -100) {
+				currentVelocity = chassis.CurrentSpeed - 100;
+			}
+		}
+		chassis.Drive(currentVelocity, master.get_analog(ANALOG_RIGHT_X));
+#else
 		chassis.Drive(master.get_analog(ANALOG_LEFT_Y), -master.get_analog(ANALOG_RIGHT_X));
-
+#endif
 		//shoot control
 		int deg = shoot_sensor.get_value();
 		if (IsAutoShootEnabled) {

@@ -31,3 +31,5 @@ bool IsReady;
 #define SIG_STANDBY false
 #define SIG_SHOOT true
 bool ShootSignal = SIG_STANDBY;
+
+bool IsAccelCompensationEnabled = true;

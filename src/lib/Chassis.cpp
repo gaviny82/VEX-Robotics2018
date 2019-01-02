@@ -26,9 +26,8 @@ Chassis::Chassis(const initializer_list<Motor> left, const initializer_list<Moto
 void Chassis::Drive(const int &forward, const int &yaw) {
 	CurrentSpeed = forward;
 	CurrentYaw = yaw;
-	int realforward = forward * (IsReversed ? 1 : -1);
-	int left = ForwardCoefficient * realforward - TurningCoefficient * yaw;
-	int right = ForwardCoefficient * realforward + TurningCoefficient * yaw;
+	int left = ForwardCoefficient * forward * (IsReversed ? 1 : -1) - TurningCoefficient * yaw * (IsReversed ? 1 : -1);
+	int right = ForwardCoefficient * forward * (IsReversed ? 1 : -1) + TurningCoefficient * yaw * (IsReversed ? 1 : -1);
 
 	SetMotorsLeft(limit(127, left));
 	SetMotorsRight(limit(127, right));
