@@ -68,10 +68,12 @@ void opcontrol() {
 		//motion control
 #ifdef DEBUG	//acceleration compensation
 	int currentVelocity = master.get_analog(ANALOG_LEFT_Y);
+		int accel = currentVelocity - chassis.CurrentSpeed;
 		if (IsAccelCompensationEnabled) {
-			int accel = currentVelocity - chassis.CurrentSpeed;
-			if (accel < -100) {
-				currentVelocity = chassis.CurrentSpeed - 100;
+			if (accel > 12) {
+				currentVelocity = chassis.CurrentSpeed + accel*0.1;
+			}else if(accel<-12){
+				currentVelocity = chassis.CurrentSpeed + accel*0.1;
 			}
 		}
 		chassis.Drive(currentVelocity, master.get_analog(ANALOG_RIGHT_X));
@@ -127,7 +129,8 @@ void opcontrol() {
 #ifdef DEBUG
 		int line = 0;
 		lcd::print(line++, "Forward(%.3fx): %d, Yaw(%.3fx): %d, %s", chassis.ForwardCoefficient, chassis.CurrentSpeed, chassis.TurningCoefficient, chassis.CurrentYaw, chassis.IsReversed ? "Reversed" : "Forward");
-		lcd::print(line++, "Shoot: DEG: %d, SIG: %s, Voltage: %d, Count: %ul", deg, ShootSignal == SIG_STANDBY ? "Standby" : "Shoot", shoot_m, shootCount);
+		lcd::print(line++,"Compensation: %s, Accel: %d",IsAccelCompensationEnabled?"on":"Off", accel);
+		lcd::print(line++, "Shoot: DEG: %d, %s, Voltage: %d, Count: %ul", deg, ShootSignal == SIG_STANDBY ? "Standby" : "Shoot", shoot_m, shootCount);
 		lcd::print(line++, "Collector state: %s%s, Collector temperature: %f", IsCollectorOn ? "On," : "Off,", IsCollectorReverse ? "Reverse" : "Collecting", collector.get_temperature());
 #endif
 		delay(20); /* DO NOT DELETE! If the loop goes too tight LCD will die */
