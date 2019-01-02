@@ -8,31 +8,31 @@
 using namespace pros;
 
 #define reverse true
-Motor left_f_mtr(15, MOTOR_GEARSET_18);
-Motor left_b_mtr(20, MOTOR_GEARSET_18);
-Motor right_f_mtr(1, MOTOR_GEARSET_18, reverse);
-Motor right_b_mtr(18, MOTOR_GEARSET_18, reverse);
+extern Motor left_f_mtr;
+extern Motor left_b_mtr;
+extern Motor right_f_mtr;
+extern Motor right_b_mtr;
 
-Motor collector(2, MOTOR_GEARSET_36, reverse);
-Motor shoot1(17, MOTOR_GEARSET_6);
-Motor shoot2(19, MOTOR_GEARSET_6, reverse);
+extern Motor collector;
+extern Motor shoot1;
+extern Motor shoot2;
 
-Chassis chassis({ left_f_mtr, left_b_mtr }, { right_f_mtr, right_b_mtr });
+extern Chassis chassis;
 
-ADIAnalogIn shoot_sensor('A');
+extern ADIAnalogIn shoot_sensor;
 
 //configuration
-bool IsCollectorOn;
-bool IsCollectorReverse;
+extern bool IsCollectorOn;
+extern bool IsCollectorReverse;
 
-bool IsAutoShootEnabled = true;
+extern bool IsAutoShootEnabled;
 #define POSITION_READY 3700	//TODO: Don't know if it works
-bool IsReady;
+extern bool IsReady;
 
 #define SIG_STANDBY false
 #define SIG_SHOOT true
-bool ShootSignal = SIG_STANDBY;
+extern bool ShootSignal;
 
-bool IsAccelCompensationEnabled = true;
+extern bool IsAccelCompensationEnabled;
 
 #endif
