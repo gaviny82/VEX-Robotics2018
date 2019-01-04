@@ -49,3 +49,49 @@ void Chassis::SetMotorsRight(const int &speed) {
 		mtr.move(speed);
 	}
 }
+
+void Chassis::SetMotorsRelativeL(double position, int32_t speed) {
+	for (Motor mtr : LeftMotors) {
+		mtr.move_relative(position, speed);
+	}
+}
+
+void Chassis::SetMotorsRelativeR(double position, int32_t speed) {
+	for (Motor mtr : RightMotors) {
+		mtr.move_relative(position, speed);
+	}
+}
+
+void Chassis::ClearEncoderL() {
+	for (Motor mtr : LeftMotors) {
+		mtr.set_encoder_units(E_MOTOR_ENCODER_COUNTS);
+		mtr.tare_position();
+	}
+}
+
+void Chassis::ClearEncoderR() {
+	for (Motor mtr : RightMotors) {
+		mtr.set_encoder_units(E_MOTOR_ENCODER_COUNTS);
+		mtr.tare_position();
+	}
+}
+
+double Chassis::GetEncoderL() {
+	double total = 0;
+	uint16_t cnt = 0;
+	for (Motor mtr : LeftMotors) {
+		total = total + mtr.tare_position();
+		cnt ++;
+	}
+	return total / cnt;
+}
+
+double Chassis::GetEncoderR() {
+	double total = 0;
+	uint16_t cnt = 0;
+	for (Motor mtr : RightMotors) {
+		total = total + mtr.tare_position();
+		cnt ++;
+	}
+	return total / cnt;
+}

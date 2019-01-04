@@ -19,4 +19,10 @@ public:
 	void Stop();
 	void SetMotorsLeft(const int &speed);
 	void SetMotorsRight(const int &speed);
+	void SetMotorsRelativeL(double position, int32_t speed);
+	void SetMotorsRelativeR(double position, int32_t speed);
+	void ClearEncoderL();
+	void ClearEncoderR();
+	double GetEncoderL();
+	double GetEncoderR();
 };

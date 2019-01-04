@@ -1,6 +1,6 @@
 #include "lib/pid_control.hpp"
 
-PidControl::PidControl(float kP, float kI, float kD) {
+void PidControl::Pidinit(float kP, float kI, float kD) {
 	Kp = kP;
 	Ki = kI;
 	Kd = kD;
@@ -13,7 +13,7 @@ PidControl::PidControl(float kP, float kI, float kD) {
 	nPowerOut = 0.0;
 }
 
-float PidControl::PidProcess(int posTarget, int posCurrent) {
+double PidControl::PidProcess(int posTarget, int posCurrent) {
 	nSetPos = posTarget;
 	nActPos = posCurrent;
 	nErr = nSetPos - nActPos;

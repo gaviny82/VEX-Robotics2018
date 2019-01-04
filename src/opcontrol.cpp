@@ -4,6 +4,7 @@
 #include "lib/chassis.hpp"
 #include "pros/rtos.hpp"
 #include "robot.hpp"
+#include "lib/auto_move.hpp"
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -62,11 +63,9 @@ void opcontrol() {
 	Button reverse_switch(master, DIGITAL_DOWN, reverse_callback);
 	EventHandler::EnableButtonEvents();
 
-	int shoot_m;
 
 	while (true) {
-		//motion control
-#ifdef DEBUG	//acceleration compensation
+	//motion control
 	int currentVelocity = master.get_analog(ANALOG_LEFT_Y);
 		int accel = currentVelocity - chassis.CurrentSpeed;
 		if (IsAccelCompensationEnabled) {
@@ -77,10 +76,9 @@ void opcontrol() {
 			}
 		}
 		chassis.Drive(currentVelocity, master.get_analog(ANALOG_RIGHT_X));
-#else
-		chassis.Drive(master.get_analog(ANALOG_LEFT_Y), -master.get_analog(ANALOG_RIGHT_X));
-#endif
+
 		//shoot control
+		int shoot_m;
 		int deg = shoot_sensor.get_value();
 		if (IsAutoShootEnabled) {
 			//auto shoot

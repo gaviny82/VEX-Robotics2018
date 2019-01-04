@@ -3,9 +3,9 @@
 class PidControl {
 public:
 	float Kp, Ki, Kd;
-	float maxOutput;
+	float maxOutput = 127;
 
-	explicit PidControl(float kP, float kI, float kD);
+	void Pidinit(float kP, float kI, float kD);
 
 	/*
 	* return the output of a pid
@@ -13,7 +13,7 @@ public:
 	* @param posTarget: target value
 	* @param posCurrent: current value
 	*/
-	float PidProcess(int posTarget, int posCurrent);
+	double PidProcess(int posTarget, int posCurrent);
 
 	private:
 		float nPowerOut;
