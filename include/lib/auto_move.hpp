@@ -1,12 +1,10 @@
 #pragma once
-#include "api.h"
+#include "main.h"
 #include "robot.hpp"
 
-#if 1
-
-uint16_t movecnt = 0;
-uint8_t move_state[64]  = {};
-uint32_t move_start_time[64] = {};
+extern uint16_t movecnt;
+extern uint8_t move_state[64];
+extern uint32_t move_start_time[64];
 
 #define MOV_FIRST_RUN 0
 #define MOV_RUNNING 1
@@ -32,5 +30,3 @@ do {\
   }\
   __next:;\
 } while (0);
-
-#endif

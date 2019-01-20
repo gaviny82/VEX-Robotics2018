@@ -24,8 +24,8 @@ Chassis::Chassis(const initializer_list<Motor> left, const initializer_list<Moto
 }
 
 void Chassis::Drive(const int &forward, const int &yaw) {
-	CurrentSpeed = limit(127,forward);
-	CurrentYaw = limit(127,yaw);
+	CurrentSpeed = limit(127, forward);
+	CurrentYaw = limit(127, yaw);
 	int left = ForwardCoefficient * CurrentSpeed * (IsReversed ? -1 : 1) + TurningCoefficient * CurrentYaw;
 	int right = ForwardCoefficient * CurrentSpeed * (IsReversed ? -1 : 1) - TurningCoefficient * CurrentYaw;
 
@@ -81,7 +81,7 @@ double Chassis::GetEncoderL() {
 	uint16_t cnt = 0;
 	for (Motor mtr : LeftMotors) {
 		total = total + mtr.tare_position();
-		cnt ++;
+		cnt++;
 	}
 	return total / cnt;
 }
@@ -91,7 +91,7 @@ double Chassis::GetEncoderR() {
 	uint16_t cnt = 0;
 	for (Motor mtr : RightMotors) {
 		total = total + mtr.tare_position();
-		cnt ++;
+		cnt++;
 	}
 	return total / cnt;
 }
