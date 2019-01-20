@@ -17,12 +17,14 @@
 
 
 void autonomous() {
-    chassis.SetMotorsRelativeL(2000, 127);
-        chassis.SetMotorsRelativeR(2000, 127);
-    while(true) {
-      pros::lcd::print(0,"EncL: %f  EncR: %f", left_f_mtr.get_position(), right_f_mtr.get_position());
- //_set_movement(100,2,2,3000);
-//__end:
-delay(20);
-    }
+	chassis.SetMotorsRelativeL(2000, 127);
+	chassis.SetMotorsRelativeR(2000, 127);
+	while (true) {
+		pros::lcd::print(0, "EncL: %f  EncR: %f", left_f_mtr.get_position(), right_f_mtr.get_position());
+		_set_movement(100,2,2,3000);
+
+
+		__end:;
+		delay(20);
+	}
 }
