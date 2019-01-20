@@ -2,7 +2,7 @@
 #include "robot.hpp"
 #include "lib/auto_move.hpp"
 #include "lib/pid_control.hpp"
-
+/*
 PidControl pid_l;
 PidControl pid_r;
 
@@ -30,4 +30,4 @@ void auto_move::run() {
     if (time <= 0)
         state == TASK_TLE;
 
-}
+}*/

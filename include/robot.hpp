@@ -16,6 +16,7 @@ extern Motor right_b_mtr;
 extern Motor collector;
 extern Motor shoot1;
 extern Motor shoot2;
+extern Motor arm;
 
 extern Chassis chassis;
 

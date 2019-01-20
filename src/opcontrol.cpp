@@ -55,11 +55,11 @@ void opcontrol() {
 	chassis.TurningCoefficient = 0.7;
 
 #ifdef DEBUG
-	Button accel_compensation_switch(master, DIGITAL_LEFT, accel_compensation_callback);
+	Button accel_compensation_switch(master, DIGITAL_X, accel_compensation_callback);
 #endif
 	Button autoshoot_switch(master, DIGITAL_UP, autoshoot_switch_callback);
-	Button collector_switch(master, DIGITAL_R1, collector_switch_callback);
-	Button click_to_shoot(master, DIGITAL_B, shoot_callback);
+	//Button collector_switch(master, DIGITAL_L1, collector_switch_callback);
+	Button click_to_shoot(master, DIGITAL_LEFT, shoot_callback);
 	Button reverse_switch(master, DIGITAL_DOWN, reverse_callback);
 	EventHandler::EnableButtonEvents();
 
@@ -111,7 +111,7 @@ void opcontrol() {
 		}
 
 		//collector control
-		IsCollectorReverse = master.get_digital(DIGITAL_R2);
+		/*IsCollectorReverse = master.get_digital(DIGITAL_L2);
 		if (IsCollectorOn) {
 			if (IsReady) {
 				collector.move(127 * (IsCollectorReverse ? -1 : 1));
@@ -122,6 +122,26 @@ void opcontrol() {
 		}
 		else {
 			collector.move(0);
+		}*/
+		if(master.get_digital(DIGITAL_R1)){
+			if (IsReady) {
+				collector.move(127);
+			}
+			else {
+				collector.move(0);//TODO: Test if the collector wroks properly when shooting
+			}
+		}else if(master.get_digital(DIGITAL_R2)){
+				collector.move(-127);
+		}else{
+				collector.move(0);
+		}
+
+		if(master.get_digital(DIGITAL_L1)){
+			arm.move(127);
+		}else if(master.get_digital(DIGITAL_L2)){
+			arm.move(-127);
+		}else{
+			arm.move(0);
 		}
 
 #ifdef DEBUG

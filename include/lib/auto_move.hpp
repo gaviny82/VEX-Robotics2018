@@ -3,26 +3,6 @@
 #include "robot.hpp"
 
 #if 0
-class auto_move {
-    public:
-        int32_t time;
-        int state;
-        double target_l;
-        double target_r;
-        float Kp = 0.5, Ki = 0, Kd = 0;
-        void run();
-        void reset();
-        bool firstrun = true;
-    private:
-        uint32_t start_time;
-};
-
-enum state {
-    MOV_FIRST_RUN,
-    MOV_RUNNING,
-    MOV_ALREADY_DONE
-};
-#endif
 
 uint16_t movecnt = 0;
 uint8_t move_state[64]  = {};
@@ -53,4 +33,6 @@ uint32_t move_start_time[64] = {};
         chassis.SetMotorsRelativeR(MOV_LEFT, MOV_VELOCITY); \
     }   \
 __next: \
-    } while(0)
+} while(0)\
+
+#endif

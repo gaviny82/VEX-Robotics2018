@@ -1,6 +1,8 @@
 #include "api.h"
 #include "lib/pid_control.hpp"
 #include "lib/auto_move.hpp"
+#include "main.h"
+#include "robot.hpp"
 /**
  * Runs the user autonomous code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -15,8 +17,12 @@
 
 
 void autonomous() {
+    chassis.SetMotorsRelativeL(2000, 127);
+        chassis.SetMotorsRelativeR(2000, 127);
     while(true) {
- _set_movement(100,2,2,3000);
-__end:
-        }
+      pros::lcd::print(0,"EncL: %f  EncR: %f", left_f_mtr.get_position(), right_f_mtr.get_position());
+ //_set_movement(100,2,2,3000);
+//__end:
+delay(20);
     }
+}
