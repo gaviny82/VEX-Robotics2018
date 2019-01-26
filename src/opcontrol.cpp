@@ -141,7 +141,7 @@ void opcontrol() {
 		}else if(master.get_digital(DIGITAL_L2)){
 			arm.move(-127);
 		}else{
-			arm.move(0);
+			arm.move_relative(0, 127);
 		}
 
 #ifdef DEBUG
