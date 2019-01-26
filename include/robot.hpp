@@ -26,8 +26,9 @@ extern ADIAnalogIn shoot_sensor;
 extern bool IsCollectorOn;
 extern bool IsCollectorReverse;
 
+#define POSITION_READY 3750
+
 extern bool IsAutoShootEnabled;
-#define POSITION_READY 3700	//TODO: Don't know if it works
 extern bool IsReady;
 
 #define SIG_STANDBY false

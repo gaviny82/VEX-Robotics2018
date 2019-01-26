@@ -1,6 +1,7 @@
 #include "lib/pid_control.hpp"
 #include "lib/auto_move.hpp"
 #include "main.h"
+#include "api.h"
 #include "robot.hpp"
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -16,6 +17,14 @@
 
 
 void autonomous() {
+	motor_pid_full_s_t pid = pros::c::motor_get_pos_pid(1);
+	pid.kp = 0x10;
+	pid.ki = 0x0;
+	pid.kd = 0x0;
+	pros::c::motor_set_pos_pid_full(15,pid);
+	pros::c::motor_set_pos_pid_full(20,pid);
+	pros::c::motor_set_pos_pid_full(1,pid);
+	pros::c::motor_set_pos_pid_full(18,pid);
 	while (true) {
 		movecnt=0;
 		pros::lcd::print(0, "EncL: %f  EncR: %f", left_f_mtr.get_position(), right_f_mtr.get_position());
