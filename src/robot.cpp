@@ -18,7 +18,7 @@ bool IsCollectorOn;
 bool IsCollectorReverse;
 
 bool IsAutoShootEnabled = true;
-#define POSITION_READY 3700	//TODO: Don't know if it works
+#define POSITION_READY 3750	//TODO: Don't know if it works
 bool IsReady;
 
 #define SIG_STANDBY false
