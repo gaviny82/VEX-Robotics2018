@@ -21,6 +21,8 @@
  */
 using namespace pros;
 
+bool first_run = true;
+
 #define DEBUG
 
 #ifdef DEBUG
@@ -49,20 +51,21 @@ void accel_compensation_callback() {
 }
 #endif
 
+#ifdef DEBUG
+Button accel_compensation_switch(master, DIGITAL_X, accel_compensation_callback);
+#endif
+Button autoshoot_switch(master, DIGITAL_UP, autoshoot_switch_callback);
+//Button collector_switch(master, DIGITAL_L1, collector_switch_callback);
+Button click_to_shoot(master, DIGITAL_LEFT, shoot_callback);
+Button reverse_switch(master, DIGITAL_DOWN, reverse_callback);
+
 void opcontrol() {
 	//initialization
-	Controller master(CONTROLLER_MASTER);
 	chassis.TurningCoefficient = 0.7;
-
-#ifdef DEBUG
-	Button accel_compensation_switch(master, DIGITAL_X, accel_compensation_callback);
-#endif
-	Button autoshoot_switch(master, DIGITAL_UP, autoshoot_switch_callback);
-	//Button collector_switch(master, DIGITAL_L1, collector_switch_callback);
-	Button click_to_shoot(master, DIGITAL_LEFT, shoot_callback);
-	Button reverse_switch(master, DIGITAL_DOWN, reverse_callback);
+	if(first_run){
+	first_run = false;
+	}
 	EventHandler::EnableButtonEvents();
-
 
 	while (true) {
 	//motion control

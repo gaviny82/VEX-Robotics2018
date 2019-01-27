@@ -1,4 +1,11 @@
 #include "main.h"
+#include "lib/event_handler.hpp"
+#include "lib/button.hpp"
+#include "lib/chassis.hpp"
+#include "pros/rtos.hpp"
+#include "robot.hpp"
+#include "lib/auto_move.hpp"
+
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -8,6 +15,7 @@
  */
 void initialize() {
 	pros::lcd::initialize();
+
 }
 
 /**
@@ -15,7 +23,19 @@ void initialize() {
  * the VEX Competition Switch, following either autonomous or opcontrol. When
  * the robot is enabled, this task will exit.
  */
-void disabled() {}
+void disabled() {
+	IsCollectorOn = false;
+	IsCollectorReverse = false;
+
+	IsAutoShootEnabled = true;
+
+	IsReady = false;
+	IsAccelCompensationEnabled = true;
+
+	memset((void *)&move_state, 0, sizeof(move_state));
+	memset((void *)&move_start_time, 0, sizeof(move_start_time));
+
+}
 
 /**
  * Runs after initialize(), and before autonomous when connected to the Field

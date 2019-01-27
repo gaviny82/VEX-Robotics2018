@@ -20,13 +20,15 @@ extern Motor arm;
 
 extern Chassis chassis;
 
+extern Controller master;
+
 extern ADIAnalogIn shoot_sensor;
 
 //configuration
 extern bool IsCollectorOn;
 extern bool IsCollectorReverse;
 
-#define POSITION_READY 3750
+#define POSITION_READY 3700
 
 extern bool IsAutoShootEnabled;
 extern bool IsReady;

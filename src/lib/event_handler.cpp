@@ -30,10 +30,21 @@ void EventHandler::button_event_loop(void * param)
 }
 
 void EventHandler::EnableButtonEvents(){
+	if(!ButtonEventTask){
 	Task t(button_event_loop, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "Button Event Handler");
 	ButtonEventTask = &t;
+	} else {
+		ButtonEventTask->remove();
+		free(ButtonEventTask);
+		Task t(button_event_loop, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "Button Event Handler");
+		ButtonEventTask = &t;
+	}
 }
 
 void EventHandler::DisableButtonEvents(){
+	if(ButtonEventTask){
 	ButtonEventTask->remove();
+	free(ButtonEventTask);
+	ButtonEventTask =  nullptr;
+	}
 }

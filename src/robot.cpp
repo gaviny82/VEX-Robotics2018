@@ -13,12 +13,14 @@ Motor arm(12, MOTOR_GEARSET_18, reverse);
 
 Chassis chassis({ left_f_mtr, left_b_mtr }, { right_f_mtr, right_b_mtr });
 
+Controller master(CONTROLLER_MASTER);
+
 //configuration
 bool IsCollectorOn;
 bool IsCollectorReverse;
 
 bool IsAutoShootEnabled = true;
-#define POSITION_READY 3750	//TODO: Don't know if it works
+
 bool IsReady;
 
 #define SIG_STANDBY false
