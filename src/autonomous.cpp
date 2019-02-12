@@ -46,7 +46,7 @@ void autonomous() {
 		uint16_t movecnt = 0;
 		pros::lcd::print(0, "EncL: %f  EncR: %f", left_f_mtr.get_position(), right_f_mtr.get_position());
 
-		#include"autos/front_red.h"
+		#include"autos/front_blue.h"
 
 		__end:;
 		int shoot_m;
