@@ -45,19 +45,16 @@ void reverse_callback() {
 	chassis.IsReversed=!chassis.IsReversed;
 }
 
-#ifdef DEBUG
+
 void accel_compensation_callback() {
 	IsAccelCompensationEnabled = !IsAccelCompensationEnabled;
 }
-#endif
 
-#ifdef DEBUG
 Button accel_compensation_switch(master, DIGITAL_X, accel_compensation_callback);
-#endif
 Button autoshoot_switch(master, DIGITAL_UP, autoshoot_switch_callback);
 //Button collector_switch(master, DIGITAL_L1, collector_switch_callback);
 Button click_to_shoot(master, DIGITAL_LEFT, shoot_callback);
-Button reverse_switch(master, DIGITAL_DOWN, reverse_callback);
+//Button reverse_switch(master, DIGITAL_DOWN, reverse_callback);
 
 void opcontrol() {
 	//initialization
@@ -91,7 +88,7 @@ void opcontrol() {
 			}
 			else if (deg < POSITION_READY && deg > 1000) {
 				IsReady = true;
-				shoot_m = 10;
+				shoot_m = 15;
 			}
 			else {
 				ShootSignal = SIG_STANDBY;
@@ -144,7 +141,7 @@ void opcontrol() {
 		}else if(master.get_digital(DIGITAL_L2)){
 			arm.move(-127);
 		}else{
-			arm.move(127);
+			arm.move(0);
 		}
 
 #ifdef DEBUG

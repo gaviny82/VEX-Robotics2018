@@ -58,7 +58,7 @@ void autonomous() {
 		}
 		else if (deg < POSITION_READY && deg > 1000) {
 			IsReady = true;
-			shoot_m = 10;
+			shoot_m = 13;
 		}
 		else {
 			ShootSignal = SIG_STANDBY;
