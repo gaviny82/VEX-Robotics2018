@@ -44,12 +44,13 @@ void autonomous() {
 	while (true) {
 		uint16_t movecnt = 0;
 		pros::lcd::print(0, "EncL: %f  EncR: %f", left_f_mtr.get_position(), right_f_mtr.get_position());
-		_set_movement(100,1000,1000,2000);
-//		pros::lcd::print(2,"State: %s", move_state[movecnt]);
-		_set_onetime_task(2000, ShootSignal = SIG_SHOOT);
-//		pros::lcd::print(2,"State: %s", move_state[movecnt]);
-		_set_movement(100,10,500,2000);
-//		pros::lcd::print(2,"State: %s", move_state[movecnt]);
+		_set_onetime_task(0, collector.move(127));
+		_set_movement(127,3200,3200,3000);
+		_set_movement(127,-3000,-3000,2500);
+//		_set_onetime_task(2000, ShootSignal = SIG_SHOOT);
+
+		_set_movement(127,-500,500,3000);
+
 		__end:;
 		int shoot_m;
 		int deg = shoot_sensor.get_value();

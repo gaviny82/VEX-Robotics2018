@@ -3,7 +3,7 @@
 #define reverse true
 Motor left_f_mtr(15, MOTOR_GEARSET_18);
 Motor left_b_mtr(20, MOTOR_GEARSET_18);
-Motor right_f_mtr(1, MOTOR_GEARSET_18, reverse);
+Motor right_f_mtr(3, MOTOR_GEARSET_18, reverse);
 Motor right_b_mtr(18, MOTOR_GEARSET_18, reverse);
 
 Motor collector(2, MOTOR_GEARSET_36, reverse);
