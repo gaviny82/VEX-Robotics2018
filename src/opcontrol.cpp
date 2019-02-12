@@ -88,15 +88,15 @@ void opcontrol() {
 			}
 			else if (deg < POSITION_READY && deg > 1000) {
 				IsReady = true;
-				shoot_m = 15;
+				shoot_m = VOLT_SHOOT_HOLD;
 			}
 			else {
 				ShootSignal = SIG_STANDBY;
 				IsReady = false;
 				shoot_m = 127;
 			}
-				shoot1.move(shoot_m);
-				shoot2.move(shoot_m);
+			shoot1.move(shoot_m);
+			shoot2.move(shoot_m);
 		}
 		else {
 			//manual shoot

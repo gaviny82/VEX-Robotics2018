@@ -2,3 +2,4 @@ bin/*
 .vs/*
 .vscode/*
 compile_commands.json
+/compile.bat

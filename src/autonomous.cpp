@@ -25,10 +25,10 @@ void autonomous() {
 	pid.kp = 0x10;
 	pid.ki = 0x0;
 	pid.kd = 0x0;
-	pros::c::motor_set_pos_pid_full(15,pid);
-	pros::c::motor_set_pos_pid_full(20,pid);
-	pros::c::motor_set_pos_pid_full(1,pid);
-	pros::c::motor_set_pos_pid_full(18,pid);
+	pros::c::motor_set_pos_pid_full(15, pid);
+	pros::c::motor_set_pos_pid_full(20, pid);
+	pros::c::motor_set_pos_pid_full(1, pid);
+	pros::c::motor_set_pos_pid_full(18, pid);
 #endif
 	IsCollectorOn = false;
 	IsCollectorReverse = false;
@@ -58,7 +58,7 @@ void autonomous() {
 		}
 		else if (deg < POSITION_READY && deg > 1000) {
 			IsReady = true;
-			shoot_m = 13;
+			shoot_m = VOLT_SHOOT_HOLD;
 		}
 		else {
 			ShootSignal = SIG_STANDBY;
