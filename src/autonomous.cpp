@@ -42,14 +42,11 @@ void autonomous() {
 	memset((void *)&move_start_time, 0, sizeof(move_start_time));
 
 	while (true) {
+
 		uint16_t movecnt = 0;
 		pros::lcd::print(0, "EncL: %f  EncR: %f", left_f_mtr.get_position(), right_f_mtr.get_position());
-		_set_onetime_task(0, collector.move(127));
-		_set_movement(127,3200,3200,3000);
-		_set_movement(127,-3000,-3000,2500);
-//		_set_onetime_task(2000, ShootSignal = SIG_SHOOT);
 
-		_set_movement(127,-500,500,3000);
+		#include"autos/front_red.h"
 
 		__end:;
 		int shoot_m;
