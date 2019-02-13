@@ -35,7 +35,6 @@ void EventHandler::EnableButtonEvents(){
 	ButtonEventTask = &t;
 	} else {
 		ButtonEventTask->remove();
-		free(ButtonEventTask);
 		Task t(button_event_loop, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "Button Event Handler");
 		ButtonEventTask = &t;
 	}
