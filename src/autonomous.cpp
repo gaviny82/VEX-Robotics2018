@@ -43,11 +43,10 @@ void autonomous() {
 	memset((void *)&move_start_time, 0, sizeof(move_start_time[MAX_STEPS]));
 
 	while (true) {
-
 		movecnt = 0;
 		pros::lcd::print(0, "EncL: %f  EncR: %f", left_f_mtr.get_position(), right_f_mtr.get_position());
 
-		#include"autos/front_blue.h"
+		#include "autos/front_red.h"
 
 		__end:;
 		int shoot_m;
