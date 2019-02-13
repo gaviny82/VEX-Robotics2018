@@ -30,3 +30,4 @@ bool ShootSignal = SIG_STANDBY;
 ADIAnalogIn shoot_sensor('A');
 
 bool IsAccelCompensationEnabled = true;
+

@@ -32,6 +32,8 @@ void disabled() {
 	IsReady = false;
 	IsAccelCompensationEnabled = true;
 
+	movecnt = 0;
+
 	memset((void *)&move_state, 0, sizeof(move_state[MAX_STEPS]));
 	memset((void *)&move_start_time, 0, sizeof(move_start_time[MAX_STEPS]));
 

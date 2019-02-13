@@ -17,6 +17,7 @@
 
 uint8_t move_state[64]  = {};
 uint32_t move_start_time[64] = {};
+uint16_t movecnt;
 
 
 void autonomous() {
@@ -43,7 +44,7 @@ void autonomous() {
 
 	while (true) {
 
-		uint16_t movecnt = 0;
+		movecnt = 0;
 		pros::lcd::print(0, "EncL: %f  EncR: %f", left_f_mtr.get_position(), right_f_mtr.get_position());
 
 		#include"autos/front_blue.h"

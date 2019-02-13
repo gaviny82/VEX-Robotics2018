@@ -40,4 +40,5 @@ extern bool ShootSignal;
 
 extern bool IsAccelCompensationEnabled;
 
+extern uint16_t movecnt;
 #endif
