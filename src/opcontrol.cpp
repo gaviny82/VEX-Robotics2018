@@ -67,15 +67,10 @@ void opcontrol() {
 	while (true) {
 	//motion control
 	int currentVelocity = master.get_analog(ANALOG_LEFT_Y);
-		int accel = currentVelocity - chassis.CurrentSpeed;
-		if (IsAccelCompensationEnabled) {
-			if (accel > 12) {
-				currentVelocity = chassis.CurrentSpeed + accel*0.1;
-			}else if(accel<-12){
-				currentVelocity = chassis.CurrentSpeed + accel*0.1;
-			}
-		}
-		chassis.Drive(currentVelocity, master.get_analog(ANALOG_RIGHT_X));
+	int accel = currentVelocity - chassis.CurrentSpeed;
+			if ((accel > 12 || accel<-12) && IsAccelCompensationEnabled)
+				currentVelocity = chassis.CurrentSpeed + accel*0.2;
+	chassis.Drive(currentVelocity, master.get_analog(ANALOG_RIGHT_X));
 
 		//shoot control
 		int shoot_m;
@@ -137,9 +132,9 @@ void opcontrol() {
 		}
 
 		if(master.get_digital(DIGITAL_L1)){
-			arm.move(127);
-		}else if(master.get_digital(DIGITAL_L2)){
 			arm.move(-127);
+		}else if(master.get_digital(DIGITAL_L2)){
+			arm.move(127);
 		}else{
 			arm.move(0);
 		}
