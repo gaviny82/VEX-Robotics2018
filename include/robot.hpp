@@ -28,8 +28,8 @@ extern ADIAnalogIn shoot_sensor;
 extern bool IsCollectorOn;
 extern bool IsCollectorReverse;
 
-#define POSITION_READY 3750
-#define VOLT_SHOOT_HOLD 7
+#define POSITION_READY 3650
+#define VOLT_SHOOT_HOLD 8
 
 extern bool IsAutoShootEnabled;
 extern bool IsReady;
