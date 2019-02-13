@@ -2,8 +2,10 @@
 #include "main.h"
 #include "robot.hpp"
 
-extern uint8_t move_state[64];
-extern uint32_t move_start_time[64];
+#define MAX_STEPS 64
+
+extern uint8_t move_state[MAX_STEPS];
+extern uint32_t move_start_time[MAX_STEPS];
 
 #define MOV_FIRST_RUN 0
 #define MOV_RUNNING 1

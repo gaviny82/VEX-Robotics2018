@@ -38,8 +38,8 @@ void autonomous() {
 	IsReady = false;
 	IsAccelCompensationEnabled = true;
 
-	memset((void *)&move_state, 0, sizeof(move_state));
-	memset((void *)&move_start_time, 0, sizeof(move_start_time));
+	memset((void *)&move_state, 0, sizeof(move_state[MAX_STEPS]));
+	memset((void *)&move_start_time, 0, sizeof(move_start_time[MAX_STEPS]));
 
 	while (true) {
 
