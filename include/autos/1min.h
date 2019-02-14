@@ -1,15 +1,22 @@
-pros::lcd::print(1, "Auto: 1 min @ back_red");
+pros::lcd::print(1, "Auto: 1 min @ front_red");
 
 //move forward to collect the ball	[2000ms]
 _set_onetime_task(0, collector.move(127));
 _set_movement(127, 2800, 2800, 3000);
 //turn over the cap
-_set_onetime_task(300, IsAutoShootEnabled = false);
+//_set_onetime_task(300, IsAutoShootEnabled = false);
 _set_onetime_task(0, collector.move(-127));
 _set_onetime_task(1600, chassis.Drive(50, 0));
-_set_onetime_task(0, chassis.Drive(0, 0));
+_set_onetime_task(500, chassis.Drive(0, 0));
+_set_movement(100, -500, -500, 700);
+_set_movement(60, -580, 580, 1500);
+_set_onetime_task(1500, chassis.Drive(-20, 0));
+_set_onetime_task(200, chassis.Drive(0, 0));
+_set_movement(60, 300, 300, 700);
+_set_movement(40, 580, -580, 2000);
+
 //move backward and adjust the position
-_set_movement(100, -4700, -4700, 4800);
+_set_movement(70, -4200, -4200, 6000);
 _set_onetime_task(1200, chassis.Drive(-30, 0));
 _set_onetime_task(0, chassis.Drive(0, 0));
 _set_movement(50, 300, 300, 700);
@@ -33,26 +40,27 @@ _set_movement(100, -550, 550, 1000);
 //turn over the caps	[4000ms]
 _set_onetime_task(0, collector.move(-127));
 _set_movement(100, 500, 500, 800);
-_set_onetime_task(0, collector.move(-127));
 _set_onetime_task(800, chassis.Drive(60, 0));
 _set_onetime_task(0, chassis.Drive(0, 0));
 _set_onetime_task(500, collector.move(0));
+
 _set_movement(100, -2100, -2100, 2500);
 _set_onetime_task(1200, chassis.Drive(-30, 0));
 _set_onetime_task(0, chassis.Drive(0, 0));
 _set_movement(50, 300, 300, 700);
 _set_movement(60, 580, -580, 1500);
-_set_movement(100, 2300, 2300, 2600);
 
-#if 0
-_set_movement(60, -580, 580, 1500);
-_set_movement(100, -1500, -1500, 1800);
-
-_set_onetime_task(2000, chassis.Drive(-20, 0));
+_set_movement(100, 3200, 3200, 3500);
+_set_movement(60, 580, -580, 2000);
+_set_onetime_task(1500, chassis.Drive(-30, 0));
 _set_onetime_task(0, chassis.Drive(0, 0));
+//
+_set_onetime_task(1000, chassis.Drive(-105, 0));
+_set_onetime_task(20, chassis.Drive(40, 0));
+_set_onetime_task(1000, chassis.Drive(0, 0));
 
-_set_movement(60, 500, 500, 800);
-_set_movement(60, 580, -580, 1500);
-
-_set_movement(100, -3000, -3000, 2800);
-#endif
+_set_onetime_task(1500, chassis.Drive(-30, 0));
+//2nd platform
+_set_onetime_task(800, chassis.Drive(-105, 0));
+_set_onetime_task(20, chassis.Drive(40, 0));
+_set_onetime_task(0, chassis.Drive(0, 0));
