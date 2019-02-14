@@ -59,6 +59,7 @@ Button click_to_shoot(master, DIGITAL_LEFT, shoot_callback);
 void opcontrol() {
 	//initialization
 	chassis.TurningCoefficient = 0.7;
+	IsAutoShootEnabled = true;
 	if(first_run){
 	first_run = false;
 	}
@@ -132,9 +133,9 @@ void opcontrol() {
 		}
 
 		if(master.get_digital(DIGITAL_L1)){
-			arm.move(-127);
-		}else if(master.get_digital(DIGITAL_L2)){
 			arm.move(127);
+		}else if(master.get_digital(DIGITAL_L2)){
+			arm.move(-127);
 		}else{
 			arm.move(0);
 		}
