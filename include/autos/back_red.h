@@ -11,7 +11,7 @@ _set_onetime_task(0, collector.move(0));
 //adjust position
 _set_onetime_task(1000, chassis.Drive(-30, 0));
 //
-_set_onetime_task(800, chassis.Drive(-105, 0));
+_set_onetime_task(820, chassis.Drive(-105, 0));
 _set_onetime_task(20, chassis.Drive(40, 0));
 _set_onetime_task(0, chassis.Drive(0, 0));
 _set_onetime_task(0, chassis.SetMotorsRelativeL(0, 127); chassis.SetMotorsRelativeR(0, 127));
