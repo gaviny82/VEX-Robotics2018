@@ -10,7 +10,7 @@ _set_onetime_task(1600, chassis.Drive(50, 0));
 _set_onetime_task(500, chassis.Drive(0, 0));
 _set_movement(100, -500, -500, 700);
 _set_movement(60, -580, 580, 1500);
-_set_onetime_task(2000, chassis.Drive(-30, 0));
+_set_onetime_task(2500, chassis.Drive(-40, 0));
 _set_onetime_task(200, chassis.Drive(0, 0));
 _set_movement(60, 300, 300, 700);
 _set_movement(40, 580, -580, 2000);
