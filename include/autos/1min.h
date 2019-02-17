@@ -9,6 +9,7 @@ _set_onetime_task(0, collector.move(-127));
 _set_onetime_task(1600, chassis.Drive(50, 0));
 _set_onetime_task(500, chassis.Drive(0, 0));
 _set_movement(100, -500, -500, 700);
+_set_onetime_task(0, collector.move(80));//
 _set_movement(60, -580, 580, 1500);
 _set_onetime_task(2500, chassis.Drive(-40, 0));
 _set_onetime_task(200, chassis.Drive(0, 0));
@@ -55,7 +56,7 @@ _set_movement(60, 580, -580, 2000);
 _set_onetime_task(2000, chassis.Drive(-30, 0));
 _set_onetime_task(0, chassis.Drive(0, 0));
 //
-_set_onetime_task(1000, chassis.Drive(-105, 0));
+_set_onetime_task(1300, chassis.Drive(-110, 0));
 _set_onetime_task(20, chassis.Drive(40, 0));
 _set_onetime_task(1000, chassis.Drive(0, 0));
 

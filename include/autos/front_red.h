@@ -1,4 +1,4 @@
-pros::lcd::print(1, "Auto: back_red bat1");
+pros::lcd::print(1, "Auto: front_red bat1");
 
 //move forward to collect the ball	[2000ms]
 _set_onetime_task(0, collector.move(127));

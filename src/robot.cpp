@@ -6,7 +6,7 @@ Motor left_b_mtr(20, MOTOR_GEARSET_18);
 Motor right_f_mtr(3, MOTOR_GEARSET_18, reverse);
 Motor right_b_mtr(18, MOTOR_GEARSET_18, reverse);
 
-Motor collector(2, MOTOR_GEARSET_36, reverse);
+Motor collector(8, MOTOR_GEARSET_36, reverse);
 Motor shoot1(17, MOTOR_GEARSET_6);
 Motor shoot2(19, MOTOR_GEARSET_6, reverse);
 Motor arm(14, MOTOR_GEARSET_18, reverse);
