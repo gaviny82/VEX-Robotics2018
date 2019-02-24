@@ -2,4 +2,5 @@ bin/*
 .vs/*
 .vscode/*
 compile_commands.json
-/compile.bat
+compile.bat
+*.code-workspace

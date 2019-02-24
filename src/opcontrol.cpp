@@ -21,14 +21,6 @@
  */
 using namespace pros;
 
-bool first_run = true;
-
-#define DEBUG
-
-#ifdef DEBUG
-uint32_t shootCount = 0;
-#endif
-
 void autoshoot_switch_callback() {
 	IsAutoShootEnabled = !IsAutoShootEnabled;
 }
@@ -39,12 +31,10 @@ void collector_switch_callback() {
 
 void shoot_callback() {
 	ShootSignal = SIG_SHOOT;
-	shootCount++;
 }
 void reverse_callback() {
-	chassis.IsReversed=!chassis.IsReversed;
+	chassis.IsReversed = !chassis.IsReversed;
 }
-
 
 void accel_compensation_callback() {
 	IsAccelCompensationEnabled = !IsAccelCompensationEnabled;
@@ -60,18 +50,16 @@ void opcontrol() {
 	//initialization
 	chassis.TurningCoefficient = 0.7;
 	IsAutoShootEnabled = true;
-	if(first_run){
-	first_run = false;
-	}
 	EventHandler::EnableButtonEvents();
 
 	while (true) {
-	//motion control
-	int currentVelocity = master.get_analog(ANALOG_LEFT_Y);
-	int accel = currentVelocity - chassis.CurrentSpeed;
-			if ((accel > 12 || accel<-12) && IsAccelCompensationEnabled)
-				currentVelocity = chassis.CurrentSpeed + accel*0.2;
-	chassis.Drive(currentVelocity, master.get_analog(ANALOG_RIGHT_X));
+		//motion control
+		int currentVelocity = master.get_analog(ANALOG_LEFT_Y);
+		int accel = currentVelocity - chassis.CurrentSpeed;
+		if ((accel > 12 || accel < -12) && IsAccelCompensationEnabled) {
+			currentVelocity = chassis.CurrentSpeed + accel * 0.2;
+		}
+		chassis.Drive(currentVelocity, master.get_analog(ANALOG_RIGHT_X));
 
 		//shoot control
 		int shoot_m;
@@ -106,47 +94,39 @@ void opcontrol() {
 			}
 		}
 
-		//collector control
-		/*IsCollectorReverse = master.get_digital(DIGITAL_L2);
-		if (IsCollectorOn) {
-			if (IsReady) {
-				collector.move(127 * (IsCollectorReverse ? -1 : 1));
-			}
-			else {
-				collector.move(-20);
-			}
-		}
-		else {
-			collector.move(0);
-		}*/
-		if(master.get_digital(DIGITAL_R1)){
+		//manual collector control
+		if (master.get_digital(DIGITAL_R1)) {
 			if (IsReady) {
 				collector.move(127);
 			}
 			else {
-				collector.move(0);//TODO: Test if the collector wroks properly when shooting
-			}
-		}else if(master.get_digital(DIGITAL_R2)){
-				collector.move(-127);
-		}else{
 				collector.move(0);
+			}
+		}
+		else if (master.get_digital(DIGITAL_R2)) {
+			collector.move(-127);
+		}
+		else {
+			collector.move(0);
 		}
 
-		if(master.get_digital(DIGITAL_L1)){
+		//arm control
+		if (master.get_digital(DIGITAL_L1)) {
 			arm.move(127);
-		}else if(master.get_digital(DIGITAL_L2)){
+		}
+		else if (master.get_digital(DIGITAL_L2)) {
 			arm.move(-127);
-		}else{
+		}
+		else {
 			arm.move(0);
 		}
 
-#ifdef DEBUG
-		int line = 0;
-		lcd::print(line++, "Forward(%.3fx): %d, Yaw(%.3fx): %d, %s", chassis.ForwardCoefficient, chassis.CurrentSpeed, chassis.TurningCoefficient, chassis.CurrentYaw, chassis.IsReversed ? "Reversed" : "Forward");
-		lcd::print(line++,"Compensation: %s, Accel: %d",IsAccelCompensationEnabled?"on":"Off", accel);
-		lcd::print(line++, "Shoot: DEG: %d, %s, Voltage: %d, Count: %ul", deg, ShootSignal == SIG_STANDBY ? "Standby" : "Shoot", shoot_m, shootCount);
-		lcd::print(line++, "Collector state: %s%s, Collector temperature: %f", IsCollectorOn ? "On," : "Off,", IsCollectorReverse ? "Reverse" : "Collecting", collector.get_temperature());
-#endif
+		//debug messages for operator control session
+		lcd::print(0, "Forward(%.3fx): %d, Yaw(%.3fx): %d, %s", chassis.ForwardCoefficient, chassis.CurrentSpeed, chassis.TurningCoefficient, chassis.CurrentYaw, chassis.IsReversed ? "Reversed" : "Forward");
+		lcd::print(1, "Compensation: %s, Accel: %d", IsAccelCompensationEnabled ? "on" : "Off", accel);
+		lcd::print(2, "Shoot: DEG: %d, %s, Voltage: %d", deg, ShootSignal == SIG_STANDBY ? "Standby" : "Shoot", shoot_m);
+		lcd::print(3, "Collector state: %s%s, Collector temperature: %f", IsCollectorOn ? "On," : "Off,", IsCollectorReverse ? "Reverse" : "Collecting", collector.get_temperature());
+
 		delay(20); /* DO NOT DELETE! If the loop goes too tight LCD will die */
 	}
 }

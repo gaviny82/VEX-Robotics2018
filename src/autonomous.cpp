@@ -19,7 +19,6 @@ uint8_t move_state[64] = {};
 uint32_t move_start_time[64] = {};
 uint16_t movecnt;
 
-
 void autonomous() {
 #if 0
 	motor_pid_full_s_t pid = pros::c::motor_get_pos_pid(1);
@@ -45,40 +44,37 @@ void autonomous() {
 		pros::lcd::print(0, "EncL: %f  EncR: %f", left_f_mtr.get_position(), right_f_mtr.get_position());
 
 #include "autos/back_red.h"
+__end:;
 
-		__end:;
-			  int shoot_m;
-			  int deg = shoot_sensor.get_value();
-			  if (IsAutoShootEnabled) {
-				  //auto shoot
-				  if (ShootSignal == SIG_SHOOT && IsReady) {
-					  shoot_m = 127;
-					  IsReady = false;
-				  }
-				  else if (deg < POSITION_READY && deg > 1000) {
-					  IsReady = true;
-					  shoot_m = VOLT_SHOOT_HOLD;
-				  }
-				  else {
-					  ShootSignal = SIG_STANDBY;
-					  IsReady = false;
-					  shoot_m = 127;
-				  }
-				  shoot1.move(shoot_m);
-				  shoot2.move(shoot_m);
-			  }
-			  else {
-				  //manual shoot
-				  if (master.get_digital(DIGITAL_X)) {
-					  shoot1.move(127);
-					  shoot2.move(127);
-				  }
-				  else {
-					  shoot1.move(0);
-					  shoot2.move(0);
-				  }
-			  }
-			  //		lcd::print(1, "Shoot: DEG: %d, %s, Voltage: %d", deg, ShootSignal == SIG_STANDBY ? "Standby" : "Shoot", shoot_m);
-			  delay(20);
+		int shoot_m;
+		int deg = shoot_sensor.get_value();
+		if (IsAutoShootEnabled) {
+			//auto shoot
+			if (ShootSignal == SIG_SHOOT && IsReady) {
+				shoot_m = 127;
+				IsReady = false;
+			}
+			else if (deg < POSITION_READY && deg > 1000) {
+				IsReady = true;
+				shoot_m = VOLT_SHOOT_HOLD;
+			} else {
+				ShootSignal = SIG_STANDBY;
+				IsReady = false;
+				shoot_m = 127;
+			}
+				shoot1.move(shoot_m);
+				shoot2.move(shoot_m);
+		} else {
+			//manual shoot
+			if (master.get_digital(DIGITAL_X)) {
+				shoot1.move(127);
+				shoot2.move(127);
+			} else {
+				shoot1.move(0);
+				shoot2.move(0);
+			}
+		}
+		//lcd::print(1, "Shoot: DEG: %d, %s, Voltage: %d", deg, ShootSignal == SIG_STANDBY ? "Standby" : "Shoot", shoot_m);
+		delay(20);
 	}
 }
