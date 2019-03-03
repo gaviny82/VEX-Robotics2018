@@ -6,8 +6,9 @@
 using namespace pros;
 using namespace std;
 
-class Chassis {
-public:
+class Chassis
+{
+  public:
 	double ForwardCoefficient = 1, TurningCoefficient = 1;
 	int MaxSpeed = 127;
 	bool IsReversed = false;

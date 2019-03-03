@@ -1,10 +1,7 @@
 #include "main.h"
 #include "lib/event_handler.hpp"
-#include "lib/button.hpp"
 #include "lib/chassis.hpp"
-#include "pros/rtos.hpp"
 #include "robot.hpp"
-#include "lib/auto_move.hpp"
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -21,42 +18,22 @@
  */
 using namespace pros;
 
-void autoshoot_switch_callback() {
-	IsAutoShootEnabled = !IsAutoShootEnabled;
-}
+Button accel_compensation_switch(master, DIGITAL_X, [] { IsAccelCompensationEnabled = !IsAccelCompensationEnabled; });
+Button autoshoot_switch(master, DIGITAL_UP, [] { IsAutoShootEnabled = !IsAutoShootEnabled; });
+Button click_to_shoot(master, DIGITAL_LEFT, [] { ShootSignal = SIG_SHOOT; });
+//Button reverse_switch(master, DIGITAL_DOWN, []{chassis.IsReversed = !chassis.IsReversed;});
 
-void collector_switch_callback() {
-	IsCollectorOn = !IsCollectorOn;
-}
-
-void shoot_callback() {
-	ShootSignal = SIG_SHOOT;
-}
-void reverse_callback() {
-	chassis.IsReversed = !chassis.IsReversed;
-}
-
-void accel_compensation_callback() {
-	IsAccelCompensationEnabled = !IsAccelCompensationEnabled;
-}
-
-Button accel_compensation_switch(master, DIGITAL_X, accel_compensation_callback);
-Button autoshoot_switch(master, DIGITAL_UP, autoshoot_switch_callback);
-//Button collector_switch(master, DIGITAL_L1, collector_switch_callback);
-Button click_to_shoot(master, DIGITAL_LEFT, shoot_callback);
-//Button reverse_switch(master, DIGITAL_DOWN, reverse_callback);
-
-void opcontrol() {
-	//initialization
-	chassis.TurningCoefficient = 0.7;
-	IsAutoShootEnabled = true;
+void opcontrol()
+{
 	EventHandler::EnableButtonEvents();
 
-	while (true) {
+	while (true)
+	{
 		//motion control
 		int currentVelocity = master.get_analog(ANALOG_LEFT_Y);
 		int accel = currentVelocity - chassis.CurrentSpeed;
-		if ((accel > 12 || accel < -12) && IsAccelCompensationEnabled) {
+		if ((accel > 12 || accel < -12) && IsAccelCompensationEnabled)
+		{
 			currentVelocity = chassis.CurrentSpeed + accel * 0.2;
 		}
 		chassis.Drive(currentVelocity, master.get_analog(ANALOG_RIGHT_X));
@@ -64,17 +41,21 @@ void opcontrol() {
 		//shoot control
 		int shoot_m;
 		int deg = shoot_sensor.get_value();
-		if (IsAutoShootEnabled) {
+		if (IsAutoShootEnabled)
+		{
 			//auto shoot
-			if (ShootSignal == SIG_SHOOT && IsReady) {
+			if (ShootSignal == SIG_SHOOT && IsReady)
+			{
 				shoot_m = 127;
 				IsReady = false;
 			}
-			else if (deg < POSITION_READY && deg > 1000) {
+			else if (deg < POSITION_READY && deg > 1000)
+			{
 				IsReady = true;
 				shoot_m = VOLT_SHOOT_HOLD;
 			}
-			else {
+			else
+			{
 				ShootSignal = SIG_STANDBY;
 				IsReady = false;
 				shoot_m = 127;
@@ -82,42 +63,53 @@ void opcontrol() {
 			shoot1.move(shoot_m);
 			shoot2.move(shoot_m);
 		}
-		else {
+		else
+		{
 			//manual shoot
-			if (master.get_digital(DIGITAL_X)) {
+			if (master.get_digital(DIGITAL_X))
+			{
 				shoot1.move(127);
 				shoot2.move(127);
 			}
-			else {
+			else
+			{
 				shoot1.move(0);
 				shoot2.move(0);
 			}
 		}
 
 		//manual collector control
-		if (master.get_digital(DIGITAL_R1)) {
-			if (IsReady) {
+		if (master.get_digital(DIGITAL_R1))
+		{
+			if (IsReady)
+			{
 				collector.move(127);
 			}
-			else {
+			else
+			{
 				collector.move(0);
 			}
 		}
-		else if (master.get_digital(DIGITAL_R2)) {
+		else if (master.get_digital(DIGITAL_R2))
+		{
 			collector.move(-127);
 		}
-		else {
+		else
+		{
 			collector.move(0);
 		}
 
 		//arm control
-		if (master.get_digital(DIGITAL_L1)) {
+		if (master.get_digital(DIGITAL_L1))
+		{
 			arm.move(127);
 		}
-		else if (master.get_digital(DIGITAL_L2)) {
+		else if (master.get_digital(DIGITAL_L2))
+		{
 			arm.move(-127);
 		}
-		else {
+		else
+		{
 			arm.move(0);
 		}
 

@@ -1,8 +1,6 @@
-#ifndef _ROBOT_HPP_
-#define _ROBOT_HPP_
+#pragma once
 
 #include "main.h"
-#include "lib/button.hpp"
 #include "lib/chassis.hpp"
 
 using namespace pros;
@@ -24,7 +22,7 @@ extern Controller master;
 
 extern ADIAnalogIn shoot_sensor;
 
-//configuration
+//configuration and status
 extern bool IsCollectorOn;
 extern bool IsCollectorReverse;
 
@@ -39,6 +37,7 @@ extern bool IsReady;
 extern bool ShootSignal;
 
 extern bool IsAccelCompensationEnabled;
-
+//autonomous
 extern uint16_t movecnt;
-#endif
+
+extern void reset_config();
