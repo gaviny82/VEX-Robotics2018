@@ -19,6 +19,10 @@ uint8_t move_state[64] = {};
 uint32_t move_start_time[64] = {};
 uint16_t movecnt;
 
+pidctrl_t pid_left;
+pidctrl_t pid_right;
+
+
 void autonomous()
 {
 	memset((void *)&move_state, 0, sizeof(move_state[MAX_STEPS]));
