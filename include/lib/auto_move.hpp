@@ -49,3 +49,9 @@ do {  \
     goto __end; \
   }\
 } while (0);
+
+#define _shoot _set_onetime_task(2000, ShootSignal = SIG_SHOOT)
+#define _collector_start _set_onetime_task(0, collector.move(127))
+#define _collector_reverse _set_onetime_task(0, collector.move(-127))
+#define _collector_stop _set_onetime_task(0, collector.move(0))
+
