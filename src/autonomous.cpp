@@ -33,7 +33,7 @@ void pid_init(pidctrl_t *pid, int target)
 	pid->nIntegral = 0;
 	pid->nDiffer = 0;
 	pid->nPowerOut = 0.0;
-  pid->nSetPos = 0;
+	pid->nSetPos = 0;
 }
 
 int pid_process(pidctrl_t *pid, int posAct)

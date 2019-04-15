@@ -23,10 +23,6 @@ extern uint32_t move_start_time[MAX_STEPS];
 extern pidctrl_t pid_left;
 extern pidctrl_t pid_right;
 
-#define PID_KP 1
-#define PID_KI 0
-#define PID_KD 0
-
 #define MOV_FIRST_RUN 0
 #define MOV_RUNNING 1
 #define MOV_ALREADY_DONE 2
