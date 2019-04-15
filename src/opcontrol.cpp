@@ -40,7 +40,7 @@ void opcontrol()
 
 		//shoot control
 		int shoot_m;
-		if (0)
+		if (1)
 		{
 			//auto shoot
 			if (ShootSignal == SIG_SHOOT && IsReady)
@@ -48,7 +48,7 @@ void opcontrol()
 				shoot_m = 127;
 				IsReady = false;
 			}
-			else if (shoot_swtch_a.get_value() == HIGH || shoot_swtch_a.get_value() == HIGH)
+			else if (shoot_switch_a.get_value() == HIGH || shoot_switch_b.get_value() == HIGH)
 			{
 				IsReady = true;
 				shoot_m = VOLT_SHOOT_HOLD;
