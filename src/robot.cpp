@@ -1,15 +1,15 @@
 #include "robot.hpp"
 #include "lib/auto_move.hpp"
 
-Motor left_f_mtr(15, MOTOR_GEARSET_18);
-Motor left_b_mtr(20, MOTOR_GEARSET_18);
-Motor right_f_mtr(3, MOTOR_GEARSET_18, reverse);
-Motor right_b_mtr(18, MOTOR_GEARSET_18, reverse);
+Motor left_f_mtr(7, MOTOR_GEARSET_18, reverse);
+Motor left_b_mtr(6, MOTOR_GEARSET_18);
+Motor right_f_mtr(4, MOTOR_GEARSET_18);
+Motor right_b_mtr(5, MOTOR_GEARSET_18,reverse);
 
-Motor collector(8, MOTOR_GEARSET_36, reverse);
-Motor shoot1(17, MOTOR_GEARSET_6);
-Motor shoot2(19, MOTOR_GEARSET_6, reverse);
-Motor arm(14, MOTOR_GEARSET_18, reverse);
+Motor collector(13, MOTOR_GEARSET_36);
+Motor shoot1(12, MOTOR_GEARSET_6);
+Motor shoot2(11, MOTOR_GEARSET_6, reverse);
+Motor arm(14, MOTOR_GEARSET_18);
 
 Chassis chassis({left_f_mtr, left_b_mtr}, {right_f_mtr, right_b_mtr});
 
@@ -27,7 +27,10 @@ bool IsReady;
 #define SIG_SHOOT true
 bool ShootSignal = SIG_STANDBY;
 
-ADIAnalogIn shoot_sensor('A');
+ADIDigitalIn shoot_swtch_a('A');
+ADIDigitalIn shoot_swtch_b('B');
+
+ADIDigitalIn arm_swtch_a('C');
 
 bool IsAccelCompensationEnabled = true;
 

@@ -1,4 +1,3 @@
-#include "lib/pid_control.hpp"
 #include "lib/auto_move.hpp"
 #include "robot.hpp"
 #include "main.h"
@@ -22,6 +21,33 @@ uint16_t movecnt;
 pidctrl_t pid_left;
 pidctrl_t pid_right;
 
+void pid_init(pidctrl_t *pid, int target)
+{
+	pid->Kp = PID_KP;
+	pid->Ki = PID_KI;
+	pid->Kd = PID_KD;
+	pid->nSetPos = 0;
+	pid->nActPos = 0;
+	pid->nErr = 0;
+	pid->nErr_last = 0;
+	pid->nIntegral = 0;
+	pid->nDiffer = 0;
+	pid->nPowerOut = 0.0;
+  pid->nSetPos = 0;
+}
+
+int pid_process(pidctrl_t *pid, int posAct)
+{
+	pid->nActPos = posAct;
+	pid->nErr = pid->nSetPos - pid->nActPos;
+	pid->nIntegral = pid->nErr_last + pid->nErr;
+	pid->nDiffer = pid->nErr_last - pid->nErr;
+	pid->nPowerOut = pid->Kp*pid->nErr + pid->Ki*pid->nIntegral + pid->Kd*pid->nDiffer;
+	pid->nErr_last = pid->nErr;
+  
+	return (int)pid->nPowerOut;
+}
+
 
 void autonomous()
 {
@@ -35,45 +61,6 @@ void autonomous()
 
 #include "autos/back_red.h"
 	__end:;
-
-		int shoot_m;
-		int deg = shoot_sensor.get_value();
-		if (IsAutoShootEnabled)
-		{
-			//auto shoot
-			if (ShootSignal == SIG_SHOOT && IsReady)
-			{
-				shoot_m = 127;
-				IsReady = false;
-			}
-			else if (deg < POSITION_READY && deg > 1000)
-			{
-				IsReady = true;
-				shoot_m = VOLT_SHOOT_HOLD;
-			}
-			else
-			{
-				ShootSignal = SIG_STANDBY;
-				IsReady = false;
-				shoot_m = 127;
-			}
-			shoot1.move(shoot_m);
-			shoot2.move(shoot_m);
-		}
-		else
-		{
-			//manual shoot
-			if (master.get_digital(DIGITAL_X))
-			{
-				shoot1.move(127);
-				shoot2.move(127);
-			}
-			else
-			{
-				shoot1.move(0);
-				shoot2.move(0);
-			}
-		}
 		//lcd::print(1, "Shoot: DEG: %d, %s, Voltage: %d", deg, ShootSignal == SIG_STANDBY ? "Standby" : "Shoot", shoot_m);
 		delay(20);
 	}

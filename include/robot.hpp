@@ -20,7 +20,8 @@ extern Chassis chassis;
 
 extern Controller master;
 
-extern ADIAnalogIn shoot_sensor;
+extern ADIDigitalIn shoot_swtch_a;
+extern ADIDigitalIn shoot_swtch_b;
 
 //configuration and status
 extern bool IsCollectorOn;

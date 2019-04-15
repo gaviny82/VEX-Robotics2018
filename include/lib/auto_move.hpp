@@ -31,33 +31,6 @@ extern pidctrl_t pid_right;
 #define MOV_RUNNING 1
 #define MOV_ALREADY_DONE 2
 
-void pid_init(pidctrl_t *pid, int target)
-{
-	pid->Kp = PID_KP;
-	pid->Ki = PID_KI;
-	pid->Kd = PID_KD;
-	pid->nSetPos = 0;
-	pid->nActPos = 0;
-	pid->nErr = 0;
-	pid->nErr_last = 0;
-	pid->nIntegral = 0;
-	pid->nDiffer = 0;
-	pid->nPowerOut = 0.0;
-  pid->nSetPos = 0;
-}
-
-int pid_process(pidctrl_t *pid, int posAct)
-{
-	pid->nActPos = posAct;
-	pid->nErr = pid->nSetPos - pid->nActPos;
-	pid->nIntegral = pid->nErr_last + pid->nErr;
-	pid->nDiffer = pid->nErr_last - pid->nErr;
-	pid->nPowerOut = pid->Kp*pid->nErr + pid->Ki*pid->nIntegral + pid->Kd*pid->nDiffer;
-	pid->nErr_last = pid->nErr;
-  
-	return (int)pid->nPowerOut;
-}
-
 #define _set_movement(MOV_VELOCITY, MOV_LEFT, MOV_RIGHT, MOV_TIME)      \
 do {  \
   movecnt++;   \

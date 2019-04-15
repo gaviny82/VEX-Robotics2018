@@ -40,8 +40,7 @@ void opcontrol()
 
 		//shoot control
 		int shoot_m;
-		int deg = shoot_sensor.get_value();
-		if (IsAutoShootEnabled)
+		if (0)
 		{
 			//auto shoot
 			if (ShootSignal == SIG_SHOOT && IsReady)
@@ -49,7 +48,7 @@ void opcontrol()
 				shoot_m = 127;
 				IsReady = false;
 			}
-			else if (deg < POSITION_READY && deg > 1000)
+			else if (shoot_swtch_a.get_value() == HIGH || shoot_swtch_a.get_value() == HIGH)
 			{
 				IsReady = true;
 				shoot_m = VOLT_SHOOT_HOLD;
@@ -81,14 +80,7 @@ void opcontrol()
 		//manual collector control
 		if (master.get_digital(DIGITAL_R1))
 		{
-			if (IsReady)
-			{
-				collector.move(127);
-			}
-			else
-			{
-				collector.move(0);
-			}
+			collector.move(127);
 		}
 		else if (master.get_digital(DIGITAL_R2))
 		{
@@ -116,7 +108,7 @@ void opcontrol()
 		//debug messages for operator control session
 		lcd::print(0, "Forward(%.3fx): %d, Yaw(%.3fx): %d, %s", chassis.ForwardCoefficient, chassis.CurrentSpeed, chassis.TurningCoefficient, chassis.CurrentYaw, chassis.IsReversed ? "Reversed" : "Forward");
 		lcd::print(1, "Compensation: %s, Accel: %d", IsAccelCompensationEnabled ? "on" : "Off", accel);
-		lcd::print(2, "Shoot: DEG: %d, %s, Voltage: %d", deg, ShootSignal == SIG_STANDBY ? "Standby" : "Shoot", shoot_m);
+		lcd::print(2, "Shoot: DEG: %s, Voltage: %d", ShootSignal == SIG_STANDBY ? "Standby" : "Shoot", shoot_m);
 		lcd::print(3, "Collector state: %s%s, Collector temperature: %f", IsCollectorOn ? "On," : "Off,", IsCollectorReverse ? "Reverse" : "Collecting", collector.get_temperature());
 
 		delay(20); /* DO NOT DELETE! If the loop goes too tight LCD will die */
