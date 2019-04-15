@@ -26,14 +26,13 @@ void pid_init(pidctrl_t *pid, int target)
 	pid->Kp = PID_KP;
 	pid->Ki = PID_KI;
 	pid->Kd = PID_KD;
-	pid->nSetPos = 0;
+	pid->nSetPos = target;
 	pid->nActPos = 0;
 	pid->nErr = 0;
 	pid->nErr_last = 0;
 	pid->nIntegral = 0;
 	pid->nDiffer = 0;
 	pid->nPowerOut = 0.0;
-	pid->nSetPos = 0;
 }
 
 int pid_process(pidctrl_t *pid, int posAct)
