@@ -33,7 +33,7 @@ ADIDigitalIn shoot_switch_c('C');
 
 ADIDigitalIn arm_switch('H');
 
-bool IsAccelCompensationEnabled = true;
+bool IsAccelCompensationEnabled = false;
 
 void reset_config()
 {

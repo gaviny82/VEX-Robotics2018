@@ -50,6 +50,7 @@ int pid_process(pidctrl_t *pid, int posAct)
 
 void autonomous()
 {
+	int shoot_m;
 	memset((void *)&move_state, 0, sizeof(move_state[MAX_STEPS]));
 	memset((void *)&move_start_time, 0, sizeof(move_start_time[MAX_STEPS]));
 
