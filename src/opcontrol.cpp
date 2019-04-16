@@ -40,15 +40,15 @@ void opcontrol()
 
 		//shoot control
 		int shoot_m;
-		if (1)
+		if (IsAutoShootEnabled)
 		{
 			//auto shoot
 			if (ShootSignal == SIG_SHOOT && IsReady)
 			{
-				shoot_m = 127;
+				shoot_m = 100;
 				IsReady = false;
 			}
-			else if (shoot_switch_a.get_value() == HIGH || shoot_switch_b.get_value() == HIGH)
+			else if (shoot_switch_a.get_value() == HIGH || shoot_switch_b.get_value() == HIGH || shoot_switch_c.get_value() == HIGH)
 			{
 				IsReady = true;
 				shoot_m = VOLT_SHOOT_HOLD;
@@ -57,7 +57,7 @@ void opcontrol()
 			{
 				ShootSignal = SIG_STANDBY;
 				IsReady = false;
-				shoot_m = 127;
+				shoot_m = 100;
 			}
 			shoot1.move(shoot_m);
 			shoot2.move(shoot_m);
@@ -67,8 +67,8 @@ void opcontrol()
 			//manual shoot
 			if (master.get_digital(DIGITAL_X))
 			{
-				shoot1.move(127);
-				shoot2.move(127);
+				shoot1.move(100);
+				shoot2.move(100);
 			}
 			else
 			{
@@ -80,11 +80,11 @@ void opcontrol()
 		//manual collector control
 		if (master.get_digital(DIGITAL_R1))
 		{
-			collector.move(127);
+			collector.move(100);
 		}
 		else if (master.get_digital(DIGITAL_R2))
 		{
-			collector.move(-127);
+			collector.move(-100);
 		}
 		else
 		{
@@ -92,11 +92,11 @@ void opcontrol()
 		}
 
 		//arm control
-		if (master.get_digital(DIGITAL_L1))
+		if (master.get_digital(DIGITAL_L2) && arm_switch.get_value() == LOW)
 		{
 			arm.move(127);
 		}
-		else if (master.get_digital(DIGITAL_L2))
+		else if (master.get_digital(DIGITAL_L1))
 		{
 			arm.move(-127);
 		}

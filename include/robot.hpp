@@ -22,12 +22,14 @@ extern Controller master;
 
 extern ADIDigitalIn shoot_switch_a;
 extern ADIDigitalIn shoot_switch_b;
+extern ADIDigitalIn shoot_switch_c;
+
+extern ADIDigitalIn arm_switch;
 
 //configuration and status
 extern bool IsCollectorOn;
 extern bool IsCollectorReverse;
 
-#define POSITION_READY 3650
 #define VOLT_SHOOT_HOLD 8
 
 extern bool IsAutoShootEnabled;

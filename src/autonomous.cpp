@@ -60,6 +60,25 @@ void autonomous()
 
 #include "autos/back_red.h"
 	__end:;
+	//auto shoot
+			if (ShootSignal == SIG_SHOOT && IsReady)
+			{
+				shoot_m = 100;
+				IsReady = false;
+			}
+			else if (shoot_switch_a.get_value() == HIGH || shoot_switch_b.get_value() == HIGH || shoot_switch_c.get_value() == HIGH)
+			{
+				IsReady = true;
+				shoot_m = VOLT_SHOOT_HOLD;
+			}
+			else
+			{
+				ShootSignal = SIG_STANDBY;
+				IsReady = false;
+				shoot_m = 100;
+			}
+			shoot1.move(shoot_m);
+			shoot2.move(shoot_m);
 		//lcd::print(1, "Shoot: DEG: %d, %s, Voltage: %d", deg, ShootSignal == SIG_STANDBY ? "Standby" : "Shoot", shoot_m);
 		delay(20);
 	}
