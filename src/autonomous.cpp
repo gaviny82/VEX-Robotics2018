@@ -43,7 +43,7 @@ int pid_process(pidctrl_t *pid, int posAct)
 	pid->nDiffer = pid->nErr_last - pid->nErr;
 	pid->nPowerOut = pid->Kp*pid->nErr + pid->Ki*pid->nIntegral + pid->Kd*pid->nDiffer;
 	pid->nErr_last = pid->nErr;
-  
+
 	return (int)pid->nPowerOut;
 }
 
@@ -81,8 +81,8 @@ void autonomous()
 			shoot1.move(shoot_m);
 			shoot2.move(shoot_m);
 
-			if(arm_m < 0 && arm_switch.get_value() == HIGH)
-				arm_m = 0;
+			if(arm_m > 10 && arm_switch.get_value() == HIGH)
+				arm_m = 10;
 			arm.move(arm_m);
 
 		//lcd::print(1, "Shoot: DEG: %d, %s, Voltage: %d", deg, ShootSignal == SIG_STANDBY ? "Standby" : "Shoot", shoot_m);
