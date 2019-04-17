@@ -80,11 +80,11 @@ void opcontrol()
 		//manual collector control
 		if (master.get_digital(DIGITAL_R1))
 		{
-			collector.move(100);
+			collector.move(127);
 		}
 		else if (master.get_digital(DIGITAL_R2))
 		{
-			collector.move(-100);
+			collector.move(-127);
 		}
 		else
 		{
