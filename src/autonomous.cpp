@@ -50,7 +50,7 @@ int pid_process(pidctrl_t *pid, int posAct)
 
 void autonomous()
 {
-	int shoot_m;
+	int shoot_m, arm_m;
 	memset((void *)&move_state, 0, sizeof(move_state[MAX_STEPS]));
 	memset((void *)&move_start_time, 0, sizeof(move_start_time[MAX_STEPS]));
 
@@ -80,6 +80,11 @@ void autonomous()
 			}
 			shoot1.move(shoot_m);
 			shoot2.move(shoot_m);
+
+			if(arm_m < 0 && arm_switch.get_value() == HIGH)
+				arm_m = 0;
+			arm.move(arm_m);
+
 		//lcd::print(1, "Shoot: DEG: %d, %s, Voltage: %d", deg, ShootSignal == SIG_STANDBY ? "Standby" : "Shoot", shoot_m);
 		delay(20);
 	}
