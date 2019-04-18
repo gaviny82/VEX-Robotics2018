@@ -29,10 +29,11 @@ bool ShootSignal = SIG_STANDBY;
 
 ADIDigitalIn shoot_switch_a('A');
 ADIDigitalIn shoot_switch_b('B');
+ADIDigitalIn shoot_switch_c('C');
 
-ADIDigitalIn arm_switch_a('C');
+ADIDigitalIn arm_switch('H');
 
-bool IsAccelCompensationEnabled = true;
+bool IsAccelCompensationEnabled = false;
 
 void reset_config()
 {
