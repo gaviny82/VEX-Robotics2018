@@ -1,7 +1,7 @@
 pros::lcd::print(1, "Auto: new_front_blue");
 
 //shoot
-_set_onetime_task(127, ShootSignal = SIG_SHOOT);
+_set_onetime_task(500, ShootSignal = SIG_SHOOT);
 _set_onetime_task(0, arm.move(127));
 
 //turning
