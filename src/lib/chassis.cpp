@@ -18,7 +18,7 @@ int limit(const int &limit, const int &value)
 	}
 }
 
-Chassis::Chassis(const initializer_list<Motor> left, const initializer_list<Motor> right, const int &maxSpeed)
+Chassis::Chassis(const initializer_list<Motor> left, const initializer_list<Motor> right,  const int &maxSpeed)
 {
 	for (Motor mtr : left)
 	{
@@ -97,6 +97,16 @@ void Chassis::ClearEncoderR()
 		mtr.tare_position();
 	}
 }
+//for arm used
+/*
+void Chassis::clearEncoderArm()
+{
+for(Motor mtr : Armmotors)
+	{
+		mtr.set_encodder_units(E_MOTOR_ENCODER_COUNTS);
+		mtr.tare_position();
+	}
+}*/
 
 double Chassis::GetEncoderL()
 {
