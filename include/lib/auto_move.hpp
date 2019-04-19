@@ -5,10 +5,10 @@
 #define MAX_STEPS 64
 
 typedef struct {
-	int nSetPos;
-	int nActPos;
-	int nErr;
-	int nErr_last;
+	float nSetPos;
+	float nActPos;
+	float nErr;
+	float nErr_last;
 	float Kp, Ki, Kd;
 	float nIntegral;
 	float nDiffer;
@@ -58,8 +58,8 @@ do {  \
       chassis.SetMotorsLeft(0);\
       chassis.SetMotorsRight(0);\
     }\
-    chassis.SetMotorsLeft(pid_process(&pid_left, chassis.GetEncoderL()));\
-    chassis.SetMotorsRight(pid_process(&pid_right, chassis.GetEncoderR()));\
+    chassis.SetMotorsLeft(pid_process(*pid_left, chassis.GetEncoderL()));\
+    chassis.SetMotorsRight(pid_process(*pid_right, chassis.GetEncoderR()));\
     goto __end;\
   }\
   if (move_state[movecnt] == MOV_FIRST_RUN){\
@@ -67,8 +67,8 @@ do {  \
     move_start_time[movecnt] = millis();\
     chassis.ClearEncoderL();\
     chassis.ClearEncoderR();\
-    pid_init(&pid_left, MOV_LEFT); \
-    pid_init(&pid_right, MOV_RIGHT); \
+    pid_init(*pid_left, MOV_LEFT); \
+    pid_init(*pid_right, MOV_RIGHT); \
     goto __end; \
   }\
 } while (0);

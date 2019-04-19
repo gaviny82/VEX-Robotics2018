@@ -34,7 +34,7 @@ void opcontrol()
 		int accel = currentVelocity - chassis.CurrentSpeed;
 		if ((accel > 12 || accel < -12) && IsAccelCompensationEnabled)
 		{
-			currentVelocity = chassis.CurrentSpeed + accel * 0.2;
+			currentVelocity = chassis.CurrentSpeed + accel * 0.25;
 		}
 		chassis.Drive(currentVelocity, master.get_analog(ANALOG_RIGHT_X));
 
@@ -80,11 +80,11 @@ void opcontrol()
 		//manual collector control
 		if (master.get_digital(DIGITAL_R1))
 		{
-			collector.move(127);
+			collector.move(115);
 		}
 		else if (master.get_digital(DIGITAL_R2))
 		{
-			collector.move(-127);
+			collector.move(-115);
 		}
 		else
 		{
@@ -110,7 +110,6 @@ void opcontrol()
 		lcd::print(1, "Compensation: %s, Accel: %d", IsAccelCompensationEnabled ? "on" : "Off", accel);
 		lcd::print(2, "Shoot: DEG: %s, Voltage: %d", ShootSignal == SIG_STANDBY ? "Standby" : "Shoot", shoot_m);
 		lcd::print(3, "Collector state: %s%s, Collector temperature: %f", IsCollectorOn ? "On," : "Off,", IsCollectorReverse ? "Reverse" : "Collecting", collector.get_temperature());
-
 		delay(20); /* DO NOT DELETE! If the loop goes too tight LCD will die */
 	}
 }

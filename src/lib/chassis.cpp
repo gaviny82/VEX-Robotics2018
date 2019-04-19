@@ -35,6 +35,8 @@ void Chassis::Drive(const int &forward, const int &yaw)
 {
 	CurrentSpeed = limit(127, forward);
 	CurrentYaw = limit(127, yaw);
+	ForwardCoefficient = 0.9;
+	TurningCoefficient = 0.7;
 	int left = ForwardCoefficient * CurrentSpeed * (IsReversed ? -1 : 1) + TurningCoefficient * CurrentYaw;
 	int right = ForwardCoefficient * CurrentSpeed * (IsReversed ? -1 : 1) - TurningCoefficient * CurrentYaw;
 

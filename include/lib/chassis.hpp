@@ -9,7 +9,7 @@ using namespace std;
 class Chassis
 {
   public:
-	double ForwardCoefficient = 1, TurningCoefficient = 1;
+	double ForwardCoefficient = 0.1, TurningCoefficient = 0.1;
 	int MaxSpeed = 127;
 	bool IsReversed = false;
 	int CurrentSpeed, CurrentYaw;

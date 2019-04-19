@@ -45,6 +45,6 @@ extern uint16_t movecnt;
 
 extern void reset_config();
 
-#define PID_KP 1
-#define PID_KI 1
+#define PID_KP 0.2
+#define PID_KI 0
 #define PID_KD 0

@@ -38,7 +38,7 @@ void pid_init(pidctrl_t *pid, int target)
 int pid_process(pidctrl_t *pid, int posAct)
 {
 	pid->nActPos = posAct;
-	pid->nErr = pid->nSetPos - pid->nActPos;
+	pid->nErr = pid->nActPos - pid->nSetPos;
 	pid->nIntegral = pid->nErr_last + pid->nErr;
 	pid->nDiffer = pid->nErr_last - pid->nErr;
 	pid->nPowerOut = pid->Kp*pid->nErr + pid->Ki*pid->nIntegral + pid->Kd*pid->nDiffer;
@@ -59,7 +59,7 @@ void autonomous()
 		movecnt = 0;
 		pros::lcd::print(0, "EncL: %f  EncR: %f", left_f_mtr.get_position(), right_f_mtr.get_position());
 
-#include "autos/test_of_pid.h"
+#include "autos/pid.h"
 	__end:;
 	//auto shoot
 			if (ShootSignal == SIG_SHOOT && IsReady)
@@ -80,9 +80,9 @@ void autonomous()
 			}
 			shoot1.move(shoot_m);
 			shoot2.move(shoot_m);
-
 			if(arm_m > 10 && arm_switch.get_value() == HIGH)
-				arm_m = 10;
+			arm_m = 10;
+
 			arm.move(arm_m);
 
 		//lcd::print(1, "Shoot: DEG: %d, %s, Voltage: %d", deg, ShootSignal == SIG_STANDBY ? "Standby" : "Shoot", shoot_m);
