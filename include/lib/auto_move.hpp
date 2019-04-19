@@ -67,18 +67,18 @@ do {  \
   if (move_state[movecnt] == MOV_FIRST_RUN){\
     move_state[movecnt] = MOV_WARM_START;\
     move_start_time[movecnt] = millis();\
-    chassis.SetMotorsLeft(MOV_LEFT  / 5);\
-    chassis.SetMotorsLeft(MOV_RIGHT  / 5);\
-   }\
-   if (move_state[movecnt] == MOV_WARM_START){\
-    chassis.SetMotorsLeft(MOV_LEFT  * (millis() - move_start_time[movecnt]) / 15);\
-    chassis.SetMotorsLeft(MOV_RIGHT  * (millis() - move_start_time[movecnt]) / 15);\
-    if(millis() - move_start_time[movecnt] >= 50){\
-      move_state[movecnt] = MOV_RUNNING;\
       chassis.ClearEncoderL();\
       chassis.ClearEncoderR();\
-      chassis.SetMotorsRelativeL(MOV_LEFT, MOV_VELOCITY);\
-      chassis.SetMotorsRelativeR(MOV_RIGHT, MOV_VELOCITY);\
+      chassis.SetMotorsLeft(MOV_LEFT  / 30);\
+      chassis.SetMotorsRight(MOV_RIGHT  / 30);\
+   }\
+   if (move_state[movecnt] == MOV_WARM_START){\
+    chassis.SetMotorsLeft(MOV_LEFT  * (millis() - move_start_time[movecnt]) / 30 + 20);\
+    chassis.SetMotorsRight(MOV_RIGHT  * (millis() - move_start_time[movecnt]) / 30 + 20);\
+    if(millis() - move_start_time[movecnt] >= 200){\
+      move_state[movecnt] = MOV_RUNNING;\
+      chassis.SetMotorsAbsoluteL(MOV_LEFT, MOV_VELOCITY);\
+      chassis.SetMotorsAbsoluteR(MOV_RIGHT, MOV_VELOCITY);\
     }\
    }\
     goto __end; \

@@ -3,7 +3,7 @@ pros::lcd::print(1, "Auto: new_front_blue_fake");
 //straight
 _set_onetime_task(0, arm_m = -90);//changeable
 _set_onetime_task(0, collector.move(127));
-_set_movement(90, 1100, 1100, 1400);
+_set_movement_warm(90, 1100, 1100, 1400);
 _set_onetime_task(0, arm_m = 0);
 _set_movement(90, -200, -200, 400);
 

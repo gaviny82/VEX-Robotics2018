@@ -22,6 +22,8 @@ class Chassis
 	void SetMotorsRight(const int &speed);
 	void SetMotorsRelativeL(double position, int32_t speed);
 	void SetMotorsRelativeR(double position, int32_t speed);
+	void SetMotorsAbsoluteL(double position, int32_t speed);
+	void SetMotorsAbsoluteR(double position, int32_t speed);
 	void ClearEncoderL();
 	void ClearEncoderR();
 	double GetEncoderL();

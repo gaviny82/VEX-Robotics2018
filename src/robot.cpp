@@ -52,9 +52,10 @@ void reset_config()
     else if (pros::competition::is_autonomous())
     {
 
-      motor_pid_s_t pid_strip = pros::c::motor_convert_pid(1.0 ,4, 3, 3);
+      motor_pid_s_t pid_strip = pros::c::motor_convert_pid(1.0 ,4, 5, 3);
       pros::c::motor_set_vel_pid(7, pid_strip);
       pros::c::motor_set_vel_pid(6, pid_strip);
+      pid_strip = pros::c::motor_convert_pid(1.0 ,4, 3, 10);
       pros::c::motor_set_vel_pid(5, pid_strip);
       pros::c::motor_set_vel_pid(4, pid_strip);
 #if 0

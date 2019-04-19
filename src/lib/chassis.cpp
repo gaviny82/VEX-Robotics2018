@@ -82,6 +82,23 @@ void Chassis::SetMotorsRelativeR(double position, int32_t speed)
 	}
 }
 
+void Chassis::SetMotorsAbsoluteL(double position, int32_t speed)
+{
+	for (Motor mtr : LeftMotors)
+	{
+		mtr.move_absolute(position, speed);
+	}
+}
+
+void Chassis::SetMotorsAbsoluteR(double position, int32_t speed)
+{
+	for (Motor mtr : RightMotors)
+	{
+		mtr.move_absolute(position, speed);
+	}
+}
+
+
 void Chassis::ClearEncoderL()
 {
 	for (Motor mtr : LeftMotors)
