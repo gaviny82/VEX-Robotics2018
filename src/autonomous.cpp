@@ -59,7 +59,7 @@ void autonomous()
 		movecnt = 0;
 		pros::lcd::print(0, "EncL: %f  EncR: %f", left_f_mtr.get_position(), right_f_mtr.get_position());
 
-#include "autos/pid.h"
+#include "autos/new_front_blue.h"
 	__end:;
 	//auto shoot
 			if (ShootSignal == SIG_SHOOT && IsReady)

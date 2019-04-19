@@ -52,12 +52,13 @@ void reset_config()
     else if (pros::competition::is_autonomous())
     {
 
-#if 0
-      motor_pid_s_t pid_strip = pros::c::motor_convert_pid(1.0 ,0.01, 0.0, 0.0);
+      motor_pid_s_t pid_strip = pros::c::motor_convert_pid(1.0 ,4, 3, 3);
       pros::c::motor_set_vel_pid(7, pid_strip);
       pros::c::motor_set_vel_pid(6, pid_strip);
       pros::c::motor_set_vel_pid(5, pid_strip);
       pros::c::motor_set_vel_pid(4, pid_strip);
+#if 0
+
 
 	    motor_pid_full_s_t pid = pros::c::motor_get_pos_pid(1);
 	    pid.kp = 0x13;

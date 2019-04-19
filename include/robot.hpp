@@ -30,7 +30,7 @@ extern ADIDigitalIn arm_switch;
 extern bool IsCollectorOn;
 extern bool IsCollectorReverse;
 
-#define VOLT_SHOOT_HOLD 8
+#define VOLT_SHOOT_HOLD 7
 
 extern bool IsAutoShootEnabled;
 extern bool IsReady;
@@ -45,6 +45,6 @@ extern uint16_t movecnt;
 
 extern void reset_config();
 
-#define PID_KP 0.2
-#define PID_KI 0
-#define PID_KD 0
+#define PID_KP 1
+#define PID_KI 1
+#define PID_KD 1
