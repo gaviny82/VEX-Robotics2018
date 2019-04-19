@@ -133,7 +133,7 @@ double Chassis::GetEncoderL()
 	uint16_t cnt = 0;
 	for (Motor mtr : LeftMotors)
 	{
-		total = total + mtr.tare_position(); //FIXME: tare position?
+		total = total + mtr.get_position(); //FIXME: tare position?
 		cnt++;
 	}
 	return total / cnt;
@@ -145,7 +145,7 @@ double Chassis::GetEncoderR()
 	uint16_t cnt = 0;
 	for (Motor mtr : RightMotors)
 	{
-		total = total + mtr.tare_position(); //FIXME: tare position?
+		total = total + mtr.get_position(); //FIXME: tare position?
 		cnt++;
 	}
 	return total / cnt;

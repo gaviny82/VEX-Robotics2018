@@ -14,8 +14,9 @@
  * from where it left off.
  */
 
-uint8_t move_state[64] = {};
-uint32_t move_start_time[64] = {};
+uint8_t move_state[MAX_STEPS] = {};
+uint32_t move_start_time[MAX_STEPS] = {};
+uint32_t move_brake_time[MAX_STEPS] = {};
 uint16_t movecnt;
 
 pidctrl_t pid_left;

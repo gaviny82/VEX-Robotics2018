@@ -52,24 +52,13 @@ void reset_config()
     else if (pros::competition::is_autonomous())
     {
 
-      motor_pid_s_t pid_strip = pros::c::motor_convert_pid(1.0 ,4, 5, 3);
+      motor_pid_s_t pid_strip = pros::c::motor_convert_pid(1.0 ,4, 2, 2); //left
       pros::c::motor_set_vel_pid(7, pid_strip);
       pros::c::motor_set_vel_pid(6, pid_strip);
-      pid_strip = pros::c::motor_convert_pid(1.0 ,4, 3, 10);
+      pid_strip = pros::c::motor_convert_pid(1.0 ,4, 2, 2); //right
       pros::c::motor_set_vel_pid(5, pid_strip);
       pros::c::motor_set_vel_pid(4, pid_strip);
-#if 0
 
-
-	    motor_pid_full_s_t pid = pros::c::motor_get_pos_pid(1);
-	    pid.kp = 0x13;
-	    pid.ki = 0x0;
-	    pid.kd = 0x10;
-	    pros::c::motor_set_pos_pid_full(7, pid);
-	    pros::c::motor_set_pos_pid_full(6, pid);
-	    pros::c::motor_set_pos_pid_full(5, pid);
-	    pros::c::motor_set_pos_pid_full(4, pid);
-#endif
         IsCollectorOn = false;
         IsCollectorReverse = false;
         IsAutoShootEnabled = true;
