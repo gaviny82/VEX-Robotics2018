@@ -23,9 +23,13 @@ extern uint32_t move_start_time[MAX_STEPS];
 extern pidctrl_t pid_left;
 extern pidctrl_t pid_right;
 
-#define MOV_FIRST_RUN 0
-#define MOV_RUNNING 1
-#define MOV_ALREADY_DONE 2
+enum mov_status{
+  MOV_FIRST_RUN,
+  MOV_WARM_START,
+  MOV_RUNNING,
+  MOV_WARM_BRAKE,
+  MOV_ALREADY_DONE
+};
 
 #define _set_movement(MOV_VELOCITY, MOV_LEFT, MOV_RIGHT, MOV_TIME)      \
 do {  \
@@ -49,29 +53,37 @@ do {  \
   }\
 } while (0);
 
-//#define _set_movement(MOV_VELOCITY, MOV_LEFT, MOV_RIGHT, MOV_TIME)      \
+#define _set_movement_warm(MOV_VELOCITY, MOV_LEFT, MOV_RIGHT, MOV_TIME)      \
 do {  \
   movecnt++;   \
   if (move_state[movecnt] == MOV_RUNNING){\
     if (millis() - move_start_time[movecnt] >= MOV_TIME){\
       move_state[movecnt] = MOV_ALREADY_DONE;\
-      chassis.SetMotorsLeft(0);\
-      chassis.SetMotorsRight(0);\
+      chassis.SetMotorsLeft(2);\
+      chassis.SetMotorsRight(2);\
     }\
-    chassis.SetMotorsLeft(pid_process(*pid_left, chassis.GetEncoderL()));\
-    chassis.SetMotorsRight(pid_process(*pid_right, chassis.GetEncoderR()));\
     goto __end;\
   }\
   if (move_state[movecnt] == MOV_FIRST_RUN){\
-    move_state[movecnt] = MOV_RUNNING;\
+    move_state[movecnt] = MOV_WARM_START;\
     move_start_time[movecnt] = millis();\
-    chassis.ClearEncoderL();\
-    chassis.ClearEncoderR();\
-    pid_init(*pid_left, MOV_LEFT); \
-    pid_init(*pid_right, MOV_RIGHT); \
+    chassis.SetMotorsLeft(MOV_LEFT  / 5);\
+    chassis.SetMotorsLeft(MOV_RIGHT  / 5);\
+   }\
+   if (move_state[movecnt] == MOV_WARM_START){\
+    chassis.SetMotorsLeft(MOV_LEFT  * (millis() - move_start_time[movecnt]) / 15);\
+    chassis.SetMotorsLeft(MOV_RIGHT  * (millis() - move_start_time[movecnt]) / 15);\
+    if(millis() - move_start_time[movecnt] >= 50){\
+      move_state[movecnt] = MOV_RUNNING;\
+      chassis.ClearEncoderL();\
+      chassis.ClearEncoderR();\
+      chassis.SetMotorsRelativeL(MOV_LEFT, MOV_VELOCITY);\
+      chassis.SetMotorsRelativeR(MOV_RIGHT, MOV_VELOCITY);\
+    }\
+   }\
     goto __end; \
-  }\
 } while (0);
+
 
 #define _set_onetime_task(x,cmd) \
 do {  \
