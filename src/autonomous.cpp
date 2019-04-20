@@ -18,9 +18,14 @@ uint8_t move_state[MAX_STEPS] = {};
 uint32_t move_start_time[MAX_STEPS] = {};
 uint32_t move_brake_time[MAX_STEPS] = {};
 uint16_t movecnt;
+int arm_m = 0;
 
 pidctrl_t pid_left;
 pidctrl_t pid_right;
+
+void arm_move(int a){
+	arm_m = a;
+}
 
 void pid_init(pidctrl_t *pid, int target)
 {
@@ -51,17 +56,18 @@ int pid_process(pidctrl_t *pid, int posAct)
 
 void autonomous()
 {
-	int shoot_m, arm_m;
+	int shoot_m;
 	memset((void *)&move_state, 0, sizeof(move_state[MAX_STEPS]));
 	memset((void *)&move_start_time, 0, sizeof(move_start_time[MAX_STEPS]));
-	arm.get_target_position();
+	arm.tare_position();
+	arm.set_zero_position(arm.get_position());
 
 	while (true)
 	{
 		movecnt = 0;
 		pros::lcd::print(0, "EncL: %f  EncR: %f", left_f_mtr.get_position(), right_f_mtr.get_position());
 		pros::lcd::print(5, "EncArm:%f", arm.get_position());
-#include "autos/new_front_red.h"
+#include "autos/pid.h"
 	__end:;
 
 		pros::lcd::print(3,"Time: %d", move_start_time[movecnt] - move_start_time[0]);
@@ -85,9 +91,10 @@ void autonomous()
 			shoot1.move(shoot_m);
 			shoot2.move(shoot_m);
 
-			if(arm_m < 0 && arm_switch.get_value() == HIGH){
+			if(arm_m > 0 && arm_switch.get_value() == HIGH){
 				arm.tare_position();
 				arm.set_zero_position(arm.get_position());
+				arm.move(0);
 				arm_m = 0;
 			}
 

@@ -147,7 +147,7 @@ do {  \
   }\
 } while (0);
 
-#define _arm_back _set_onetime_task(0, arm_m = -127);
+#define _arm_back _set_onetime_task(0, arm_move(127));
 
 #define _arm_up _set_onetime_task(0, arm.move_absolute(-2700, 500))
 
