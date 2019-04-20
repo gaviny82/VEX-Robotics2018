@@ -27,11 +27,10 @@ bool IsReady;
 #define SIG_SHOOT true
 bool ShootSignal = SIG_STANDBY;
 
-ADIDigitalIn shoot_switch_a('A');
+ADIDigitalIn shoot_switch_a('C');
 ADIDigitalIn shoot_switch_b('B');
-ADIDigitalIn shoot_switch_c('C');
 
-ADIDigitalIn arm_switch('H');
+ADIDigitalIn arm_switch('A');
 
 bool IsAccelCompensationEnabled = false;
 

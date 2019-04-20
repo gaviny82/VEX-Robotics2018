@@ -48,7 +48,7 @@ void opcontrol()
 				shoot_m = 100;
 				IsReady = false;
 			}
-			else if (shoot_switch_a.get_value() == HIGH || shoot_switch_b.get_value() == HIGH || shoot_switch_c.get_value() == HIGH)
+			else if (shoot_switch_a.get_value() == HIGH || shoot_switch_b.get_value() == HIGH)
 			{
 				IsReady = true;
 				shoot_m = VOLT_SHOOT_HOLD;

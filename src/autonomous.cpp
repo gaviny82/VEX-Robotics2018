@@ -60,7 +60,7 @@ void autonomous()
 		movecnt = 0;
 		pros::lcd::print(0, "EncL: %f  EncR: %f", left_f_mtr.get_position(), right_f_mtr.get_position());
 
-#include "autos/pid.h"
+#include "autos/new_front_red.h"
 	__end:;
 	//auto shoot
 			if (ShootSignal == SIG_SHOOT && IsReady)
@@ -68,7 +68,7 @@ void autonomous()
 				shoot_m = 100;
 				IsReady = false;
 			}
-			else if (shoot_switch_a.get_value() == HIGH || shoot_switch_b.get_value() == HIGH || shoot_switch_c.get_value() == HIGH)
+			else if (shoot_switch_a.get_value() == HIGH || shoot_switch_b.get_value() == HIGH)
 			{
 				IsReady = true;
 				shoot_m = VOLT_SHOOT_HOLD;

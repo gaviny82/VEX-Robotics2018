@@ -29,7 +29,7 @@ extern uint32_t move_brake_time[MAX_STEPS];
 extern pidctrl_t pid_left;
 extern pidctrl_t pid_right;
 
-static int is_neg(uint32_t num){
+static int is_neg(int32_t num){
 	if(num<0)
 		return -1;
 	else
@@ -74,13 +74,13 @@ do {  \
 		if(abs((int32_t)(abs(chassis.GetEncoderL()) - abs(MOV_LEFT))) < PID_CUT){\
 			move_state[movecnt] = MOV_WARM_BRAKE;\
 			move_brake_time[movecnt] = millis();\
-			chassis.SetMotorsLeft(20);\
-			chassis.SetMotorsRight(20);\
+			chassis.SetMotorsLeft(is_neg(MOV_LEFT)*20);\
+			chassis.SetMotorsRight(is_neg(MOV_RIGHT)*20);\
 		}\
     if (millis() - move_start_time[movecnt] >= MOV_TIME){\
       move_state[movecnt] = MOV_ALREADY_DONE;\
-      chassis.SetMotorsLeft(2);\
-      chassis.SetMotorsRight(2);\
+      chassis.SetMotorsLeft(is_neg(MOV_LEFT)*2);\
+      chassis.SetMotorsRight(is_neg(MOV_RIGHT)*2);\
     }\
     goto __end;\
   }\
@@ -105,8 +105,8 @@ do {  \
 	 if(move_state[movecnt] == MOV_WARM_BRAKE){\
 		 if(millis() - move_brake_time[movecnt] > BRAKE_TIME){\
 			 move_state[movecnt] = MOV_ALREADY_DONE;\
-			 chassis.SetMotorsLeft(2);\
-			 chassis.SetMotorsRight(2);\
+			 chassis.SetMotorsLeft(is_neg(MOV_LEFT) * 2);\
+			 chassis.SetMotorsRight(is_neg(MOV_LEFT) * 2);\
 		 }\
 	 }\
     goto __end; \

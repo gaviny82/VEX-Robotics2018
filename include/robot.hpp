@@ -22,7 +22,6 @@ extern Controller master;
 
 extern ADIDigitalIn shoot_switch_a;
 extern ADIDigitalIn shoot_switch_b;
-extern ADIDigitalIn shoot_switch_c;
 
 extern ADIDigitalIn arm_switch;
 
