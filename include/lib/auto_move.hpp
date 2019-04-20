@@ -6,7 +6,7 @@
 #define INI_VELO 20
 #define DENO_VELO 500
 #define BRAKE_TIME 350
-#define PID_CUT 200
+#define PID_CUT 250
 
 
 typedef struct {
@@ -79,8 +79,8 @@ do {  \
 		}\
     if (millis() - move_start_time[movecnt] >= MOV_TIME){\
       move_state[movecnt] = MOV_ALREADY_DONE;\
-      chassis.SetMotorsLeft(is_neg(MOV_LEFT)*2);\
-      chassis.SetMotorsRight(is_neg(MOV_RIGHT)*2);\
+      chassis.SetMotorsLeft(is_neg(MOV_LEFT)*-2);\
+      chassis.SetMotorsRight(is_neg(MOV_RIGHT)*-2);\
     }\
     goto __end;\
   }\
@@ -98,15 +98,15 @@ do {  \
     chassis.SetMotorsRight(is_neg(MOV_LEFT)*(MOV_VELOCITY * time / DENO_VELO + INI_VELO));\
     if(millis() - move_start_time[movecnt] >= 300){\
       move_state[movecnt] = MOV_RUNNING;\
-      chassis.SetMotorsAbsoluteL(MOV_LEFT, MOV_VELOCITY);\
-      chassis.SetMotorsAbsoluteR(MOV_RIGHT, MOV_VELOCITY);\
+      chassis.SetMotorsLeft(is_neg(MOV_LEFT) * MOV_VELOCITY);\
+      chassis.SetMotorsRight(is_neg(MOV_RIGHT) * MOV_VELOCITY);\
     }\
    }\
 	 if(move_state[movecnt] == MOV_WARM_BRAKE){\
-		 if(millis() - move_brake_time[movecnt] > BRAKE_TIME){\
+		 if(millis() - move_brake_time[movecnt] > BRAKE_TIME || abs((int32_t)(abs(chassis.GetEncoderL()) - abs(MOV_LEFT))) < 30 ){\
 			 move_state[movecnt] = MOV_ALREADY_DONE;\
-			 chassis.SetMotorsLeft(is_neg(MOV_LEFT) * 2);\
-			 chassis.SetMotorsRight(is_neg(MOV_LEFT) * 2);\
+			 chassis.SetMotorsLeft(is_neg(MOV_LEFT) * -2);\
+			 chassis.SetMotorsRight(is_neg(MOV_LEFT) * -2);\
 		 }\
 	 }\
     goto __end; \
@@ -147,4 +147,8 @@ do {  \
   }\
 } while (0);
 
+#define _arm_back _set_onetime_task(0, arm_m = -127);
 
+#define _arm_up _set_onetime_task(0, arm.move_absolute(-2700, 500))
+
+#define _arm_down _set_onetime_task(0, arm.move_absolute(-3500, 500))

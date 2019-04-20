@@ -54,14 +54,17 @@ void autonomous()
 	int shoot_m, arm_m;
 	memset((void *)&move_state, 0, sizeof(move_state[MAX_STEPS]));
 	memset((void *)&move_start_time, 0, sizeof(move_start_time[MAX_STEPS]));
+	arm.get_target_position();
 
 	while (true)
 	{
 		movecnt = 0;
 		pros::lcd::print(0, "EncL: %f  EncR: %f", left_f_mtr.get_position(), right_f_mtr.get_position());
-
+		pros::lcd::print(5, "EncArm:%f", arm.get_position());
 #include "autos/new_front_red.h"
 	__end:;
+
+		pros::lcd::print(3,"Time: %d", move_start_time[movecnt] - move_start_time[0]);
 	//auto shoot
 			if (ShootSignal == SIG_SHOOT && IsReady)
 			{
@@ -81,12 +84,16 @@ void autonomous()
 			}
 			shoot1.move(shoot_m);
 			shoot2.move(shoot_m);
-			if(arm_m > 10 && arm_switch.get_value() == HIGH)
-			arm_m = 10;
 
-			arm.move(arm_m);
+			if(arm_m < 0 && arm_switch.get_value() == HIGH){
+				arm.tare_position();
+				arm.set_zero_position(arm.get_position());
+				arm_m = 0;
+			}
 
-		//lcd::print(1, "Shoot: DEG: %d, %s, Voltage: %d", deg, ShootSignal == SIG_STANDBY ? "Standby" : "Shoot", shoot_m);
+			if(arm_m != 0){
+				arm.move(arm_m);
+			}
 		delay(20);
 	}
 }
