@@ -151,4 +151,4 @@ do {  \
 
 #define _arm_up _set_onetime_task(0, arm.move_absolute(-2700, 500))
 
-#define _arm_down _set_onetime_task(0, arm.move_absolute(-3500, 500))
+#define _arm_down _set_onetime_task(0, arm.move_absolute(-3600, 500))
