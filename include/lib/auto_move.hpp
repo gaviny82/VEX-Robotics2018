@@ -131,8 +131,20 @@ do {  \
   }\
 } while (0);
 
-#define _shoot _set_onetime_task(2000, ShootSignal = SIG_SHOOT)
-#define _collector_start _set_onetime_task(0, collector.move(127))
-#define _collector_reverse _set_onetime_task(0, collector.move(-127))
-#define _collector_stop _set_onetime_task(0, collector.move(0))
-//
+#define _set_delayed_task(x,cmd) \
+do {  \
+  movecnt++;   \
+    if (move_state[movecnt] == MOV_FIRST_RUN){\
+    move_state[movecnt] = MOV_RUNNING;\
+    move_start_time[movecnt] = millis();\
+    goto __end; \
+  }\
+  if (move_state[movecnt] == MOV_RUNNING){\
+    if (millis() - move_start_time[movecnt] >= x){\
+      move_state[movecnt] = MOV_ALREADY_DONE;\
+      cmd; \
+    }\
+  }\
+} while (0);
+
+
