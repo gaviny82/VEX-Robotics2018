@@ -26,7 +26,7 @@ _set_onetime_task(100, chassis.SetMotorsRelativeL(0, 30); chassis.SetMotorsRelat
 */
 
 //rise the arm
-set_onetime_task(0, -arm_pan);
+set_onetime_task(0, _arm_pan);
 
 //turn over the plate
 _set_movement_warm(127, -2600, -2600, 3000);

@@ -7,10 +7,10 @@ pros::lcd::print(2, "交附2");
 _set_onetime_task(0,_arm_down);
 _set_onetime_task(0,collector.move(110)); //吸球启动
 _set_movement_warm(80, 1100, 1100, 1400);//前进
-_set_movement_warm(90, -450, -450, 500);//向后拨球
-
+_set_movement_warm(90, -650, -650, 500);//向后拨球
+_set_onetime_task(200,);
 /* 清第一列旗 */
-_set_movement_warm(100, -850, -850, 1500);//后退到击球位置
+_set_movement_warm(100, -650, -650, 1500);//后退到击球位置
 _set_onetime_task(0, collector.move(0));//吸球停止
 _set_movement(100,840,-840,900);//转向对旗
 _set_onetime_task(0,_arm_up);
