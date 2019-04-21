@@ -8,22 +8,30 @@ _set_onetime_task(200,ShootSignal = SIG_SHOOT);
 _set_onetime_task(100,collector.move(0));
 _set_movement(100,220,-220,200);
 _set_movement_warm(110,-1600,-1600,2000);
-_set_movement(100,-680,600,600);
-_set_onetime_task(800,chassis.Drive(-60,0));
+_set_movement(100,-680,500,600);
+_set_onetime_task(1000,chassis.Drive(-60,0));
 _set_onetime_task(0, chassis.Drive(0,0));
 _set_onetime_task(0,_arm_up);
 
 //turn over the plate
 _set_delayed_task(1000,_arm_down);
-_set_movement_warm(100, 2400, 2400, 3000);
+_set_movement_warm(100, 2700, 2700, 3000);
 _set_onetime_task(500,)
 _set_onetime_task(0,collector.move(110))
-_set_movement_warm(90, -1400, -1400, 2000);
-_set_delayed_task(1000,collector.move(0));
-_set_movement(100,380,-380,600);
-_set_movement_warm(50,1400,1400,1500);
-_set_movement(100,370,-370,500);
-_set_movement(127,3000,3000,3000);
+_set_movement_warm(90, -1100, -1100, 2000);
+_set_movement_warm(100,-300,-300,600);
+_set_onetime_task(1000,);
+//_set_onetime_task(0,collector.move(0))
+_set_movement(100,250,-250,400);
+_set_onetime_task(0,_arm_down);
+_set_onetime_task(0,collector.move(110));
+_set_movement_warm(50,2200,2200,2500);
+//_set_onetime_task(0,collector.move(0));
+_set_movement_warm(50,-700,-700,900);
+_set_onetime_task(0,_arm_back);
+_set_movement(100,380,-380,500);
+_set_onetime_task(1250,chassis.Drive(127,0))
+_set_onetime_task(0,chassis.Drive(0,0));
 /*
 _set_onetime_task(0,collector.move(0))
 _set_onetime_task(400,ShootSignal = SIG_SHOOT);

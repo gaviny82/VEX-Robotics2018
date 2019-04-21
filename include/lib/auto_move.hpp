@@ -149,7 +149,7 @@ do {  \
 
 #define _arm_back  arm_move(127)
 
-#define _arm_up arm.move_absolute(-2700, 500)
+#define _arm_up arm.move_absolute(-2900, 500)
 
 #define _arm_down arm.move_absolute(-3750, 500)
 #define _arm_pan arm.move_absolute(-3500,500)
