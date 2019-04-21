@@ -67,7 +67,7 @@ void autonomous()
 		movecnt = 0;
 		pros::lcd::print(0, "EncL: %f  EncR: %f", left_f_mtr.get_position(), right_f_mtr.get_position());
 		pros::lcd::print(5, "EncArm:%f", arm.get_position());
-#include "autos/new_front_red.h"
+#include "autos/new_back_blue.h"
 	__end:;
 
 		pros::lcd::print(3,"Time: %d", move_start_time[movecnt] - move_start_time[0]);
@@ -97,6 +97,7 @@ void autonomous()
 				arm.move(0);
 				arm_m = 0;
 			}
+
 
 			if(arm_m != 0){
 				arm.move(arm_m);
