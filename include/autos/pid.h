@@ -11,5 +11,10 @@ _arm_up;
 _set_movement_warm(100, -1300, -1300, 1400);//前进
 */
 //_set_movement(100,670,-670,1000);
-_set_movement_warm(100,1600,1600,3000);
+//_set_movement_warm(100,1600,1600,3000);
+_set_onetime_task(5000,_arm_down);
+_set_onetime_task(5000,_arm_up);
+_set_onetime_task(0,_arm_pan);
+_set_onetime_task(0,collector.move(100));
+_set_movement_warm(100,3000,3000,1500);
 //1600 = 60cm  37.037 = 1cm

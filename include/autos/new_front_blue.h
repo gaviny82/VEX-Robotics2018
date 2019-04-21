@@ -1,51 +1,46 @@
-pros::lcd::print(1, "Auto: new_front_blue_fake");
+pros::lcd::print(1, "Auto: new_front_blue");
+pros::lcd::print(2, "交附2");
 
-//straight
-_set_onetime_task(0, arm_m = -90);//changeable
-_set_onetime_task(0, collector.move(127));
-_set_movement_warm(90, 1100, 1100, 1400);
-_set_onetime_task(0, arm_m = 0);
-_set_movement(90, -200, -200, 400);
+//standzrd: 670 units = 90 degree
+//standzrd: 1600 units = 60cm
+/* 拨台上球 */
+_set_onetime_task(0,_arm_down);
+_set_onetime_task(0,collector.move(110)); //吸球启动
+_set_movement_warm(80, 1100, 1100, 1400);//前进
+_set_movement_warm(90, -450, -450, 500);//向后拨球
 
-//back
-_set_movement(90, 200, 200, 600);
-_set_onetime_task(0, arm_m = 90);
-_set_onetime_task(200, collector.move(0));
-_set_movement(90, -1150, -1150, 1400);
-_set_onetime_task(0, arm_m = 0);
+/* 清第一列旗 */
+_set_movement_warm(100, -850, -850, 1500);//后退到击球位置
+_set_onetime_task(0, collector.move(0));//吸球停止
+_set_movement(100,840,-840,900);//转向对旗
+_set_onetime_task(0,_arm_up);
 
-//turning
-_set_movement(100,940,-820,1000);
+_set_onetime_task(400, ShootSignal = SIG_SHOOT);/*高旗射球*/
+_set_onetime_task(0,collector.move(110));//启动吸球
+_set_movement_warm(127,1750,1750,2000);//前进到中旗点位
+_set_delayed_task(0, collector.move(0)); /*第二发球到位*/
+_set_onetime_task(400, ShootSignal = SIG_SHOOT);/*中旗射球*/
+_set_movement(100,95,-95,300);/*调整角度*/
+_set_movement_warm(127, 800, 800, 1500);/*向前顶低旗*/
+//_set_onetime_task(200,);/*停止*/
+_set_movement_warm(127, -2450, -2450, 3000);//后退回到红区
 
-//shoot
-_set_onetime_task(0, ShootSignal = SIG_SHOOT);
-_set_onetime_task(200, collector.move(127));
 
-//straight
-_set_movement(127, 1800, 1800, 2000);
+_set_movement(100,-760,760,800);//转向对墙
+_set_onetime_task(0,collector.move(110));//开始吸球
+_set_onetime_task(0,_arm_pan);
+_set_movement_warm(75,2600,2600,3000);//向前顶盘
+_set_movement(100,710,-710,800);//转向对台
+_set_movement(100,-600,-600,400);//后退顶台
+_set_onetime_task(0,_arm_up);
+_set_movement_warm(100,2700,2700,3000);//前进到达点位
+_set_onetime_task(0,collector.move(0));
+_set_movement(100,-300,300,400);//
+_set_onetime_task(300,ShootSignal = SIG_SHOOT);//打中旗
+//_set_movement_warm(100,200,200,300);
 
-//shoot again
-_set_onetime_task(0, ShootSignal = SIG_SHOOT);
-_set_onetime_task(0, collector.move(127));
-
-//Third flag
-_set_movement(100,50,-50,100)
-_set_movement(127, 2000, 2000, 2500);
-_set_movement(127,-700, -700, 2000);
-
-//turning to the Cap
-_set_movement(100, 310, -310, 600);
-
-//back
-_set_movement(100, -2000, -2000, 2000);
-_set_movement(100, 600, 600, 600);
-
-//turn and face the flag
-_set_movement(100,-400,400,600)
-
-//shoot
-
-_set_onetime_task(0, ShootSignal = SIG_SHOOT)
-
-//forward
-_set_movement(100,1000,1000,1500)
+//_set_movement_warm(100,200,200,300);//
+//后退翻前盘
+_set_onetime_task(800, chassis.SetMotorsLeft(-110); chassis.SetMotorsRight(-60));
+_set_onetime_task(0, chassis.SetMotorsLeft(0); chassis.SetMotorsRight(0));
+_set_movement(100,200,200,200);

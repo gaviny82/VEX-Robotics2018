@@ -106,10 +106,12 @@ void opcontrol()
 		}
 
 		//debug messages for operator control session
-		lcd::print(0, "Forward(%.3fx): %d, Yaw(%.3fx): %d, %s", chassis.ForwardCoefficient, chassis.CurrentSpeed, chassis.TurningCoefficient, chassis.CurrentYaw, chassis.IsReversed ? "Reversed" : "Forward");
+	  lcd::print(0, "Forward(%.3fx): %d, Yaw(%.3fx): %d, %s", chassis.ForwardCoefficient, chassis.CurrentSpeed, chassis.TurningCoefficient, chassis.CurrentYaw, chassis.IsReversed ? "Reversed" : "Forward");
 		lcd::print(1, "Compensation: %s, Accel: %d", IsAccelCompensationEnabled ? "on" : "Off", accel);
 		lcd::print(2, "Shoot: DEG: %s, Voltage: %d", ShootSignal == SIG_STANDBY ? "Standby" : "Shoot", shoot_m);
 		lcd::print(3, "Collector state: %s%s, Collector temperature: %f", IsCollectorOn ? "On," : "Off,", IsCollectorReverse ? "Reverse" : "Collecting", collector.get_temperature());
 		delay(20); /* DO NOT DELETE! If the loop goes too tight LCD will die */
+		lcd::print(5, "EncArm:%f", arm.get_position());
+
 	}
 }
