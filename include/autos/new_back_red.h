@@ -30,7 +30,7 @@ _set_movement_warm(70, -1000, -1000, 1600);
 
 //turn and shoot the high flag
 _set_onetime_task(0, collector.move(0));
-_set_movement(100, -350, 350, 500);
+_set_movement(100, -400, 400, 500);
 _set_movement_warm(127, -1200, -1200, 1500);
 _set_onetime_task(500, collector.move(-127));
 _set_onetime_task(400, ShootSignal = SIG_SHOOT);
