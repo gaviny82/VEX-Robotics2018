@@ -1,6 +1,6 @@
 pros::lcd::print(1, "Auto: test");
 //_set_onetime_task(0, arm_m = 10);
-_set_onetime_task(0,_arm_pan);
+_set_onetime_task(0,_arm_down);
 //_set_onetime_task(0, arm_m = 5);
 /*
 _arm_down;
