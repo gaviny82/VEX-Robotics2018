@@ -24,7 +24,7 @@ _set_onetime_task(400, ShootSignal = SIG_SHOOT);/*中旗射球*/
 _set_movement(100,-85,85,300);/*调整角度*/
 _set_movement_warm(127, 800, 800, 1500);/*向前顶低旗*/
 //_set_onetime_task(200,);/*停止*/
-_set_movement_warm(127, -2300, -2300, 3000);//后退回到红区
+_set_movement_warm(127, -2200, -2200, 3000);//后退回到红区
 
 
 _set_movement(100,800,-800,800);//转向对墙
@@ -44,6 +44,6 @@ _set_movement_warm(100,200,200,300);
 
 //_set_movement_warm(100,200,200,300);
 //后退翻前盘
-_set_onetime_task(600, chassis.SetMotorsLeft(-60); chassis.SetMotorsRight(-120));
+_set_onetime_task(900, chassis.SetMotorsLeft(-60); chassis.SetMotorsRight(-120));
 _set_onetime_task(0, chassis.SetMotorsLeft(0); chassis.SetMotorsRight(0));
 _set_movement(100,200,200,200);

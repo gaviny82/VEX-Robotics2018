@@ -21,9 +21,9 @@ _set_movement_warm(100, -1310, -1310, 2000);
 //推盘吸球
 //turn and fetch the ball
 _set_movement(100,-250,250,400);
-_set_onetime_task(0,_arm_down);
+//_set_onetime_task(0,_arm_down);
 _set_onetime_task(0,collector.move(110));
-_set_movement_warm(50,2200,2200,2500);
+_set_movement_warm(60,2200,2200,2500);
 _set_delayed_task(1500,collector.move(0));
 
 //go back a little
@@ -37,7 +37,7 @@ _set_onetime_task(800,chassis.Drive(80,0))
 _set_onetime_task(0,chassis.Drive(0,0));
 
 //high flag position
-_set_movement(60,0,-680,900);//第一列旗角度
+_set_movement(60,0,-640,900);//第一列旗角度
 _set_onetime_task(200,collector.move(-80));
 _set_onetime_task(300,ShootSignal = SIG_SHOOT);//高旗
 _set_onetime_task(0,collector.move(110));
@@ -50,8 +50,10 @@ _set_onetime_task(100,ShootSignal = SIG_SHOOT);//低旗
 //上台
 //striahgt and turn right
 _set_movement_warm(100,1300,1300,1500);
-_set_movement(100,0,670,900);
+_set_movement(100,0,640,900);
 
 //get on the plate
 _set_onetime_task(800,chassis.Drive(127,0));
-_set_movement(10,-10,-10,50);
+_set_movement(10,-10,-10,20);
+_set_movement(5,5,5,10);
+_set_onetime_task(0,chassis.Drive(0,0));

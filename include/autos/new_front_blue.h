@@ -23,21 +23,21 @@ _set_movement(100,85,-85,300);/*调整角度*/
 _set_movement_warm(127, 800, 800, 1500);/*向前顶低旗*/
 //_set_onetime_task(200,);/*停止*/
 
-_set_movement_warm(127, -2400, -2400, 3000);//后退回到红区
+_set_movement_warm(127, -2100, -2100, 3000);//后退回到红区
 //_set_delayed_task(200,_arm_down);
 
-_set_movement(100,-730,730,800);//转向对墙
+_set_movement(100,-740,740,800);//转向对墙
 _set_onetime_task(0,collector.move(110));//开始吸球
-_set_movement_warm(100,2400,2400,3000);//向前顶盘
+_set_movement_warm(127,2400,2400,3000);//向前顶盘
 //_set_movement_warm(70,-200,-200,300);
 _set_movement(100,750,-750,800);//转向对台
-_set_movement(100,-600,-600,400);//后退顶台
+_set_onetime_task(500,chassis.Drive(-127,0))
 _set_onetime_task(0,_arm_up);
 _set_movement_warm(100,2700,2700,3000);//前进到达点位
 _set_onetime_task(0,collector.move(0));
-_set_movement(100,-300,300,400);//
+_set_movement(100,-350,350,400);//
 _set_onetime_task(300,ShootSignal = SIG_SHOOT);//打中旗
-//_set_movement_warm(100,200,200,300);
+_set_movement_warm(100,200,200,300);
 
 //_set_movement_warm(100,200,200,300);//
 //后退翻前盘
