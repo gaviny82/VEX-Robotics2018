@@ -138,10 +138,14 @@ _set_movement(127, -2000, -2000, 3000);
 _set_movement_warm(127, 5000, 5000, 6000);
 _set_movement(500, chassis.Drive(80, 0));
 _set_movemnt(127, 2000, 2000, 3000);
+_set_movement(100, 680, -680, 600);
+_set_movement(127, 2500, 2500, 3000);
+_set_movement(50, -20, -20, 400);
 
 
 
 /*
+previous part of route that goes on the plate
 _set_movement(100,300,-300,400);
 _set_movement_warm(127,2000,2000,3000);
 _set_onetime_task(500,chassis.Drive(80,0));
