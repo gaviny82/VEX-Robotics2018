@@ -35,7 +35,7 @@ void Chassis::Drive(const int &forward, const int &yaw)
 {
 	CurrentSpeed = limit(127, forward);
 	CurrentYaw = limit(127, yaw);
-	ForwardCoefficient = 0.9;
+	ForwardCoefficient = 1.0;
 	TurningCoefficient = 0.7;
 	int left = ForwardCoefficient * CurrentSpeed * (IsReversed ? -1 : 1) + TurningCoefficient * CurrentYaw;
 	int right = ForwardCoefficient * CurrentSpeed * (IsReversed ? -1 : 1) - TurningCoefficient * CurrentYaw;
@@ -145,10 +145,10 @@ void Chassis::SetBrakeMode(motor_brake_mode_e_t mode)
 {
 	for (Motor mtr : RightMotors)
 	{
-		mtr.set_brake_mode(mode);	
+		mtr.set_brake_mode(mode);
 	}
 	for (Motor mtr : LeftMotors)
 	{
-		mtr.set_brake_mode(mode);	
+		mtr.set_brake_mode(mode);
 	}
 }
