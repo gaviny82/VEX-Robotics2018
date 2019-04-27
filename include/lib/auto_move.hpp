@@ -48,7 +48,7 @@ enum mov_status{
 do {  \
   movecnt++;   \
   if (move_state[movecnt] == MOV_RUNNING){\
-    if (millis() - move_start_time[movecnt] >= MOV_TIME){\
+		if (millis() - move_start_time[movecnt] >= MOV_TIME){\
       move_state[movecnt] = MOV_ALREADY_DONE;\
       chassis.SetMotorsRelativeL(0, 30);\
       chassis.SetMotorsRelativeR(0, 30);\

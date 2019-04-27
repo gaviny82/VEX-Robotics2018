@@ -6,24 +6,29 @@ pros::lcd::print(2, "交附2");
 /* 拨台上球 */
 _set_onetime_task(0,_arm_down);
 _set_onetime_task(0,collector.move(110)); //吸球启动
-_set_movement_warm(50, 1100, 1100, 1400);//前进
-_set_movement_warm(50, -650, -650, 500);//向后拨球
+_set_movement_warm(80, 1100, 1100, 1400);//前进
+_set_movement_warm(80, -650, -650, 500);//向后拨球
 _set_onetime_task(0,_arm_back);
 _set_onetime_task(200,);
 _set_delayed_task(1500, collector.move(0));//吸球停止
 /* 清第一列旗 */
-_set_movement_warm(50, -1100, -1100, 1500);//后退到击球位置
+_set_movement_warm(50, -750, -750, 1500);//后退到击球位置
 _set_onetime_task(0,collector.move(-100));
-_set_delayed_task()
-_set_movement(30,935,-935,2500);//转向对旗
+_set_delayed_task(200,collector.move(-80));
+_set_movement(50,930,-930,2000);//转向对旗
 //_set_onetime_task(0,_arm_up);
 _set_onetime_task(400, ShootSignal = SIG_SHOOT);/*高旗射球*/
 _set_onetime_task(0,collector.move(110));//启动吸球
-_set_movement_warm(70,1750,1750,2000);//前进到中旗点位
-_set_delayed_task(0, collector.move(0)); /*第二发球到位*/
+_set_movement_warm(110,1750,1750,2000);//前进到中旗点位
+//_set_delayed_task(0, collector.move(0)); /*第二发球到位*/
 _set_onetime_task(400, ShootSignal = SIG_SHOOT);/*中旗射球*/
-_set_movement(100,85,-85,300);/*调整角度*/
+//_set_movement(50,85,-85,100);/*调整角度*/
 _set_movement_warm(80, 2000, 2000, 1500);/*向前顶低旗*/
+_set_movement_warm(80,-2000,-2000,3000)
+_set_movement(100,670,-670,500);
+_set_movement_warm(100,-1500,-1500,1500);
+_set_movement(100,100,100,200);
+//_set_movememt_warm(50,200,200,300);
 //_set_onetime_task(200,);/*停止*/
 /*
 _set_movement_warm(127, -2100, -2100, 3000);//后退回到红区
