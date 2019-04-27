@@ -24,13 +24,13 @@ _set_onetime_task(400, ShootSignal = SIG_SHOOT);/*中旗射球*/
 _set_movement(100,-85,85,300);/*调整角度*/
 _set_movement_warm(127, 800, 800, 1500);/*向前顶低旗*/
 //_set_onetime_task(200,);/*停止*/
-_set_movement_warm(127, -2200, -2200, 3000);//后退回到红区
+_set_movement_warm(127, -2100, -2100, 3000);//后退回到红区
 
 
 _set_movement(100,800,-800,800);//转向对墙
 _set_onetime_task(0,collector.move(110));//开始吸球
 //_set_onetime_task(0,_arm_pan);
-_set_movement_warm(120,2200,2200,3000);//向前顶盘
+_set_movement_warm(120,2400,2400,3000);//向前顶盘
 //_set_onetime_task(200,);
 //_set_movement_warm(100,-300,-300,300);
 _set_movement(127,-740,740,800);//转向对台
