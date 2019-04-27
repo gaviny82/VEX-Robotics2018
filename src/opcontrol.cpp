@@ -24,7 +24,7 @@ Button accel_compensation_switch(master, DIGITAL_X, [] { IsAccelCompensationEnab
 Button autoshoot_switch(master, DIGITAL_UP, [] { IsAutoShootEnabled = !IsAutoShootEnabled; });
 Button click_to_shoot(master, DIGITAL_LEFT, [] { ShootSignal = SIG_SHOOT; });
 Button brake_mode_switch(master, DIGITAL_RIGHT, [] {
-	if(brk_mode = E_MOTOR_BRAKE_COAST){
+	if(brk_mode == E_MOTOR_BRAKE_COAST){
 		brk_mode = E_MOTOR_BRAKE_HOLD;
 	} else {
 		brk_mode = E_MOTOR_BRAKE_COAST;
