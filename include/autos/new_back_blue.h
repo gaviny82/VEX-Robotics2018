@@ -55,3 +55,4 @@ _set_movement(100,650,0,900);
 //get on tne plate
 _set_onetime_task(800,chassis.Drive(127,0));
 _set_movement(10,-10,-10,50);
+_set_onetime_task(0,chassis.SetBrakeMode(E_MOTOR_BRAKE_HOLD));

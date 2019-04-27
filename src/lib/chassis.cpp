@@ -116,16 +116,6 @@ void Chassis::ClearEncoderR()
 		mtr.tare_position();
 	}
 }
-//for arm used
-/*
-void Chassis::clearEncoderArm()
-{
-for(Motor mtr : Armmotors)
-	{
-		mtr.set_encodder_units(E_MOTOR_ENCODER_COUNTS);
-		mtr.tare_position();
-	}
-}*/
 
 double Chassis::GetEncoderL()
 {
@@ -149,4 +139,16 @@ double Chassis::GetEncoderR()
 		cnt++;
 	}
 	return total / cnt;
+}
+
+void Chassis::SetBrakeMode(motor_brake_mode_e_t mode)
+{
+	for (Motor mtr : RightMotors)
+	{
+		mtr.set_brake_mode(mode);	
+	}
+	for (Motor mtr : LeftMotors)
+	{
+		mtr.set_brake_mode(mode);	
+	}
 }

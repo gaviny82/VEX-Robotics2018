@@ -57,3 +57,4 @@ _set_onetime_task(800,chassis.Drive(127,0));
 _set_movement(10,-10,-10,20);
 _set_movement(5,5,5,10);
 _set_onetime_task(0,chassis.Drive(0,0));
+_set_onetime_task(0,chassis.SetBrakeMode(E_MOTOR_BRAKE_HOLD));

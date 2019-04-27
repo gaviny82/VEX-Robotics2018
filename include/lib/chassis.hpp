@@ -18,6 +18,7 @@ class Chassis
 	Chassis(const initializer_list<Motor> left, const initializer_list<Motor> right, const int &maxSpeed = 0);
 	void Drive(const int &forward, const int &yaw);
 	void Stop();
+	void SetBrakeMode(motor_brake_mode_e_t mode);
 	void SetMotorsLeft(const int &speed);
 	void SetMotorsRight(const int &speed);
 	void SetMotorsRelativeL(double position, int32_t speed);
